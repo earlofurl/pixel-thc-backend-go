@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-const alphabet = "abcdefghijklmnopqrstuvwxyz"
+const alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
@@ -63,4 +63,9 @@ func RandomCurrency() string {
 // RandomEmail generates a random email
 func RandomEmail() string {
 	return fmt.Sprintf("%s@email.com", RandomString(6))
+}
+
+// RandomCategory generates a random category
+func RandomCategory() string {
+	return RandomString(6)
 }

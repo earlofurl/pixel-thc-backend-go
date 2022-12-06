@@ -1,7 +1,7 @@
 Table users as U {
   id bigserial [pk]
   hashed_password varchar [not null]
-  username varchar [not null]
+  username varchar [unique, not null]
   email varchar [unique, not null]
   first_name varchar [not null]
   last_name varchar [not null]
@@ -9,7 +9,7 @@ Table users as U {
   role varchar [not null] // future enum
   created_at timestamptz [not null, default: `now()`]
   password_changed_at timestamptz [not null, default: '0001-01-01']
-  updated_at timestamptz [default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
 }
 
 Table accounts as A {
@@ -64,14 +64,16 @@ Table sessions {
 
 Table product_categories {
   id bigserial [pk]
-  name varchar [not null]
+  name varchar [unique, not null]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
   // item_types ########
 }
 
 Table strains {
   id bigserial [pk]
   created_at timestamptz [not null, default: `now()`]
-  updated_at timestamptz [default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
   name varchar [not null]
   type varchar // future enum
   yield_average decimal
@@ -97,7 +99,7 @@ Table strains {
 Table retail_store_locations {
   id bigserial [pk]
   created_at timestamptz [not null, default: `now()`]
-  updated_at timestamptz [default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
   name varchar [not null, unique]
   address varchar [not null]
   city varchar [not null]
@@ -116,7 +118,7 @@ Table retail_store_locations {
 Table items {
   id bigserial [pk]
   created_at timestamptz [not null, default: `now()`]
-  updated_at timestamptz [default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
   description varchar
   is_used boolean [default: false]
   // packages #######
@@ -127,7 +129,7 @@ Table items {
 Table item_types {
   id bigserial [pk]
   created_at timestamptz [not null, default: `now()`]
-  updated_at timestamptz [default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
   product_form varchar [not null]
   product_modifier varchar [not null]
   // items ######
@@ -138,7 +140,7 @@ Table item_types {
 Table package_tags {
   id bigserial [pk]
   created_at timestamptz [not null, default: `now()`]
-  updated_at timestamptz [default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
   tag_number varchar [not null]
   is_assigned boolean [default: false]
   is_provisional boolean [default: true]
@@ -149,7 +151,7 @@ Table package_tags {
 Table packages {
   id bigserial [pk]
   created_at timestamptz [not null, default: `now()`]
-  updated_at timestamptz [default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
   tag_id bigint [ref: > package_tags.id]
   package_type varchar [not null] // future enum
   quantity decimal
@@ -196,7 +198,7 @@ Table source_packages_child_packages {
 Table lab_tests {
   id bigserial [pk]
   created_at timestamptz [not null, default: `now()`]
-  updated_at timestamptz [default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
   test_name varchar
   batch_code varchar
   test_id_code varchar
@@ -242,7 +244,7 @@ Table lab_tests_packages {
 Table uoms {
   id bigserial [pk]
   created_at timestamptz [not null, default: `now()`]
-  updated_at timestamptz [default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
   name varchar [not null]
   abbreviation varchar [not null]
   // item_types
@@ -252,7 +254,7 @@ Table uoms {
 Table orders {
   id bigserial [pk]
   created_at timestamptz [not null, default: `now()`]
-  updated_at timestamptz [default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
   scheduled_pack_date_time timestamptz
   scheduled_ship_date_time timestamptz
   scheduled_delivery_date_time timestamptz
@@ -269,7 +271,7 @@ Table orders {
 Table package_adjustments {
   id bigserial [pk]
   created_at timestamptz [not null, default: `now()`]
-  updated_at timestamptz [default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
   from_package_id bigint [ref: > packages.id, not null]
   to_package_id bigint [ref: > packages.id, not null]
   amount bigint [not null, note: 'must be positive']
@@ -281,3 +283,7 @@ Table package_adjustments {
     (from_package_id, to_package_id)
   }
 }
+
+
+
+

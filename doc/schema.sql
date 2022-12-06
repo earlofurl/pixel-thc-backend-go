@@ -1,11 +1,11 @@
 -- SQL dump generated using DBML (dbml-lang.org)
 -- Database: PostgreSQL
--- Generated at: 2022-12-06T10:09:29.304Z
+-- Generated at: 2022-12-06T22:12:41.329Z
 
 CREATE TABLE "users" (
   "id" bigserial PRIMARY KEY,
   "hashed_password" varchar NOT NULL,
-  "username" varchar NOT NULL,
+  "username" varchar UNIQUE NOT NULL,
   "email" varchar UNIQUE NOT NULL,
   "first_name" varchar NOT NULL,
   "last_name" varchar NOT NULL,
@@ -52,7 +52,9 @@ CREATE TABLE "sessions" (
 
 CREATE TABLE "product_categories" (
   "id" bigserial PRIMARY KEY,
-  "name" varchar NOT NULL
+  "name" varchar UNIQUE NOT NULL,
+  "created_at" timestamptz NOT NULL DEFAULT (now()),
+  "updated_at" timestamptz DEFAULT (now())
 );
 
 CREATE TABLE "strains" (
