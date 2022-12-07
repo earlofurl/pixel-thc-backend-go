@@ -13,6 +13,7 @@ require (
 	github.com/lib/pq v1.10.7
 	github.com/o1egl/paseto v1.0.0
 	github.com/rs/zerolog v1.28.0
+	github.com/shopspring/decimal v1.2.0
 	github.com/spf13/viper v1.10.1
 	github.com/stretchr/testify v1.8.1
 	golang.org/x/crypto v0.0.0-20220408190544-5352b0902921

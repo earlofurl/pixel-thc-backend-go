@@ -111,6 +111,21 @@ func (mr *MockStoreMockRecorder) CreateItemType(arg0, arg1 interface{}) *gomock.
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateItemType", reflect.TypeOf((*MockStore)(nil).CreateItemType), arg0, arg1)
 }
 
+// CreateLabTest mocks base method.
+func (m *MockStore) CreateLabTest(arg0 context.Context, arg1 db.CreateLabTestParams) (db.LabTest, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateLabTest", arg0, arg1)
+	ret0, _ := ret[0].(db.LabTest)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateLabTest indicates an expected call of CreateLabTest.
+func (mr *MockStoreMockRecorder) CreateLabTest(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateLabTest", reflect.TypeOf((*MockStore)(nil).CreateLabTest), arg0, arg1)
+}
+
 // CreateProductCategory mocks base method.
 func (m *MockStore) CreateProductCategory(arg0 context.Context, arg1 string) (db.ProductCategory, error) {
 	m.ctrl.T.Helper()
@@ -258,6 +273,20 @@ func (mr *MockStoreMockRecorder) DeleteItemType(arg0, arg1 interface{}) *gomock.
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteItemType", reflect.TypeOf((*MockStore)(nil).DeleteItemType), arg0, arg1)
 }
 
+// DeleteLabTest mocks base method.
+func (m *MockStore) DeleteLabTest(arg0 context.Context, arg1 int64) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteLabTest", arg0, arg1)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteLabTest indicates an expected call of DeleteLabTest.
+func (mr *MockStoreMockRecorder) DeleteLabTest(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteLabTest", reflect.TypeOf((*MockStore)(nil).DeleteLabTest), arg0, arg1)
+}
+
 // DeleteProductCategory mocks base method.
 func (m *MockStore) DeleteProductCategory(arg0 context.Context, arg1 int64) error {
 	m.ctrl.T.Helper()
@@ -373,6 +402,21 @@ func (m *MockStore) GetItemType(arg0 context.Context, arg1 int64) (db.ItemType, 
 func (mr *MockStoreMockRecorder) GetItemType(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetItemType", reflect.TypeOf((*MockStore)(nil).GetItemType), arg0, arg1)
+}
+
+// GetLabTest mocks base method.
+func (m *MockStore) GetLabTest(arg0 context.Context, arg1 int64) (db.LabTest, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetLabTest", arg0, arg1)
+	ret0, _ := ret[0].(db.LabTest)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetLabTest indicates an expected call of GetLabTest.
+func (mr *MockStoreMockRecorder) GetLabTest(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetLabTest", reflect.TypeOf((*MockStore)(nil).GetLabTest), arg0, arg1)
 }
 
 // GetProductCategory mocks base method.
@@ -555,6 +599,21 @@ func (mr *MockStoreMockRecorder) ListItems(arg0 interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListItems", reflect.TypeOf((*MockStore)(nil).ListItems), arg0)
 }
 
+// ListLabTests mocks base method.
+func (m *MockStore) ListLabTests(arg0 context.Context) ([]db.LabTest, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListLabTests", arg0)
+	ret0, _ := ret[0].([]db.LabTest)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListLabTests indicates an expected call of ListLabTests.
+func (mr *MockStoreMockRecorder) ListLabTests(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListLabTests", reflect.TypeOf((*MockStore)(nil).ListLabTests), arg0)
+}
+
 // ListProductCategories mocks base method.
 func (m *MockStore) ListProductCategories(arg0 context.Context) ([]db.ProductCategory, error) {
 	m.ctrl.T.Helper()
@@ -673,6 +732,21 @@ func (m *MockStore) UpdateItemType(arg0 context.Context, arg1 db.UpdateItemTypeP
 func (mr *MockStoreMockRecorder) UpdateItemType(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateItemType", reflect.TypeOf((*MockStore)(nil).UpdateItemType), arg0, arg1)
+}
+
+// UpdateLabTest mocks base method.
+func (m *MockStore) UpdateLabTest(arg0 context.Context, arg1 db.UpdateLabTestParams) (db.LabTest, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateLabTest", arg0, arg1)
+	ret0, _ := ret[0].(db.LabTest)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UpdateLabTest indicates an expected call of UpdateLabTest.
+func (mr *MockStoreMockRecorder) UpdateLabTest(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateLabTest", reflect.TypeOf((*MockStore)(nil).UpdateLabTest), arg0, arg1)
 }
 
 // UpdateProductCategory mocks base method.
