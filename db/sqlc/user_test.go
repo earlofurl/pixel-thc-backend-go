@@ -2,7 +2,7 @@ package db
 
 import (
 	"context"
-	"database/sql"
+	"github.com/gobuffalo/nulls"
 	"pixel-thc-backend-go/util"
 	"testing"
 	"time"
@@ -67,11 +67,8 @@ func TestUpdateUserOnlyFirstName(t *testing.T) {
 
 	newFirstName := util.RandomOwner()
 	updatedUser, err := testQueries.UpdateUser(context.Background(), UpdateUserParams{
-		Username: oldUser.Username,
-		FirstName: sql.NullString{
-			String: newFirstName,
-			Valid:  true,
-		},
+		Username:  oldUser.Username,
+		FirstName: nulls.NewString(newFirstName),
 	})
 
 	require.NoError(t, err)
@@ -90,10 +87,7 @@ func TestUpdateUserOnlyLastName(t *testing.T) {
 	newLastName := util.RandomOwner()
 	updatedUser, err := testQueries.UpdateUser(context.Background(), UpdateUserParams{
 		Username: oldUser.Username,
-		LastName: sql.NullString{
-			String: newLastName,
-			Valid:  true,
-		},
+		LastName: nulls.NewString(newLastName),
 	})
 
 	require.NoError(t, err)
@@ -112,10 +106,7 @@ func TestUpdateUserOnlyEmail(t *testing.T) {
 	newEmail := util.RandomEmail()
 	updatedUser, err := testQueries.UpdateUser(context.Background(), UpdateUserParams{
 		Username: oldUser.Username,
-		Email: sql.NullString{
-			String: newEmail,
-			Valid:  true,
-		},
+		Email:    nulls.NewString(newEmail),
 	})
 
 	require.NoError(t, err)
@@ -136,11 +127,8 @@ func TestUpdateUserOnlyPassword(t *testing.T) {
 	require.NoError(t, err)
 
 	updatedUser, err := testQueries.UpdateUser(context.Background(), UpdateUserParams{
-		Username: oldUser.Username,
-		HashedPassword: sql.NullString{
-			String: newHashedPassword,
-			Valid:  true,
-		},
+		Username:       oldUser.Username,
+		HashedPassword: nulls.NewString(newHashedPassword),
 	})
 
 	require.NoError(t, err)
@@ -159,10 +147,7 @@ func TestUpdateUserOnlyPhone(t *testing.T) {
 	newPhone := util.RandomPhone()
 	updatedUser, err := testQueries.UpdateUser(context.Background(), UpdateUserParams{
 		Username: oldUser.Username,
-		Phone: sql.NullString{
-			String: newPhone,
-			Valid:  true,
-		},
+		Phone:    nulls.NewString(newPhone),
 	})
 
 	require.NoError(t, err)
@@ -181,10 +166,7 @@ func TestUpdateUserOnlyRole(t *testing.T) {
 	newRole := util.RandomRole()
 	updatedUser, err := testQueries.UpdateUser(context.Background(), UpdateUserParams{
 		Username: oldUser.Username,
-		Role: sql.NullString{
-			String: newRole,
-			Valid:  true,
-		},
+		Role:     nulls.NewString(newRole),
 	})
 
 	require.NoError(t, err)
@@ -210,31 +192,13 @@ func TestUpdateUserAllFields(t *testing.T) {
 	require.NoError(t, err)
 
 	updatedUser, err := testQueries.UpdateUser(context.Background(), UpdateUserParams{
-		Username: oldUser.Username,
-		FirstName: sql.NullString{
-			String: newFirstName,
-			Valid:  true,
-		},
-		LastName: sql.NullString{
-			String: newLastName,
-			Valid:  true,
-		},
-		Email: sql.NullString{
-			String: newEmail,
-			Valid:  true,
-		},
-		HashedPassword: sql.NullString{
-			String: newHashedPassword,
-			Valid:  true,
-		},
-		Phone: sql.NullString{
-			String: newPhone,
-			Valid:  true,
-		},
-		Role: sql.NullString{
-			String: newRole,
-			Valid:  true,
-		},
+		Username:       oldUser.Username,
+		FirstName:      nulls.NewString(newFirstName),
+		LastName:       nulls.NewString(newLastName),
+		Email:          nulls.NewString(newEmail),
+		HashedPassword: nulls.NewString(newHashedPassword),
+		Phone:          nulls.NewString(newPhone),
+		Role:           nulls.NewString(newRole),
 	})
 
 	require.NoError(t, err)
