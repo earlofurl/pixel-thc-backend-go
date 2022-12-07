@@ -230,7 +230,7 @@ func TestLoginUserAPI(t *testing.T) {
 		{
 			name: "OK",
 			body: gin.H{
-				"username": user.Email,
+				"email":    user.Email,
 				"password": password,
 			},
 			buildStubs: func(store *mockdb.MockStore) {
@@ -249,7 +249,7 @@ func TestLoginUserAPI(t *testing.T) {
 		{
 			name: "UserNotFound",
 			body: gin.H{
-				"username": "NotFound",
+				"email":    "NotFound142@mailnotfound.com",
 				"password": password,
 			},
 			buildStubs: func(store *mockdb.MockStore) {
@@ -265,7 +265,7 @@ func TestLoginUserAPI(t *testing.T) {
 		{
 			name: "IncorrectPassword",
 			body: gin.H{
-				"username": user.Email,
+				"email":    user.Email,
 				"password": "incorrect",
 			},
 			buildStubs: func(store *mockdb.MockStore) {
@@ -281,7 +281,7 @@ func TestLoginUserAPI(t *testing.T) {
 		{
 			name: "InternalError",
 			body: gin.H{
-				"username": user.Email,
+				"email":    user.Email,
 				"password": password,
 			},
 			buildStubs: func(store *mockdb.MockStore) {
