@@ -9,13 +9,12 @@ import (
 )
 
 func createRandomItem(t *testing.T) Item {
-	itemDescription := util.RandomString(6)
 	itemIsUsed := util.RandomBool()
 	itemType1 := createRandomItemType(t)
 	strain1 := createRandomStrain(t)
 
 	arg := CreateItemParams{
-		Description: itemDescription,
+		Description: util.RandomString(6),
 		IsUsed:      itemIsUsed,
 		ItemTypeID:  itemType1.ID,
 		StrainID:    strain1.ID,
@@ -25,7 +24,7 @@ func createRandomItem(t *testing.T) Item {
 	require.NoError(t, err)
 	require.NotEmpty(t, item)
 
-	require.Equal(t, itemDescription, item.Description)
+	require.Equal(t, arg.Description, item.Description)
 	require.Equal(t, itemIsUsed, item.IsUsed)
 	require.Equal(t, itemType1.ID, item.ItemTypeID)
 	require.Equal(t, strain1.ID, item.StrainID)

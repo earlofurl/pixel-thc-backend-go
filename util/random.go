@@ -18,8 +18,8 @@ func RandomInt(min, max int64) int64 {
 	return min + rand.Int63n(max-min+1)
 }
 
-// RandomDecimal generates a random decimal
-func RandomDecimal() float64 {
+// RandomFloat generates a random decimal
+func RandomFloat() float64 {
 	return rand.Float64()
 }
 
@@ -77,10 +77,20 @@ func RandomCategory() string {
 
 // RandomQuantity generates a random decimal quantity
 func RandomQuantity() float64 {
-	return RandomDecimal()
+	return RandomFloat()
 }
 
 // RandomBool generates a random boolean value
 func RandomBool() bool {
 	return rand.Intn(2) == 0
+}
+
+// RandomPercent generates a random decimal percent
+func RandomPercent() float64 {
+	return RandomFloat()
+}
+
+// RandomDecimalTimes100 generates a random decimal times 100
+func RandomDecimalTimes100() float64 {
+	return RandomFloat() * 100
 }

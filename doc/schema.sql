@@ -1,6 +1,6 @@
 -- SQL dump generated using DBML (dbml-lang.org)
 -- Database: PostgreSQL
--- Generated at: 2022-12-07T06:30:07.626Z
+-- Generated at: 2022-12-07T06:42:58.952Z
 
 CREATE TABLE "users" (
   "id" bigserial PRIMARY KEY,
@@ -61,8 +61,8 @@ CREATE TABLE "strains" (
   "id" bigserial PRIMARY KEY,
   "created_at" timestamptz NOT NULL DEFAULT (now()),
   "updated_at" timestamptz NOT NULL DEFAULT (now()),
-  "name" varchar(255) NOT NULL,
-  "type" varchar(255) NOT NULL,
+  "name" varchar(255) NOT NULL DEFAULT '',
+  "type" varchar(255) NOT NULL DEFAULT '',
   "yield_average" numeric(9,6),
   "terp_average_total" numeric(9,6),
   "terp_1" varchar(255),
@@ -180,15 +180,16 @@ CREATE TABLE "lab_tests" (
   "id" bigserial PRIMARY KEY,
   "created_at" timestamptz NOT NULL DEFAULT (now()),
   "updated_at" timestamptz NOT NULL DEFAULT (now()),
-  "test_name" varchar(255),
-  "batch_code" varchar(255),
-  "test_id_code" varchar(255),
-  "lab_facility_name" varchar(255),
-  "test_performed_date_time" timestamptz,
-  "overall_passed" boolean,
-  "test_type_name" varchar(255),
-  "test_passed" boolean,
-  "test_comment" varchar(255),
+  "test_name" varchar(255) NOT NULL DEFAULT '',
+  "batch_code" varchar(255) NOT NULL DEFAULT '',
+  "test_id_code" varchar(255) NOT NULL DEFAULT '',
+  "lab_facility_name" varchar(255) NOT NULL DEFAULT '',
+  "test_performed_date_time" timestamptz NOT NULL DEFAULT (now()),
+  "test_completed" boolean NOT NULL DEFAULT false,
+  "overall_passed" boolean NOT NULL DEFAULT false,
+  "test_type_name" varchar(255) NOT NULL DEFAULT '',
+  "test_passed" boolean NOT NULL DEFAULT false,
+  "test_comment" varchar(255) NOT NULL DEFAULT '',
   "thc_total_percent" numeric(9,6),
   "thc_total_value" numeric(9,6),
   "cbd_percent" numeric(9,6),
