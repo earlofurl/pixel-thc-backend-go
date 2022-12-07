@@ -230,12 +230,12 @@ func TestLoginUserAPI(t *testing.T) {
 		{
 			name: "OK",
 			body: gin.H{
-				"username": user.Username,
+				"username": user.Email,
 				"password": password,
 			},
 			buildStubs: func(store *mockdb.MockStore) {
 				store.EXPECT().
-					GetUser(gomock.Any(), gomock.Eq(user.Username)).
+					GetUser(gomock.Any(), gomock.Eq(user.Email)).
 					Times(1).
 					Return(user, nil)
 				store.EXPECT().
@@ -265,12 +265,12 @@ func TestLoginUserAPI(t *testing.T) {
 		{
 			name: "IncorrectPassword",
 			body: gin.H{
-				"username": user.Username,
+				"username": user.Email,
 				"password": "incorrect",
 			},
 			buildStubs: func(store *mockdb.MockStore) {
 				store.EXPECT().
-					GetUser(gomock.Any(), gomock.Eq(user.Username)).
+					GetUser(gomock.Any(), gomock.Eq(user.Email)).
 					Times(1).
 					Return(user, nil)
 			},
@@ -281,7 +281,7 @@ func TestLoginUserAPI(t *testing.T) {
 		{
 			name: "InternalError",
 			body: gin.H{
-				"username": user.Username,
+				"username": user.Email,
 				"password": password,
 			},
 			buildStubs: func(store *mockdb.MockStore) {
@@ -297,7 +297,7 @@ func TestLoginUserAPI(t *testing.T) {
 		{
 			name: "InvalidUsername",
 			body: gin.H{
-				"username": "invalid-user#1",
+				"email":    "invalid-email#1",
 				"password": password,
 			},
 			buildStubs: func(store *mockdb.MockStore) {
@@ -348,7 +348,7 @@ func randomUser(t *testing.T) (user db.User, password string) {
 		HashedPassword: hashedPassword,
 		FirstName:      util.RandomOwner(),
 		LastName:       util.RandomOwner(),
-		Email:          util.RandomEmail(),
+		Email:          util.RandomValidEmail(),
 		Phone:          util.RandomPhone(),
 		Role:           util.RandomRole(),
 	}

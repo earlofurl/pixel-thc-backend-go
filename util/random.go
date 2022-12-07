@@ -98,3 +98,8 @@ func RandomDecimalTimes100() float64 {
 func RandomTagNumber() string {
 	return RandomString(24)
 }
+
+// RandomEmail generates a random valid email address
+func RandomValidEmail() string {
+	return fmt.Sprintf("%s@%s.com", RandomString(6), RandomString(6))
+}

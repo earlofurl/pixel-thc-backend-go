@@ -17,7 +17,7 @@ func createRandomUser(t *testing.T) User {
 	arg := CreateUserParams{
 		HashedPassword: hashedPassword,
 		Username:       util.RandomString(10),
-		Email:          util.RandomString(20),
+		Email:          util.RandomValidEmail(),
 		FirstName:      util.RandomString(10),
 		LastName:       util.RandomString(10),
 		Phone:          util.RandomString(10),
@@ -48,7 +48,7 @@ func TestCreateUser(t *testing.T) {
 
 func TestGetUser(t *testing.T) {
 	user1 := createRandomUser(t)
-	user2, err := testQueries.GetUser(context.Background(), user1.Username)
+	user2, err := testQueries.GetUser(context.Background(), user1.Email)
 	require.NoError(t, err)
 	require.NotEmpty(t, user2)
 
@@ -103,7 +103,7 @@ func TestUpdateUserOnlyLastName(t *testing.T) {
 func TestUpdateUserOnlyEmail(t *testing.T) {
 	oldUser := createRandomUser(t)
 
-	newEmail := util.RandomEmail()
+	newEmail := util.RandomValidEmail()
 	updatedUser, err := testQueries.UpdateUser(context.Background(), UpdateUserParams{
 		Username: oldUser.Username,
 		Email:    nulls.NewString(newEmail),
@@ -184,7 +184,7 @@ func TestUpdateUserAllFields(t *testing.T) {
 
 	newFirstName := util.RandomOwner()
 	newLastName := util.RandomOwner()
-	newEmail := util.RandomEmail()
+	newEmail := util.RandomValidEmail()
 	newPassword := util.RandomString(6)
 	newHashedPassword, err := util.HashPassword(newPassword)
 	newPhone := util.RandomPhone()

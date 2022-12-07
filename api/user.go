@@ -14,7 +14,7 @@ import (
 
 // TODO: refactor Role to be determined on the backend rather than passed as a parameter
 type createUserRequest struct {
-	Username  string `json:"username" binding:"required,alphanum"`
+	Username  string `json:"username" binding:"required,alphanum,min=4,max=20"`
 	Email     string `json:"email" binding:"required,email"`
 	Password  string `json:"password" binding:"required,min=6"`
 	FirstName string `json:"first_name" binding:"required"`
@@ -88,7 +88,7 @@ func (server *Server) createUser(ctx *gin.Context) {
 }
 
 type loginUserRequest struct {
-	Username string `json:"username" binding:"required,alphanum"`
+	Email    string `json:"email" binding:"required,email"`
 	Password string `json:"password" binding:"required,min=6"`
 }
 
@@ -108,7 +108,7 @@ func (server *Server) loginUser(ctx *gin.Context) {
 		return
 	}
 
-	user, err := server.store.GetUser(ctx, req.Username)
+	user, err := server.store.GetUser(ctx, req.Email)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			ctx.JSON(http.StatusNotFound, errorResponse(err))

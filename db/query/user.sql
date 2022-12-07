@@ -6,7 +6,7 @@ RETURNING *;
 -- name: GetUser :one
 SELECT *
 FROM users
-WHERE username = $1
+WHERE email = $1
 LIMIT 1;
 
 -- name: UpdateUser :one
