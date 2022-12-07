@@ -1,6 +1,6 @@
 -- SQL dump generated using DBML (dbml-lang.org)
 -- Database: PostgreSQL
--- Generated at: 2022-12-07T05:46:40.594Z
+-- Generated at: 2022-12-07T06:30:07.626Z
 
 CREATE TABLE "users" (
   "id" bigserial PRIMARY KEY,
@@ -62,7 +62,7 @@ CREATE TABLE "strains" (
   "created_at" timestamptz NOT NULL DEFAULT (now()),
   "updated_at" timestamptz NOT NULL DEFAULT (now()),
   "name" varchar(255) NOT NULL,
-  "type" varchar(255),
+  "type" varchar(255) NOT NULL,
   "yield_average" numeric(9,6),
   "terp_average_total" numeric(9,6),
   "terp_1" varchar(255),
@@ -105,10 +105,10 @@ CREATE TABLE "items" (
   "id" bigserial PRIMARY KEY,
   "created_at" timestamptz NOT NULL DEFAULT (now()),
   "updated_at" timestamptz NOT NULL DEFAULT (now()),
-  "description" varchar(255),
+  "description" varchar(255) NOT NULL DEFAULT '',
   "is_used" boolean NOT NULL DEFAULT false,
-  "item_type_id" bigint,
-  "strain_id" bigint
+  "item_type_id" bigint NOT NULL,
+  "strain_id" bigint NOT NULL
 );
 
 CREATE TABLE "item_types" (
@@ -117,8 +117,8 @@ CREATE TABLE "item_types" (
   "updated_at" timestamptz NOT NULL DEFAULT (now()),
   "product_form" varchar(255) NOT NULL,
   "product_modifier" varchar(255) NOT NULL,
-  "uom_default" bigint,
-  "product_category_id" bigint
+  "uom_default" bigint NOT NULL,
+  "product_category_id" bigint NOT NULL
 );
 
 CREATE TABLE "package_tags" (
