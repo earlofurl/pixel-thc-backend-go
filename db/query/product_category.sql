@@ -1,6 +1,8 @@
 -- name: CreateProductCategory :one
 -- description: Create a new product category
-INSERT INTO product_categories (name) VALUES ($1) RETURNING *;
+INSERT INTO product_categories (name)
+VALUES ($1)
+RETURNING *;
 
 -- name: GetProductCategory :one
 -- description: Get a product category by ID
@@ -25,7 +27,8 @@ ORDER BY name;
 -- name: UpdateProductCategory :one
 -- description: Update a product category
 UPDATE product_categories
-SET name = $2, updated_at = NOW()
+SET name       = $2,
+    updated_at = NOW()
 WHERE id = $1
 RETURNING *;
 

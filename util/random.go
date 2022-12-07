@@ -94,3 +94,7 @@ func RandomPercent() float64 {
 func RandomDecimalTimes100() float64 {
 	return RandomFloat() * 100
 }
+
+func RandomTagNumber() string {
+	return RandomString(24)
+}

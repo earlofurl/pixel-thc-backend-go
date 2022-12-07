@@ -53,8 +53,8 @@ Table transfers {
 Table sessions {
   id uuid [pk]
   username varchar(64) [ref: > U.username, not null]
-  refresh_token varchar(255) [not null]
-  user_agent varchar(255) [not null]
+  refresh_token varchar [not null]
+  user_agent varchar [not null]
   client_ip varchar(45) [not null]
   is_blocked boolean [not null, default: false]
   expires_at timestamptz [not null]

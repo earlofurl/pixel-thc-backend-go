@@ -1,6 +1,6 @@
 -- SQL dump generated using DBML (dbml-lang.org)
 -- Database: PostgreSQL
--- Generated at: 2022-12-07T06:42:58.952Z
+-- Generated at: 2022-12-07T09:47:05.068Z
 
 CREATE TABLE "users" (
   "id" bigserial PRIMARY KEY,
@@ -42,8 +42,8 @@ CREATE TABLE "transfers" (
 CREATE TABLE "sessions" (
   "id" uuid PRIMARY KEY,
   "username" varchar(64) NOT NULL,
-  "refresh_token" varchar(255) NOT NULL,
-  "user_agent" varchar(255) NOT NULL,
+  "refresh_token" varchar NOT NULL,
+  "user_agent" varchar NOT NULL,
   "client_ip" varchar(45) NOT NULL,
   "is_blocked" boolean NOT NULL DEFAULT false,
   "expires_at" timestamptz NOT NULL,

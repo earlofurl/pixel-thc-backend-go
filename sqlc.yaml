@@ -21,5 +21,19 @@ sql:
             "go_type": "github.com/shopspring/decimal.Decimal",
             "db_type": "pg_catalog.numeric",
             "nullable": true
+          },
+#          {
+#            "go_type": "github.com/volatiletech/null/v9.Int64",
+#            "db_type": "pg_catalog.bigint",
+#            "nullable": true
+#          },
+#          {
+#            "go_type": "github.com/gobuffalo/nulls.Int64",
+#            "db_type": "pg_catalog.int8",
+#          },
+          {
+            "go_type": "github.com/gobuffalo/nulls.Int64",
+            "db_type": "pg_catalog.int8",
+            "nullable": true
           }
         ]

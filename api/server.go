@@ -84,6 +84,17 @@ func (server *Server) setupRouter() {
 	authRoutes.GET("/items/:id", server.getItem)
 	authRoutes.POST("/items", server.createItem)
 
+	// lab tests
+	authRoutes.GET("/lab-tests", server.listLabTests)
+	authRoutes.GET("/lab-tests/:id", server.getLabTest)
+	authRoutes.POST("/lab-tests", server.createLabTest)
+
+	// package tags
+	authRoutes.GET("/package-tags", server.listPackageTags)
+	authRoutes.GET("/package-tags/:id", server.getPackageTag)
+	authRoutes.GET("/package-tags/tag/:tag-number", server.getPackageTagByTagNumber)
+	authRoutes.POST("/package-tags", server.createPackageTag)
+
 	server.router = router
 }
 
