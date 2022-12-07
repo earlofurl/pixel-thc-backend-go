@@ -22,18 +22,24 @@ sql:
             "db_type": "pg_catalog.numeric",
             "nullable": true
           },
-#          {
-#            "go_type": "github.com/volatiletech/null/v9.Int64",
-#            "db_type": "pg_catalog.bigint",
-#            "nullable": true
-#          },
-#          {
-#            "go_type": "github.com/gobuffalo/nulls.Int64",
-#            "db_type": "pg_catalog.int8",
-#          },
           {
             "go_type": "github.com/gobuffalo/nulls.Int64",
             "db_type": "pg_catalog.int8",
             "nullable": true
+          },
+          {
+            "go_type": "github.com/gobuffalo/nulls.Time",
+            "db_type": "timestamptz",
+            "nullable": true
+          },
+          {
+            "go_type": "github.com/gobuffalo/nulls.String",
+            "db_type": "pg_catalog.varchar",
+            "nullable": true
+          },
+          {
+              "go_type": "github.com/gobuffalo/nulls.Bool",
+              "db_type": "pg_catalog.bool",
+              "nullable": true
           }
         ]

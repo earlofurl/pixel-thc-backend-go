@@ -9,6 +9,7 @@ import (
 	db "pixel-thc-backend-go/db/sqlc"
 	reflect "reflect"
 
+	nulls "github.com/gobuffalo/nulls"
 	gomock "github.com/golang/mock/gomock"
 	uuid "github.com/google/uuid"
 )
@@ -124,6 +125,21 @@ func (m *MockStore) CreateLabTest(arg0 context.Context, arg1 db.CreateLabTestPar
 func (mr *MockStoreMockRecorder) CreateLabTest(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateLabTest", reflect.TypeOf((*MockStore)(nil).CreateLabTest), arg0, arg1)
+}
+
+// CreatePackage mocks base method.
+func (m *MockStore) CreatePackage(arg0 context.Context, arg1 db.CreatePackageParams) (db.Package, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreatePackage", arg0, arg1)
+	ret0, _ := ret[0].(db.Package)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreatePackage indicates an expected call of CreatePackage.
+func (mr *MockStoreMockRecorder) CreatePackage(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreatePackage", reflect.TypeOf((*MockStore)(nil).CreatePackage), arg0, arg1)
 }
 
 // CreatePackageTag mocks base method.
@@ -302,6 +318,20 @@ func (mr *MockStoreMockRecorder) DeleteLabTest(arg0, arg1 interface{}) *gomock.C
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteLabTest", reflect.TypeOf((*MockStore)(nil).DeleteLabTest), arg0, arg1)
 }
 
+// DeletePackage mocks base method.
+func (m *MockStore) DeletePackage(arg0 context.Context, arg1 int64) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeletePackage", arg0, arg1)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeletePackage indicates an expected call of DeletePackage.
+func (mr *MockStoreMockRecorder) DeletePackage(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeletePackage", reflect.TypeOf((*MockStore)(nil).DeletePackage), arg0, arg1)
+}
+
 // DeletePackageTag mocks base method.
 func (m *MockStore) DeletePackageTag(arg0 context.Context, arg1 int64) error {
 	m.ctrl.T.Helper()
@@ -446,6 +476,36 @@ func (m *MockStore) GetLabTest(arg0 context.Context, arg1 int64) (db.LabTest, er
 func (mr *MockStoreMockRecorder) GetLabTest(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetLabTest", reflect.TypeOf((*MockStore)(nil).GetLabTest), arg0, arg1)
+}
+
+// GetPackage mocks base method.
+func (m *MockStore) GetPackage(arg0 context.Context, arg1 int64) (db.Package, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetPackage", arg0, arg1)
+	ret0, _ := ret[0].(db.Package)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetPackage indicates an expected call of GetPackage.
+func (mr *MockStoreMockRecorder) GetPackage(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPackage", reflect.TypeOf((*MockStore)(nil).GetPackage), arg0, arg1)
+}
+
+// GetPackageByTagID mocks base method.
+func (m *MockStore) GetPackageByTagID(arg0 context.Context, arg1 nulls.Int64) (db.Package, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetPackageByTagID", arg0, arg1)
+	ret0, _ := ret[0].(db.Package)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetPackageByTagID indicates an expected call of GetPackageByTagID.
+func (mr *MockStoreMockRecorder) GetPackageByTagID(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPackageByTagID", reflect.TypeOf((*MockStore)(nil).GetPackageByTagID), arg0, arg1)
 }
 
 // GetPackageTag mocks base method.
@@ -688,6 +748,21 @@ func (mr *MockStoreMockRecorder) ListPackageTags(arg0 interface{}) *gomock.Call 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListPackageTags", reflect.TypeOf((*MockStore)(nil).ListPackageTags), arg0)
 }
 
+// ListPackages mocks base method.
+func (m *MockStore) ListPackages(arg0 context.Context) ([]db.Package, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListPackages", arg0)
+	ret0, _ := ret[0].([]db.Package)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListPackages indicates an expected call of ListPackages.
+func (mr *MockStoreMockRecorder) ListPackages(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListPackages", reflect.TypeOf((*MockStore)(nil).ListPackages), arg0)
+}
+
 // ListProductCategories mocks base method.
 func (m *MockStore) ListProductCategories(arg0 context.Context) ([]db.ProductCategory, error) {
 	m.ctrl.T.Helper()
@@ -821,6 +896,21 @@ func (m *MockStore) UpdateLabTest(arg0 context.Context, arg1 db.UpdateLabTestPar
 func (mr *MockStoreMockRecorder) UpdateLabTest(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateLabTest", reflect.TypeOf((*MockStore)(nil).UpdateLabTest), arg0, arg1)
+}
+
+// UpdatePackage mocks base method.
+func (m *MockStore) UpdatePackage(arg0 context.Context, arg1 db.UpdatePackageParams) (db.Package, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdatePackage", arg0, arg1)
+	ret0, _ := ret[0].(db.Package)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UpdatePackage indicates an expected call of UpdatePackage.
+func (mr *MockStoreMockRecorder) UpdatePackage(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdatePackage", reflect.TypeOf((*MockStore)(nil).UpdatePackage), arg0, arg1)
 }
 
 // UpdatePackageTag mocks base method.
