@@ -1,6 +1,6 @@
 -- SQL dump generated using DBML (dbml-lang.org)
 -- Database: PostgreSQL
--- Generated at: 2022-12-07T00:57:01.923Z
+-- Generated at: 2022-12-07T02:14:58.417Z
 
 CREATE TABLE "users" (
   "id" bigserial PRIMARY KEY,
@@ -117,8 +117,8 @@ CREATE TABLE "item_types" (
   "updated_at" timestamptz NOT NULL DEFAULT (now()),
   "product_form" varchar NOT NULL,
   "product_modifier" varchar NOT NULL,
-  "uom_default" bigint,
-  "product_category_id" bigint
+  "uom_default" bigint NOT NULL,
+  "product_category_id" bigint NOT NULL
 );
 
 CREATE TABLE "package_tags" (

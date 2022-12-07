@@ -113,8 +113,8 @@ CREATE TABLE "item_types" (
                               "updated_at" timestamptz NOT NULL DEFAULT (now()),
                               "product_form" varchar NOT NULL,
                               "product_modifier" varchar NOT NULL,
-                              "uom_default" bigint,
-                              "product_category_id" bigint
+                              "uom_default" bigint NOT NULL,
+                              "product_category_id" bigint NOT NULL
 );
 
 CREATE TABLE "package_tags" (
