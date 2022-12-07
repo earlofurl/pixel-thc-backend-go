@@ -1,6 +1,6 @@
 -- SQL dump generated using DBML (dbml-lang.org)
 -- Database: PostgreSQL
--- Generated at: 2022-12-06T22:12:41.329Z
+-- Generated at: 2022-12-07T00:04:01.457Z
 
 CREATE TABLE "users" (
   "id" bigserial PRIMARY KEY,
@@ -13,7 +13,7 @@ CREATE TABLE "users" (
   "role" varchar NOT NULL,
   "created_at" timestamptz NOT NULL DEFAULT (now()),
   "password_changed_at" timestamptz NOT NULL DEFAULT '0001-01-01',
-  "updated_at" timestamptz DEFAULT (now())
+  "updated_at" timestamptz NOT NULL DEFAULT (now())
 );
 
 CREATE TABLE "accounts" (
@@ -54,13 +54,13 @@ CREATE TABLE "product_categories" (
   "id" bigserial PRIMARY KEY,
   "name" varchar UNIQUE NOT NULL,
   "created_at" timestamptz NOT NULL DEFAULT (now()),
-  "updated_at" timestamptz DEFAULT (now())
+  "updated_at" timestamptz NOT NULL DEFAULT (now())
 );
 
 CREATE TABLE "strains" (
   "id" bigserial PRIMARY KEY,
   "created_at" timestamptz NOT NULL DEFAULT (now()),
-  "updated_at" timestamptz DEFAULT (now()),
+  "updated_at" timestamptz NOT NULL DEFAULT (now()),
   "name" varchar NOT NULL,
   "type" varchar,
   "yield_average" decimal,
@@ -85,7 +85,7 @@ CREATE TABLE "strains" (
 CREATE TABLE "retail_store_locations" (
   "id" bigserial PRIMARY KEY,
   "created_at" timestamptz NOT NULL DEFAULT (now()),
-  "updated_at" timestamptz DEFAULT (now()),
+  "updated_at" timestamptz NOT NULL DEFAULT (now()),
   "name" varchar UNIQUE NOT NULL,
   "address" varchar NOT NULL,
   "city" varchar NOT NULL,
@@ -104,7 +104,7 @@ CREATE TABLE "retail_store_locations" (
 CREATE TABLE "items" (
   "id" bigserial PRIMARY KEY,
   "created_at" timestamptz NOT NULL DEFAULT (now()),
-  "updated_at" timestamptz DEFAULT (now()),
+  "updated_at" timestamptz NOT NULL DEFAULT (now()),
   "description" varchar,
   "is_used" boolean DEFAULT false,
   "item_type_id" bigint,
@@ -114,7 +114,7 @@ CREATE TABLE "items" (
 CREATE TABLE "item_types" (
   "id" bigserial PRIMARY KEY,
   "created_at" timestamptz NOT NULL DEFAULT (now()),
-  "updated_at" timestamptz DEFAULT (now()),
+  "updated_at" timestamptz NOT NULL DEFAULT (now()),
   "product_form" varchar NOT NULL,
   "product_modifier" varchar NOT NULL,
   "uom_default" bigint,
@@ -124,7 +124,7 @@ CREATE TABLE "item_types" (
 CREATE TABLE "package_tags" (
   "id" bigserial PRIMARY KEY,
   "created_at" timestamptz NOT NULL DEFAULT (now()),
-  "updated_at" timestamptz DEFAULT (now()),
+  "updated_at" timestamptz NOT NULL DEFAULT (now()),
   "tag_number" varchar NOT NULL,
   "is_assigned" boolean DEFAULT false,
   "is_provisional" boolean DEFAULT true,
@@ -135,7 +135,7 @@ CREATE TABLE "package_tags" (
 CREATE TABLE "packages" (
   "id" bigserial PRIMARY KEY,
   "created_at" timestamptz NOT NULL DEFAULT (now()),
-  "updated_at" timestamptz DEFAULT (now()),
+  "updated_at" timestamptz NOT NULL DEFAULT (now()),
   "tag_id" bigint,
   "package_type" varchar NOT NULL,
   "quantity" decimal,
@@ -179,7 +179,7 @@ CREATE TABLE "source_packages_child_packages" (
 CREATE TABLE "lab_tests" (
   "id" bigserial PRIMARY KEY,
   "created_at" timestamptz NOT NULL DEFAULT (now()),
-  "updated_at" timestamptz DEFAULT (now()),
+  "updated_at" timestamptz NOT NULL DEFAULT (now()),
   "test_name" varchar,
   "batch_code" varchar,
   "test_id_code" varchar,
@@ -225,15 +225,15 @@ CREATE TABLE "lab_tests_packages" (
 CREATE TABLE "uoms" (
   "id" bigserial PRIMARY KEY,
   "created_at" timestamptz NOT NULL DEFAULT (now()),
-  "updated_at" timestamptz DEFAULT (now()),
-  "name" varchar NOT NULL,
-  "abbreviation" varchar NOT NULL
+  "updated_at" timestamptz NOT NULL DEFAULT (now()),
+  "name" varchar UNIQUE NOT NULL,
+  "abbreviation" varchar UNIQUE NOT NULL
 );
 
 CREATE TABLE "orders" (
   "id" bigserial PRIMARY KEY,
   "created_at" timestamptz NOT NULL DEFAULT (now()),
-  "updated_at" timestamptz DEFAULT (now()),
+  "updated_at" timestamptz NOT NULL DEFAULT (now()),
   "scheduled_pack_date_time" timestamptz,
   "scheduled_ship_date_time" timestamptz,
   "scheduled_delivery_date_time" timestamptz,
@@ -249,7 +249,7 @@ CREATE TABLE "orders" (
 CREATE TABLE "package_adjustments" (
   "id" bigserial PRIMARY KEY,
   "created_at" timestamptz NOT NULL DEFAULT (now()),
-  "updated_at" timestamptz DEFAULT (now()),
+  "updated_at" timestamptz NOT NULL DEFAULT (now()),
   "from_package_id" bigint NOT NULL,
   "to_package_id" bigint NOT NULL,
   "amount" bigint NOT NULL,

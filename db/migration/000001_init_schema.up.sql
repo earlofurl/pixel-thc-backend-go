@@ -222,8 +222,8 @@ CREATE TABLE "uoms" (
                         "id" bigserial PRIMARY KEY,
                         "created_at" timestamptz NOT NULL DEFAULT (now()),
                         "updated_at" timestamptz NOT NULL DEFAULT (now()),
-                        "name" varchar NOT NULL,
-                        "abbreviation" varchar NOT NULL
+                        "name" varchar UNIQUE NOT NULL,
+                        "abbreviation" varchar UNIQUE NOT NULL
 );
 
 CREATE TABLE "orders" (
