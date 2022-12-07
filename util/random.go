@@ -79,3 +79,8 @@ func RandomCategory() string {
 func RandomQuantity() float64 {
 	return RandomDecimal()
 }
+
+// RandomBool generates a random boolean value
+func RandomBool() bool {
+	return rand.Intn(2) == 0
+}

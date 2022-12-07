@@ -1,6 +1,6 @@
 -- SQL dump generated using DBML (dbml-lang.org)
 -- Database: PostgreSQL
--- Generated at: 2022-12-07T02:14:58.417Z
+-- Generated at: 2022-12-07T03:09:11.381Z
 
 CREATE TABLE "users" (
   "id" bigserial PRIMARY KEY,
@@ -105,10 +105,10 @@ CREATE TABLE "items" (
   "id" bigserial PRIMARY KEY,
   "created_at" timestamptz NOT NULL DEFAULT (now()),
   "updated_at" timestamptz NOT NULL DEFAULT (now()),
-  "description" varchar,
-  "is_used" boolean DEFAULT false,
-  "item_type_id" bigint,
-  "strain_id" bigint
+  "description" varchar NOT NULL DEFAULT '',
+  "is_used" boolean NOT NULL DEFAULT false,
+  "item_type_id" bigint NOT NULL,
+  "strain_id" bigint NOT NULL
 );
 
 CREATE TABLE "item_types" (

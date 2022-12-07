@@ -74,6 +74,16 @@ func (server *Server) setupRouter() {
 	authRoutes.GET("/strains/:id", server.getStrain)
 	authRoutes.POST("/strains", server.createStrain)
 
+	// item types
+	authRoutes.GET("/item-types", server.listItemTypes)
+	authRoutes.GET("/item-types/:id", server.getItemType)
+	authRoutes.POST("/item-types", server.createItemType)
+
+	// items
+	authRoutes.GET("/items", server.listItems)
+	authRoutes.GET("/items/:id", server.getItem)
+	authRoutes.POST("/items", server.createItem)
+
 	server.router = router
 }
 
