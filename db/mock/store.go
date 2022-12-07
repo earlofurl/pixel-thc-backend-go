@@ -111,6 +111,21 @@ func (mr *MockStoreMockRecorder) CreateSession(arg0, arg1 interface{}) *gomock.C
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateSession", reflect.TypeOf((*MockStore)(nil).CreateSession), arg0, arg1)
 }
 
+// CreateStrain mocks base method.
+func (m *MockStore) CreateStrain(arg0 context.Context, arg1 db.CreateStrainParams) (db.Strain, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateStrain", arg0, arg1)
+	ret0, _ := ret[0].(db.Strain)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateStrain indicates an expected call of CreateStrain.
+func (mr *MockStoreMockRecorder) CreateStrain(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateStrain", reflect.TypeOf((*MockStore)(nil).CreateStrain), arg0, arg1)
+}
+
 // CreateTransfer mocks base method.
 func (m *MockStore) CreateTransfer(arg0 context.Context, arg1 db.CreateTransferParams) (db.Transfer, error) {
 	m.ctrl.T.Helper()
@@ -199,6 +214,20 @@ func (mr *MockStoreMockRecorder) DeleteProductCategory(arg0, arg1 interface{}) *
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteProductCategory", reflect.TypeOf((*MockStore)(nil).DeleteProductCategory), arg0, arg1)
 }
 
+// DeleteStrain mocks base method.
+func (m *MockStore) DeleteStrain(arg0 context.Context, arg1 int64) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteStrain", arg0, arg1)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteStrain indicates an expected call of DeleteStrain.
+func (mr *MockStoreMockRecorder) DeleteStrain(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteStrain", reflect.TypeOf((*MockStore)(nil).DeleteStrain), arg0, arg1)
+}
+
 // DeleteUom mocks base method.
 func (m *MockStore) DeleteUom(arg0 context.Context, arg1 int64) error {
 	m.ctrl.T.Helper()
@@ -258,21 +287,6 @@ func (mr *MockStoreMockRecorder) GetEntry(arg0, arg1 interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEntry", reflect.TypeOf((*MockStore)(nil).GetEntry), arg0, arg1)
 }
 
-// GetProductCategories mocks base method.
-func (m *MockStore) GetProductCategories(arg0 context.Context) ([]db.ProductCategory, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetProductCategories", arg0)
-	ret0, _ := ret[0].([]db.ProductCategory)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetProductCategories indicates an expected call of GetProductCategories.
-func (mr *MockStoreMockRecorder) GetProductCategories(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetProductCategories", reflect.TypeOf((*MockStore)(nil).GetProductCategories), arg0)
-}
-
 // GetProductCategory mocks base method.
 func (m *MockStore) GetProductCategory(arg0 context.Context, arg1 int64) (db.ProductCategory, error) {
 	m.ctrl.T.Helper()
@@ -316,6 +330,21 @@ func (m *MockStore) GetSession(arg0 context.Context, arg1 uuid.UUID) (db.Session
 func (mr *MockStoreMockRecorder) GetSession(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSession", reflect.TypeOf((*MockStore)(nil).GetSession), arg0, arg1)
+}
+
+// GetStrain mocks base method.
+func (m *MockStore) GetStrain(arg0 context.Context, arg1 int64) (db.Strain, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetStrain", arg0, arg1)
+	ret0, _ := ret[0].(db.Strain)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetStrain indicates an expected call of GetStrain.
+func (mr *MockStoreMockRecorder) GetStrain(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetStrain", reflect.TypeOf((*MockStore)(nil).GetStrain), arg0, arg1)
 }
 
 // GetTransfer mocks base method.
@@ -408,6 +437,36 @@ func (mr *MockStoreMockRecorder) ListEntries(arg0, arg1 interface{}) *gomock.Cal
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListEntries", reflect.TypeOf((*MockStore)(nil).ListEntries), arg0, arg1)
 }
 
+// ListProductCategories mocks base method.
+func (m *MockStore) ListProductCategories(arg0 context.Context) ([]db.ProductCategory, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListProductCategories", arg0)
+	ret0, _ := ret[0].([]db.ProductCategory)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListProductCategories indicates an expected call of ListProductCategories.
+func (mr *MockStoreMockRecorder) ListProductCategories(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListProductCategories", reflect.TypeOf((*MockStore)(nil).ListProductCategories), arg0)
+}
+
+// ListStrains mocks base method.
+func (m *MockStore) ListStrains(arg0 context.Context) ([]db.Strain, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListStrains", arg0)
+	ret0, _ := ret[0].([]db.Strain)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListStrains indicates an expected call of ListStrains.
+func (mr *MockStoreMockRecorder) ListStrains(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListStrains", reflect.TypeOf((*MockStore)(nil).ListStrains), arg0)
+}
+
 // ListTransfers mocks base method.
 func (m *MockStore) ListTransfers(arg0 context.Context, arg1 db.ListTransfersParams) ([]db.Transfer, error) {
 	m.ctrl.T.Helper()
@@ -481,6 +540,21 @@ func (m *MockStore) UpdateProductCategory(arg0 context.Context, arg1 db.UpdatePr
 func (mr *MockStoreMockRecorder) UpdateProductCategory(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateProductCategory", reflect.TypeOf((*MockStore)(nil).UpdateProductCategory), arg0, arg1)
+}
+
+// UpdateStrain mocks base method.
+func (m *MockStore) UpdateStrain(arg0 context.Context, arg1 db.UpdateStrainParams) (db.Strain, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateStrain", arg0, arg1)
+	ret0, _ := ret[0].(db.Strain)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UpdateStrain indicates an expected call of UpdateStrain.
+func (mr *MockStoreMockRecorder) UpdateStrain(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateStrain", reflect.TypeOf((*MockStore)(nil).UpdateStrain), arg0, arg1)
 }
 
 // UpdateUom mocks base method.

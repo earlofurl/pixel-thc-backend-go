@@ -1,6 +1,6 @@
 -- SQL dump generated using DBML (dbml-lang.org)
 -- Database: PostgreSQL
--- Generated at: 2022-12-07T00:04:01.457Z
+-- Generated at: 2022-12-07T00:57:01.923Z
 
 CREATE TABLE "users" (
   "id" bigserial PRIMARY KEY,
@@ -61,24 +61,24 @@ CREATE TABLE "strains" (
   "id" bigserial PRIMARY KEY,
   "created_at" timestamptz NOT NULL DEFAULT (now()),
   "updated_at" timestamptz NOT NULL DEFAULT (now()),
-  "name" varchar NOT NULL,
-  "type" varchar,
+  "name" varchar UNIQUE NOT NULL,
+  "type" varchar NOT NULL DEFAULT 'unknown',
   "yield_average" decimal,
   "terp_average_total" decimal,
-  "terp_1" varchar,
+  "terp_1" varchar NOT NULL DEFAULT 'unknown',
   "terp_1_value" decimal,
-  "terp_2" varchar,
+  "terp_2" varchar NOT NULL DEFAULT 'unknown',
   "terp_2_value" decimal,
-  "terp_3" varchar,
+  "terp_3" varchar NOT NULL DEFAULT 'unknown',
   "terp_3_value" decimal,
-  "terp_4" varchar,
+  "terp_4" varchar NOT NULL DEFAULT 'unknown',
   "terp_4_value" decimal,
-  "terp_5" varchar,
+  "terp_5" varchar NOT NULL DEFAULT 'unknown',
   "terp_5_value" decimal,
   "thc_average" decimal,
   "total_cannabinoid_average" decimal,
-  "light_dep_2022" varchar DEFAULT false,
-  "fall_harvest_2022" varchar DEFAULT false,
+  "light_dep_2022" boolean DEFAULT false,
+  "fall_harvest_2022" boolean DEFAULT false,
   "quantity_available" decimal
 );
 

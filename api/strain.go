@@ -3,70 +3,75 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
+	db "pixel-thc-backend-go/db/sqlc"
 )
 
-type createProductCategoryRequest struct {
+type createStrainRequest struct {
 	Name string `json:"name" binding:"required"`
+	Type string `json:"type" binding:"required"`
 }
 
-func (server *Server) createProductCategory(ctx *gin.Context) {
-	var req createProductCategoryRequest
+func (server *Server) createStrain(ctx *gin.Context) {
+	var req createStrainRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, errorResponse(err))
 		return
 	}
-	arg := req.Name
-	productCategory, err := server.store.CreateProductCategory(ctx, arg)
+
+	arg := db.CreateStrainParams{
+		Name: req.Name,
+		Type: req.Type,
+	}
+
+	strain, err := server.store.CreateStrain(ctx, arg)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
-	ctx.JSON(http.StatusOK, productCategory)
+	ctx.JSON(http.StatusOK, strain)
 }
 
-type getProductCategoryRequest struct {
+type getStrainRequest struct {
 	ID int64 `uri:"id" binding:"required,min=1"`
 }
 
-func (server *Server) getProductCategory(ctx *gin.Context) {
-	var req getProductCategoryRequest
+func (server *Server) getStrain(ctx *gin.Context) {
+	var req getStrainRequest
 	if err := ctx.ShouldBindUri(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, errorResponse(err))
 		return
 	}
-	productCategory, err := server.store.GetProductCategory(ctx, req.ID)
+	strain, err := server.store.GetStrain(ctx, req.ID)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
-	ctx.JSON(http.StatusOK, productCategory)
+	ctx.JSON(http.StatusOK, strain)
 }
 
-func (server *Server) listProductCategories(ctx *gin.Context) {
-	productCategories, err := server.store.ListProductCategories(ctx)
+func (server *Server) listStrains(ctx *gin.Context) {
+	strains, err := server.store.ListStrains(ctx)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
-	ctx.JSON(http.StatusOK, productCategories)
+	ctx.JSON(http.StatusOK, strains)
 }
 
-type deleteProductCategoryRequest struct {
+type deleteStrainRequest struct {
 	ID int64 `uri:"id" binding:"required,min=1"`
 }
 
-func (server *Server) deleteProductCategory(ctx *gin.Context) {
-	var req deleteProductCategoryRequest
+func (server *Server) deleteStrain(ctx *gin.Context) {
+	var req deleteStrainRequest
 	if err := ctx.ShouldBindUri(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, errorResponse(err))
 		return
 	}
-	err := server.store.DeleteProductCategory(ctx, req.ID)
+	err := server.store.DeleteStrain(ctx, req.ID)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
 	ctx.JSON(http.StatusOK, nil)
 }
-
-// TODO: updateProductCategory

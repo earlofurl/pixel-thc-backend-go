@@ -69,12 +69,12 @@ func TestDeleteProductCategory(t *testing.T) {
 	require.Empty(t, productCategory2)
 }
 
-func TestGetProductCategories(t *testing.T) {
+func TestListProductCategories(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		createRandomProductCategory(t)
 	}
 
-	productCategories, err := testQueries.GetProductCategories(context.Background())
+	productCategories, err := testQueries.ListProductCategories(context.Background())
 	require.NoError(t, err)
 	require.NotEmpty(t, productCategories)
 

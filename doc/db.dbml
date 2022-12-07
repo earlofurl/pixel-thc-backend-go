@@ -74,25 +74,25 @@ Table strains {
   id bigserial [pk]
   created_at timestamptz [not null, default: `now()`]
   updated_at timestamptz [not null, default: `now()`]
-  name varchar [not null]
-  type varchar // future enum
+  name varchar [unique, not null]
+  type varchar [not null, default: "unknown"]// future enum
   yield_average decimal
   terp_average_total decimal
   // change to individual terpenes
-  terp_1 varchar
+  terp_1 varchar [not null, default: "unknown"]
   terp_1_value decimal
-  terp_2 varchar
+  terp_2 varchar [not null, default: "unknown"]
   terp_2_value decimal
-  terp_3 varchar
+  terp_3 varchar [not null, default: "unknown"]
   terp_3_value decimal
-  terp_4 varchar
+  terp_4 varchar [not null, default: "unknown"]
   terp_4_value decimal
-  terp_5 varchar
+  terp_5 varchar [not null, default: "unknown"]
   terp_5_value decimal
   thc_average decimal
   total_cannabinoid_average decimal
-  light_dep_2022 varchar [default: false] // future enum
-  fall_harvest_2022 varchar [default: false] // future enum
+  light_dep_2022 boolean [default: false] // future enum
+  fall_harvest_2022 boolean [default: false] // future enum
   quantity_available decimal
 }
 

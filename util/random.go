@@ -18,6 +18,11 @@ func RandomInt(min, max int64) int64 {
 	return min + rand.Int63n(max-min+1)
 }
 
+// RandomDecimal generates a random decimal
+func RandomDecimal() float64 {
+	return rand.Float64()
+}
+
 // RandomString generates a random string of length n
 func RandomString(n int) string {
 	var sb strings.Builder
@@ -68,4 +73,9 @@ func RandomEmail() string {
 // RandomCategory generates a random category
 func RandomCategory() string {
 	return RandomString(6)
+}
+
+// RandomQuantity generates a random decimal quantity
+func RandomQuantity() float64 {
+	return RandomDecimal()
 }
