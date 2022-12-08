@@ -538,6 +538,21 @@ func (mr *MockStoreMockRecorder) GetPackageTagByTagNumber(arg0, arg1 interface{}
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPackageTagByTagNumber", reflect.TypeOf((*MockStore)(nil).GetPackageTagByTagNumber), arg0, arg1)
 }
 
+// GetPackageWithNestedRelations mocks base method.
+func (m *MockStore) GetPackageWithNestedRelations(arg0 context.Context) (db.GetPackageWithNestedRelationsRow, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetPackageWithNestedRelations", arg0)
+	ret0, _ := ret[0].(db.GetPackageWithNestedRelationsRow)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetPackageWithNestedRelations indicates an expected call of GetPackageWithNestedRelations.
+func (mr *MockStoreMockRecorder) GetPackageWithNestedRelations(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPackageWithNestedRelations", reflect.TypeOf((*MockStore)(nil).GetPackageWithNestedRelations), arg0)
+}
+
 // GetProductCategory mocks base method.
 func (m *MockStore) GetProductCategory(arg0 context.Context, arg1 int64) (db.ProductCategory, error) {
 	m.ctrl.T.Helper()

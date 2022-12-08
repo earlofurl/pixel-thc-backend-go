@@ -2,6 +2,7 @@
 -- description: Create a package
 INSERT INTO packages (tag_id,
                       package_type,
+                      is_active,
                       quantity,
                       notes,
                       packaged_date_time,
@@ -65,7 +66,9 @@ VALUES ($1,
         $30,
         $31,
         $32,
-        $33)
+        $33,
+        $34
+        )
 RETURNING *;
 
 -- name: GetPackage :one
@@ -80,6 +83,21 @@ LIMIT 1;
 SELECT * FROM packages
 WHERE tag_id = $1
 LIMIT 1;
+
+-- name: GetPackageWithNestedRelations :one
+-- description: Get a package with nested relations tag, uom, item, lab test, and source package
+SELECT p.id, p.notes, p.quantity,
+       pt.tag_number,
+       u.name as uom_name, u.abbreviation as uom_abbrev,
+       i.description,
+       it.product_form, it.product_modifier,
+       s.name as strain_name
+FROM packages p
+         INNER JOIN package_tags pt ON p.tag_id = pt.id
+         INNER JOIN uoms u ON p.uom_id = u.id
+         INNER JOIN items i ON p.item_id = i.id
+         INNER JOIN item_types it on it.id = i.item_type_id
+         INNER JOIN strains s on i.strain_id = s.id;
 
 -- name: ListPackages :many
 -- description: List all packages
@@ -122,8 +140,9 @@ SET tag_id                                = $1,
     packaging_supplies_consumed           = $30,
     is_line_item                          = $31,
     order_id                              = $32,
-    uom_id                                = $33
-WHERE id = $34
+    uom_id                                = $33,
+    is_active                             = $34
+WHERE id = $35
 RETURNING *;
 
 -- name: DeletePackage :exec

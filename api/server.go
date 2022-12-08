@@ -95,6 +95,12 @@ func (server *Server) setupRouter() {
 	authRoutes.GET("/package-tags/tag/:tag-number", server.getPackageTagByTagNumber)
 	authRoutes.POST("/package-tags", server.createPackageTag)
 
+	// packages
+	authRoutes.GET("/packages", server.listPackages)
+	authRoutes.GET("/packages/:id", server.getPackage)
+	authRoutes.GET("/packages/tag/:tag-id", server.getPackageByTagID)
+	authRoutes.POST("/packages", server.createPackage)
+
 	server.router = router
 }
 

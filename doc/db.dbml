@@ -10,6 +10,10 @@ Table users as U {
   created_at timestamptz [not null, default: `now()`]
   password_changed_at timestamptz [not null, default: '0001-01-01']
   updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+      email [unique]
+    }
 }
 
 Table accounts as A {
@@ -146,6 +150,10 @@ Table package_tags {
   is_provisional boolean [not null, default: true]
   is_active boolean [not null, default: false]
   assigned_package_id bigint [ref: > packages.id]
+
+  Indexes {
+    tag_number [unique]
+  }
 }
 
 Table packages {
@@ -154,6 +162,7 @@ Table packages {
   updated_at timestamptz [not null, default: `now()`]
   tag_id bigint [ref: > package_tags.id]
   package_type varchar(255) [not null] // future enum
+  is_active boolean [not null, default: false]
   quantity numeric(9,6)
   notes varchar(1024)
   packaged_date_time timestamptz [not null, default: `now()`]
@@ -188,6 +197,10 @@ Table packages {
   is_line_item boolean [not null, default: false]
   order_id bigint [ref: > orders.id]
   uom_id bigint [ref: > uoms.id]
+
+    Indexes {
+        tag_id [unique]
+    }
 }
 
 Table source_packages_child_packages {

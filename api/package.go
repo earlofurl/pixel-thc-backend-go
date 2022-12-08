@@ -95,3 +95,64 @@ func (server *Server) createPackage(ctx *gin.Context) {
 	}
 	ctx.JSON(http.StatusOK, productPackage)
 }
+
+type getPackageRequest struct {
+	ID int64 `uri:"id" binding:"required,min=1"`
+}
+
+func (server *Server) getPackage(ctx *gin.Context) {
+	var req getPackageRequest
+	if err := ctx.ShouldBindUri(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, errorResponse(err))
+		return
+	}
+
+	productPackage, err := server.store.GetPackage(ctx, req.ID)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
+		return
+	}
+	ctx.JSON(http.StatusOK, productPackage)
+}
+
+type getPackageByTagIDRequest struct {
+	TagID int64 `uri:"tag_id" binding:"required,min=1"`
+}
+
+func (server *Server) getPackageByTagID(ctx *gin.Context) {
+	var req getPackageByTagIDRequest
+	if err := ctx.ShouldBindUri(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, errorResponse(err))
+		return
+	}
+
+	productPackage, err := server.store.GetPackageByTagID(ctx, nulls.NewInt64(req.TagID))
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
+		return
+	}
+	ctx.JSON(http.StatusOK, productPackage)
+}
+
+func (server *Server) listPackages(ctx *gin.Context) {
+	productPackages, err := server.store.ListPackages(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
+		return
+	}
+	ctx.JSON(http.StatusOK, productPackages)
+}
+
+func (server *Server) deletePackage(ctx *gin.Context) {
+	var req getPackageRequest
+	if err := ctx.ShouldBindUri(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, errorResponse(err))
+		return
+	}
+
+	if err := server.store.DeletePackage(ctx, req.ID); err != nil {
+		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{"message": "package deleted"})
+}

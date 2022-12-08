@@ -14,7 +14,7 @@ func createRandomPackageTag(t *testing.T) PackageTag {
 		IsAssigned:    util.RandomBool(),
 		IsProvisional: util.RandomBool(),
 		IsActive:      util.RandomBool(),
-		//AssignedPackageID: util.RandomInt(1, 10), // TODO: change this to use a package created as part of the test.
+		//AssignedPackageID: nulls.NewInt64(newRandomPackage.ID),
 	}
 
 	packagetag, err := testQueries.CreatePackageTag(context.Background(), arg)

@@ -1,6 +1,6 @@
 -- SQL dump generated using DBML (dbml-lang.org)
 -- Database: PostgreSQL
--- Generated at: 2022-12-07T08:22:14.476Z
+-- Generated at: 2022-12-08T06:16:31.807Z
 
 CREATE TABLE "users" (
                          "id" bigserial PRIMARY KEY,
@@ -138,6 +138,7 @@ CREATE TABLE "packages" (
                             "updated_at" timestamptz NOT NULL DEFAULT (now()),
                             "tag_id" bigint,
                             "package_type" varchar(255) NOT NULL,
+                            "is_active" boolean NOT NULL DEFAULT false,
                             "quantity" numeric(9,6),
                             "notes" varchar(1024),
                             "packaged_date_time" timestamptz NOT NULL DEFAULT (now()),
@@ -257,6 +258,8 @@ CREATE TABLE "package_adjustments" (
                                        "uom_id" bigint NOT NULL
 );
 
+CREATE UNIQUE INDEX ON "users" ("email");
+
 CREATE INDEX ON "accounts" ("owner");
 
 CREATE UNIQUE INDEX ON "accounts" ("owner", "currency");
@@ -268,6 +271,10 @@ CREATE INDEX ON "transfers" ("from_account_id");
 CREATE INDEX ON "transfers" ("to_account_id");
 
 CREATE INDEX ON "transfers" ("from_account_id", "to_account_id");
+
+CREATE UNIQUE INDEX ON "package_tags" ("tag_number");
+
+CREATE UNIQUE INDEX ON "packages" ("tag_id");
 
 CREATE INDEX ON "package_adjustments" ("from_package_id");
 

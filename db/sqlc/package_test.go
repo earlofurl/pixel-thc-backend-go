@@ -11,12 +11,19 @@ import (
 )
 
 func createRandomPackage(t *testing.T) Package {
-	newRandomPackageTag := createRandomPackageTag(t)
+	var lastRandomPackageTag PackageTag
+	// create 10 random package tags
+	for i := 0; i < 10; i++ {
+		lastRandomPackageTag = createRandomPackageTag(t)
+	}
+
 	newRandomUom := createRandomUom(t)
+	newRandomItem := createRandomItem(t)
 
 	arg := CreatePackageParams{
-		TagID:                             nulls.NewInt64(newRandomPackageTag.ID),
+		TagID:                             nulls.NewInt64(lastRandomPackageTag.ID),
 		PackageType:                       util.RandomString(10),
+		IsActive:                          util.RandomBool(),
 		Quantity:                          decimal.NewFromFloat(util.RandomDecimalTimes100()),
 		Notes:                             nulls.NewString(util.RandomString(10)),
 		PackagedDateTime:                  time.Now(),
@@ -35,7 +42,7 @@ func createRandomPackage(t *testing.T) Package {
 		IsOnHold:                          util.RandomBool(),
 		ArchivedDate:                      nulls.NewTime(time.Now()),
 		FinishedDate:                      nulls.NewTime(time.Now()),
-		ItemID:                            nulls.NewInt64(util.RandomInt(1, 10)),
+		ItemID:                            nulls.NewInt64(newRandomItem.ID),
 		ProvisionalLabel:                  nulls.NewString(util.RandomString(10)),
 		IsProvisional:                     util.RandomBool(),
 		IsSold:                            util.RandomBool(),
