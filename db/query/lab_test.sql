@@ -98,3 +98,7 @@ RETURNING *;
 DELETE
 FROM lab_tests
 WHERE id = $1;
+
+-- name: AssignLabTestToPackage :exec
+-- description: Assign a lab test to a package via junction table
+INSERT INTO lab_tests_packages (lab_test_id, package_id) VALUES ($1, $2);

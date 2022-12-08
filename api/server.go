@@ -99,6 +99,7 @@ func (server *Server) setupRouter() {
 	authRoutes.GET("/packages", server.listPackages)
 	authRoutes.GET("/packages/:id", server.getPackage)
 	authRoutes.GET("/packages/tag/:tag-id", server.getPackageByTagID)
+	authRoutes.GET("/packages/active/all", server.listActivePackages)
 	authRoutes.POST("/packages", server.createPackage)
 
 	server.router = router

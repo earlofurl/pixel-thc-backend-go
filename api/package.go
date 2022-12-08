@@ -156,3 +156,12 @@ func (server *Server) deletePackage(ctx *gin.Context) {
 	}
 	ctx.JSON(http.StatusOK, gin.H{"message": "package deleted"})
 }
+
+func (server *Server) listActivePackages(ctx *gin.Context) {
+	productPackages, err := server.store.ListActivePackages(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
+		return
+	}
+	ctx.JSON(http.StatusOK, productPackages)
+}

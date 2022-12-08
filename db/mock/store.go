@@ -52,6 +52,20 @@ func (mr *MockStoreMockRecorder) AddAccountBalance(arg0, arg1 interface{}) *gomo
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddAccountBalance", reflect.TypeOf((*MockStore)(nil).AddAccountBalance), arg0, arg1)
 }
 
+// AssignLabTestToPackage mocks base method.
+func (m *MockStore) AssignLabTestToPackage(arg0 context.Context, arg1 db.AssignLabTestToPackageParams) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AssignLabTestToPackage", arg0, arg1)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// AssignLabTestToPackage indicates an expected call of AssignLabTestToPackage.
+func (mr *MockStoreMockRecorder) AssignLabTestToPackage(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AssignLabTestToPackage", reflect.TypeOf((*MockStore)(nil).AssignLabTestToPackage), arg0, arg1)
+}
+
 // CreateAccount mocks base method.
 func (m *MockStore) CreateAccount(arg0 context.Context, arg1 db.CreateAccountParams) (db.Account, error) {
 	m.ctrl.T.Helper()
@@ -538,21 +552,6 @@ func (mr *MockStoreMockRecorder) GetPackageTagByTagNumber(arg0, arg1 interface{}
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPackageTagByTagNumber", reflect.TypeOf((*MockStore)(nil).GetPackageTagByTagNumber), arg0, arg1)
 }
 
-// GetPackageWithNestedRelations mocks base method.
-func (m *MockStore) GetPackageWithNestedRelations(arg0 context.Context) (db.GetPackageWithNestedRelationsRow, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetPackageWithNestedRelations", arg0)
-	ret0, _ := ret[0].(db.GetPackageWithNestedRelationsRow)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetPackageWithNestedRelations indicates an expected call of GetPackageWithNestedRelations.
-func (mr *MockStoreMockRecorder) GetPackageWithNestedRelations(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPackageWithNestedRelations", reflect.TypeOf((*MockStore)(nil).GetPackageWithNestedRelations), arg0)
-}
-
 // GetProductCategory mocks base method.
 func (m *MockStore) GetProductCategory(arg0 context.Context, arg1 int64) (db.ProductCategory, error) {
 	m.ctrl.T.Helper()
@@ -686,6 +685,21 @@ func (m *MockStore) ListAccounts(arg0 context.Context, arg1 db.ListAccountsParam
 func (mr *MockStoreMockRecorder) ListAccounts(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListAccounts", reflect.TypeOf((*MockStore)(nil).ListAccounts), arg0, arg1)
+}
+
+// ListActivePackagesWithTestResults mocks base method.
+func (m *MockStore) ListActivePackagesWithTestResults(arg0 context.Context) ([]db.ListActivePackagesWithTestResultsRow, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListActivePackagesWithTestResults", arg0)
+	ret0, _ := ret[0].([]db.ListActivePackagesWithTestResultsRow)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListActivePackagesWithTestResults indicates an expected call of ListActivePackagesWithTestResults.
+func (mr *MockStoreMockRecorder) ListActivePackagesWithTestResults(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListActivePackagesWithTestResults", reflect.TypeOf((*MockStore)(nil).ListActivePackagesWithTestResults), arg0)
 }
 
 // ListEntries mocks base method.

@@ -1,6 +1,6 @@
 -- SQL dump generated using DBML (dbml-lang.org)
 -- Database: PostgreSQL
--- Generated at: 2022-12-08T06:16:31.807Z
+-- Generated at: 2022-12-08T19:19:38.805Z
 
 CREATE TABLE "users" (
                          "id" bigserial PRIMARY KEY,
@@ -174,7 +174,9 @@ CREATE TABLE "packages" (
 
 CREATE TABLE "source_packages_child_packages" (
                                                   "source_package_id" bigint,
-                                                  "child_package_id" bigint
+                                                  "child_package_id" bigint,
+                                                  "created_at" timestamptz NOT NULL DEFAULT (now()),
+                                                  "updated_at" timestamptz NOT NULL DEFAULT (now())
 );
 
 CREATE TABLE "lab_tests" (
@@ -221,7 +223,9 @@ CREATE TABLE "lab_tests" (
 
 CREATE TABLE "lab_tests_packages" (
                                       "lab_test_id" bigint,
-                                      "package_id" bigint
+                                      "package_id" bigint,
+                                      "created_at" timestamptz NOT NULL DEFAULT (now()),
+                                      "updated_at" timestamptz NOT NULL DEFAULT (now())
 );
 
 CREATE TABLE "uoms" (
@@ -275,6 +279,18 @@ CREATE INDEX ON "transfers" ("from_account_id", "to_account_id");
 CREATE UNIQUE INDEX ON "package_tags" ("tag_number");
 
 CREATE UNIQUE INDEX ON "packages" ("tag_id");
+
+CREATE INDEX ON "source_packages_child_packages" ("source_package_id");
+
+CREATE INDEX ON "source_packages_child_packages" ("child_package_id");
+
+CREATE INDEX ON "source_packages_child_packages" ("source_package_id", "child_package_id");
+
+CREATE INDEX ON "lab_tests_packages" ("lab_test_id");
+
+CREATE INDEX ON "lab_tests_packages" ("package_id");
+
+CREATE INDEX ON "lab_tests_packages" ("lab_test_id", "package_id");
 
 CREATE INDEX ON "package_adjustments" ("from_package_id");
 

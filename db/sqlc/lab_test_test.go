@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"github.com/gobuffalo/nulls"
 	"github.com/shopspring/decimal"
 	"github.com/stretchr/testify/require"
 	"pixel-thc-backend-go/util"
@@ -96,6 +97,24 @@ func createRandomLabTest(t *testing.T) LabTest {
 
 func TestCreateLabTest(t *testing.T) {
 	createRandomLabTest(t)
+}
+
+func TestQueries_AssignLabTestToPackage(t *testing.T) {
+	labTest := createRandomLabTest(t)
+	productPackage := createRandomPackage(t)
+
+	arg := AssignLabTestToPackageParams{
+		LabTestID: nulls.NewInt64(labTest.ID),
+		PackageID: nulls.NewInt64(productPackage.ID),
+	}
+
+	err := testQueries.AssignLabTestToPackage(context.Background(), arg)
+
+	// check if the lab test is assigned to the package
+	labTest, err = testQueries.GetLabTest(context.Background(), labTest.ID)
+	productPackage, err = testQueries.GetPackage(context.Background(), productPackage.ID)
+
+	require.NoError(t, err)
 }
 
 // TODO: Add the rest of the lab test tests
