@@ -13,6 +13,6 @@ COPY start.sh .
 COPY wait-for.sh .
 COPY db/migration ./db/migration
 
-EXPOSE 8080
+EXPOSE 8088
 CMD [ "/app/main" ]
 ENTRYPOINT [ "/app/start.sh" ]
