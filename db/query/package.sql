@@ -88,13 +88,15 @@ LIMIT 1;
 -- description: List all packages with related tag_number, uom, item, lab test, and source package
 SELECT p.*,
        pt.tag_number,
-       u.*,
+       u.name AS uom_name,
+       u.abbreviation AS uom_abbreviation,
        i.description,
        it.product_form,
        it.product_modifier,
        s.name as strain_name,
        s.type as strain_type,
-       lt.*
+       lt.*,
+       lt.id AS lab_test_id
 FROM packages p
          INNER JOIN package_tags pt ON p.tag_id = pt.id
          INNER JOIN uoms u ON p.uom_id = u.id
