@@ -13,8 +13,10 @@ LIMIT 1;
 
 -- name: ListItems :many
 -- description: List all items
-SELECT *
-FROM items
+SELECT i.*, s.name AS strain_name, t.product_form AS product_form, t.product_modifier AS product_modifier
+FROM items i
+         INNER JOIN strains s ON i.strain_id = s.id
+         INNER JOIN item_types t ON i.item_type_id = t.id
 ORDER BY strain_id;
 
 -- name: UpdateItem :one

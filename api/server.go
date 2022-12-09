@@ -102,6 +102,13 @@ func (server *Server) setupRouter() {
 	authRoutes.GET("/packages/active/all", server.listActivePackages)
 	authRoutes.POST("/packages", server.createPackage)
 
+	// orders
+	authRoutes.GET("/orders", server.listOrders)
+	authRoutes.GET("/orders/:id", server.getOrder)
+	authRoutes.POST("/orders", server.createOrder)
+	authRoutes.PUT("/orders/:id", server.updateOrder)
+	authRoutes.DELETE("/orders/:id", server.deleteOrder)
+
 	server.router = router
 }
 
