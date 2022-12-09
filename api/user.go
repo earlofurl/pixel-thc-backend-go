@@ -2,6 +2,7 @@ package api
 
 import (
 	"database/sql"
+	"encoding/json"
 	"net/http"
 	"time"
 
@@ -164,5 +165,11 @@ func (server *Server) loginUser(ctx *gin.Context) {
 		RefreshTokenExpiresAt: refreshPayload.ExpiredAt,
 		User:                  newUserResponse(user),
 	}
+
+	// Create Set-Cookie header by marshaling the response into JSON
+	rspMarshalled, err := json.Marshal(loginUserResponse{SessionID: session.ID, AccessToken: accessToken, AccessTokenExpiresAt: accessPayload.ExpiredAt, RefreshToken: refreshToken, RefreshTokenExpiresAt: refreshPayload.ExpiredAt, User: newUserResponse(user)})
+
+	ctx.Header("Set-Cookie", string(rspMarshalled))
+
 	ctx.JSON(http.StatusOK, rsp)
 }

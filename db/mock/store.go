@@ -687,19 +687,19 @@ func (mr *MockStoreMockRecorder) ListAccounts(arg0, arg1 interface{}) *gomock.Ca
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListAccounts", reflect.TypeOf((*MockStore)(nil).ListAccounts), arg0, arg1)
 }
 
-// ListActivePackagesWithTestResults mocks base method.
-func (m *MockStore) ListActivePackagesWithTestResults(arg0 context.Context) ([]db.ListActivePackagesWithTestResultsRow, error) {
+// ListActivePackages mocks base method.
+func (m *MockStore) ListActivePackages(arg0 context.Context) ([]db.ListActivePackagesRow, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ListActivePackagesWithTestResults", arg0)
-	ret0, _ := ret[0].([]db.ListActivePackagesWithTestResultsRow)
+	ret := m.ctrl.Call(m, "ListActivePackages", arg0)
+	ret0, _ := ret[0].([]db.ListActivePackagesRow)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// ListActivePackagesWithTestResults indicates an expected call of ListActivePackagesWithTestResults.
-func (mr *MockStoreMockRecorder) ListActivePackagesWithTestResults(arg0 interface{}) *gomock.Call {
+// ListActivePackages indicates an expected call of ListActivePackages.
+func (mr *MockStoreMockRecorder) ListActivePackages(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListActivePackagesWithTestResults", reflect.TypeOf((*MockStore)(nil).ListActivePackagesWithTestResults), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListActivePackages", reflect.TypeOf((*MockStore)(nil).ListActivePackages), arg0)
 }
 
 // ListEntries mocks base method.
