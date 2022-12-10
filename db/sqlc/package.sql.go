@@ -7,6 +7,7 @@ package db
 
 import (
 	"context"
+	"database/sql"
 	"time"
 
 	"github.com/gobuffalo/nulls"
@@ -324,23 +325,22 @@ func (q *Queries) GetPackageByTagID(ctx context.Context, tagID nulls.Int64) (Pac
 const listActivePackages = `-- name: ListActivePackages :many
 SELECT p.id, p.created_at, p.updated_at, p.tag_id, p.package_type, p.is_active, p.quantity, p.notes, p.packaged_date_time, p.harvest_date_time, p.lab_testing_state, p.lab_testing_state_date_time, p.is_trade_sample, p.is_testing_sample, p.product_requires_remediation, p.contains_remediated_product, p.remediation_date_time, p.received_date_time, p.received_from_manifest_number, p.received_from_facility_license_number, p.received_from_facility_name, p.is_on_hold, p.archived_date, p.finished_date, p.item_id, p.provisional_label, p.is_provisional, p.is_sold, p.ppu_default, p.ppu_on_order, p.total_package_price_on_order, p.ppu_sold_price, p.total_sold_price, p.packaging_supplies_consumed, p.is_line_item, p.order_id, p.uom_id,
        pt.tag_number,
-       u.name AS uom_name,
+       u.name         AS uom_name,
        u.abbreviation AS uom_abbreviation,
        i.description,
        it.product_form,
        it.product_modifier,
-       s.name as strain_name,
-       s.type as strain_type,
-       lt.id, lt.created_at, lt.updated_at, lt.test_name, lt.batch_code, lt.test_id_code, lt.lab_facility_name, lt.test_performed_date_time, lt.test_completed, lt.overall_passed, lt.test_type_name, lt.test_passed, lt.test_comment, lt.thc_total_percent, lt.thc_total_value, lt.cbd_percent, lt.cbd_value, lt.terpene_total_percent, lt.terpene_total_value, lt.thc_a_percent, lt.thc_a_value, lt.delta9_thc_percent, lt.delta9_thc_value, lt.delta8_thc_percent, lt.delta8_thc_value, lt.thc_v_percent, lt.thc_v_value, lt.cbd_a_percent, lt.cbd_a_value, lt.cbn_percent, lt.cbn_value, lt.cbg_a_percent, lt.cbg_a_value, lt.cbg_percent, lt.cbg_value, lt.cbc_percent, lt.cbc_value, lt.total_cannabinoid_percent, lt.total_cannabinoid_value,
-       lt.id AS lab_test_id
+       s.name         as strain_name,
+       s.type         as strain_type,
+       lt.id, lt.created_at, lt.updated_at, lt.test_name, lt.batch_code, lt.test_id_code, lt.lab_facility_name, lt.test_performed_date_time, lt.test_completed, lt.overall_passed, lt.test_type_name, lt.test_passed, lt.test_comment, lt.thc_total_percent, lt.thc_total_value, lt.cbd_percent, lt.cbd_value, lt.terpene_total_percent, lt.terpene_total_value, lt.thc_a_percent, lt.thc_a_value, lt.delta9_thc_percent, lt.delta9_thc_value, lt.delta8_thc_percent, lt.delta8_thc_value, lt.thc_v_percent, lt.thc_v_value, lt.cbd_a_percent, lt.cbd_a_value, lt.cbn_percent, lt.cbn_value, lt.cbg_a_percent, lt.cbg_a_value, lt.cbg_percent, lt.cbg_value, lt.cbc_percent, lt.cbc_value, lt.total_cannabinoid_percent, lt.total_cannabinoid_value
 FROM packages p
          INNER JOIN package_tags pt ON p.tag_id = pt.id
          INNER JOIN uoms u ON p.uom_id = u.id
          INNER JOIN items i ON p.item_id = i.id
          INNER JOIN item_types it on it.id = i.item_type_id
          INNER JOIN strains s on i.strain_id = s.id
-         INNER JOIN lab_tests_packages ltp on p.id = ltp.package_id
-         INNER JOIN lab_tests lt on lt.id = ltp.lab_test_id
+         FULL OUTER JOIN lab_tests_packages ltp on p.id = ltp.package_id
+         LEFT JOIN lab_tests lt on lt.id = ltp.lab_test_id
 WHERE p.is_active = TRUE
 ORDER BY p.created_at DESC
 `
@@ -391,19 +391,19 @@ type ListActivePackagesRow struct {
 	ProductModifier                   string          `json:"product_modifier"`
 	StrainName                        string          `json:"strain_name"`
 	StrainType                        string          `json:"strain_type"`
-	ID_2                              int64           `json:"id_2"`
-	CreatedAt_2                       time.Time       `json:"created_at_2"`
-	UpdatedAt_2                       time.Time       `json:"updated_at_2"`
-	TestName                          string          `json:"test_name"`
-	BatchCode                         string          `json:"batch_code"`
-	TestIDCode                        string          `json:"test_id_code"`
-	LabFacilityName                   string          `json:"lab_facility_name"`
-	TestPerformedDateTime             time.Time       `json:"test_performed_date_time"`
-	TestCompleted                     bool            `json:"test_completed"`
-	OverallPassed                     bool            `json:"overall_passed"`
-	TestTypeName                      string          `json:"test_type_name"`
-	TestPassed                        bool            `json:"test_passed"`
-	TestComment                       string          `json:"test_comment"`
+	ID_2                              sql.NullInt64   `json:"id_2"`
+	CreatedAt_2                       nulls.Time      `json:"created_at_2"`
+	UpdatedAt_2                       nulls.Time      `json:"updated_at_2"`
+	TestName                          nulls.String    `json:"test_name"`
+	BatchCode                         nulls.String    `json:"batch_code"`
+	TestIDCode                        nulls.String    `json:"test_id_code"`
+	LabFacilityName                   nulls.String    `json:"lab_facility_name"`
+	TestPerformedDateTime             nulls.Time      `json:"test_performed_date_time"`
+	TestCompleted                     nulls.Bool      `json:"test_completed"`
+	OverallPassed                     nulls.Bool      `json:"overall_passed"`
+	TestTypeName                      nulls.String    `json:"test_type_name"`
+	TestPassed                        nulls.Bool      `json:"test_passed"`
+	TestComment                       nulls.String    `json:"test_comment"`
 	ThcTotalPercent                   decimal.Decimal `json:"thc_total_percent"`
 	ThcTotalValue                     decimal.Decimal `json:"thc_total_value"`
 	CbdPercent                        decimal.Decimal `json:"cbd_percent"`
@@ -430,7 +430,6 @@ type ListActivePackagesRow struct {
 	CbcValue                          decimal.Decimal `json:"cbc_value"`
 	TotalCannabinoidPercent           decimal.Decimal `json:"total_cannabinoid_percent"`
 	TotalCannabinoidValue             decimal.Decimal `json:"total_cannabinoid_value"`
-	LabTestID                         int64           `json:"lab_test_id"`
 }
 
 // description: List all ACTIVE packages with related tag_number, uom, item, lab test, and source package
@@ -528,7 +527,6 @@ func (q *Queries) ListActivePackages(ctx context.Context) ([]ListActivePackagesR
 			&i.CbcValue,
 			&i.TotalCannabinoidPercent,
 			&i.TotalCannabinoidValue,
-			&i.LabTestID,
 		); err != nil {
 			return nil, err
 		}
@@ -546,24 +544,22 @@ func (q *Queries) ListActivePackages(ctx context.Context) ([]ListActivePackagesR
 const listPackages = `-- name: ListPackages :many
 SELECT p.id, p.created_at, p.updated_at, p.tag_id, p.package_type, p.is_active, p.quantity, p.notes, p.packaged_date_time, p.harvest_date_time, p.lab_testing_state, p.lab_testing_state_date_time, p.is_trade_sample, p.is_testing_sample, p.product_requires_remediation, p.contains_remediated_product, p.remediation_date_time, p.received_date_time, p.received_from_manifest_number, p.received_from_facility_license_number, p.received_from_facility_name, p.is_on_hold, p.archived_date, p.finished_date, p.item_id, p.provisional_label, p.is_provisional, p.is_sold, p.ppu_default, p.ppu_on_order, p.total_package_price_on_order, p.ppu_sold_price, p.total_sold_price, p.packaging_supplies_consumed, p.is_line_item, p.order_id, p.uom_id,
        pt.tag_number,
-       u.name AS uom_name,
+       u.name         AS uom_name,
        u.abbreviation AS uom_abbreviation,
        i.description,
        it.product_form,
        it.product_modifier,
-       s.name as strain_name,
-       s.type as strain_type,
-       lt.id, lt.created_at, lt.updated_at, lt.test_name, lt.batch_code, lt.test_id_code, lt.lab_facility_name, lt.test_performed_date_time, lt.test_completed, lt.overall_passed, lt.test_type_name, lt.test_passed, lt.test_comment, lt.thc_total_percent, lt.thc_total_value, lt.cbd_percent, lt.cbd_value, lt.terpene_total_percent, lt.terpene_total_value, lt.thc_a_percent, lt.thc_a_value, lt.delta9_thc_percent, lt.delta9_thc_value, lt.delta8_thc_percent, lt.delta8_thc_value, lt.thc_v_percent, lt.thc_v_value, lt.cbd_a_percent, lt.cbd_a_value, lt.cbn_percent, lt.cbn_value, lt.cbg_a_percent, lt.cbg_a_value, lt.cbg_percent, lt.cbg_value, lt.cbc_percent, lt.cbc_value, lt.total_cannabinoid_percent, lt.total_cannabinoid_value,
-       lt.id AS lab_test_id
+       s.name         as strain_name,
+       s.type         as strain_type,
+       lt.id, lt.created_at, lt.updated_at, lt.test_name, lt.batch_code, lt.test_id_code, lt.lab_facility_name, lt.test_performed_date_time, lt.test_completed, lt.overall_passed, lt.test_type_name, lt.test_passed, lt.test_comment, lt.thc_total_percent, lt.thc_total_value, lt.cbd_percent, lt.cbd_value, lt.terpene_total_percent, lt.terpene_total_value, lt.thc_a_percent, lt.thc_a_value, lt.delta9_thc_percent, lt.delta9_thc_value, lt.delta8_thc_percent, lt.delta8_thc_value, lt.thc_v_percent, lt.thc_v_value, lt.cbd_a_percent, lt.cbd_a_value, lt.cbn_percent, lt.cbn_value, lt.cbg_a_percent, lt.cbg_a_value, lt.cbg_percent, lt.cbg_value, lt.cbc_percent, lt.cbc_value, lt.total_cannabinoid_percent, lt.total_cannabinoid_value
 FROM packages p
          INNER JOIN package_tags pt ON p.tag_id = pt.id
          INNER JOIN uoms u ON p.uom_id = u.id
          INNER JOIN items i ON p.item_id = i.id
          INNER JOIN item_types it on it.id = i.item_type_id
          INNER JOIN strains s on i.strain_id = s.id
-         INNER JOIN lab_tests_packages ltp on p.id = ltp.package_id
-         INNER JOIN lab_tests lt on lt.id = ltp.lab_test_id
-ORDER BY p.id ASC
+         FULL OUTER JOIN lab_tests_packages ltp on p.id = ltp.package_id
+         LEFT JOIN lab_tests lt on lt.id = ltp.lab_test_id
 `
 
 type ListPackagesRow struct {
@@ -612,19 +608,19 @@ type ListPackagesRow struct {
 	ProductModifier                   string          `json:"product_modifier"`
 	StrainName                        string          `json:"strain_name"`
 	StrainType                        string          `json:"strain_type"`
-	ID_2                              int64           `json:"id_2"`
-	CreatedAt_2                       time.Time       `json:"created_at_2"`
-	UpdatedAt_2                       time.Time       `json:"updated_at_2"`
-	TestName                          string          `json:"test_name"`
-	BatchCode                         string          `json:"batch_code"`
-	TestIDCode                        string          `json:"test_id_code"`
-	LabFacilityName                   string          `json:"lab_facility_name"`
-	TestPerformedDateTime             time.Time       `json:"test_performed_date_time"`
-	TestCompleted                     bool            `json:"test_completed"`
-	OverallPassed                     bool            `json:"overall_passed"`
-	TestTypeName                      string          `json:"test_type_name"`
-	TestPassed                        bool            `json:"test_passed"`
-	TestComment                       string          `json:"test_comment"`
+	ID_2                              sql.NullInt64   `json:"id_2"`
+	CreatedAt_2                       nulls.Time      `json:"created_at_2"`
+	UpdatedAt_2                       nulls.Time      `json:"updated_at_2"`
+	TestName                          nulls.String    `json:"test_name"`
+	BatchCode                         nulls.String    `json:"batch_code"`
+	TestIDCode                        nulls.String    `json:"test_id_code"`
+	LabFacilityName                   nulls.String    `json:"lab_facility_name"`
+	TestPerformedDateTime             nulls.Time      `json:"test_performed_date_time"`
+	TestCompleted                     nulls.Bool      `json:"test_completed"`
+	OverallPassed                     nulls.Bool      `json:"overall_passed"`
+	TestTypeName                      nulls.String    `json:"test_type_name"`
+	TestPassed                        nulls.Bool      `json:"test_passed"`
+	TestComment                       nulls.String    `json:"test_comment"`
 	ThcTotalPercent                   decimal.Decimal `json:"thc_total_percent"`
 	ThcTotalValue                     decimal.Decimal `json:"thc_total_value"`
 	CbdPercent                        decimal.Decimal `json:"cbd_percent"`
@@ -651,7 +647,6 @@ type ListPackagesRow struct {
 	CbcValue                          decimal.Decimal `json:"cbc_value"`
 	TotalCannabinoidPercent           decimal.Decimal `json:"total_cannabinoid_percent"`
 	TotalCannabinoidValue             decimal.Decimal `json:"total_cannabinoid_value"`
-	LabTestID                         int64           `json:"lab_test_id"`
 }
 
 // description: List all packages with related tag_number, uom, item, lab test, and source package
@@ -749,7 +744,6 @@ func (q *Queries) ListPackages(ctx context.Context) ([]ListPackagesRow, error) {
 			&i.CbcValue,
 			&i.TotalCannabinoidPercent,
 			&i.TotalCannabinoidValue,
-			&i.LabTestID,
 		); err != nil {
 			return nil, err
 		}

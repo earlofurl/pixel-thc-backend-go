@@ -88,23 +88,22 @@ LIMIT 1;
 -- description: List all ACTIVE packages with related tag_number, uom, item, lab test, and source package
 SELECT p.*,
        pt.tag_number,
-       u.name AS uom_name,
+       u.name         AS uom_name,
        u.abbreviation AS uom_abbreviation,
        i.description,
        it.product_form,
        it.product_modifier,
-       s.name as strain_name,
-       s.type as strain_type,
-       lt.*,
-       lt.id AS lab_test_id
+       s.name         as strain_name,
+       s.type         as strain_type,
+       lt.*
 FROM packages p
          INNER JOIN package_tags pt ON p.tag_id = pt.id
          INNER JOIN uoms u ON p.uom_id = u.id
          INNER JOIN items i ON p.item_id = i.id
          INNER JOIN item_types it on it.id = i.item_type_id
          INNER JOIN strains s on i.strain_id = s.id
-         INNER JOIN lab_tests_packages ltp on p.id = ltp.package_id
-         INNER JOIN lab_tests lt on lt.id = ltp.lab_test_id
+         FULL OUTER JOIN lab_tests_packages ltp on p.id = ltp.package_id
+         LEFT JOIN lab_tests lt on lt.id = ltp.lab_test_id
 WHERE p.is_active = TRUE
 ORDER BY p.created_at DESC;
 
@@ -112,24 +111,22 @@ ORDER BY p.created_at DESC;
 -- description: List all packages with related tag_number, uom, item, lab test, and source package
 SELECT p.*,
        pt.tag_number,
-       u.name AS uom_name,
+       u.name         AS uom_name,
        u.abbreviation AS uom_abbreviation,
        i.description,
        it.product_form,
        it.product_modifier,
-       s.name as strain_name,
-       s.type as strain_type,
-       lt.*,
-       lt.id AS lab_test_id
+       s.name         as strain_name,
+       s.type         as strain_type,
+       lt.*
 FROM packages p
          INNER JOIN package_tags pt ON p.tag_id = pt.id
          INNER JOIN uoms u ON p.uom_id = u.id
          INNER JOIN items i ON p.item_id = i.id
          INNER JOIN item_types it on it.id = i.item_type_id
          INNER JOIN strains s on i.strain_id = s.id
-         INNER JOIN lab_tests_packages ltp on p.id = ltp.package_id
-         INNER JOIN lab_tests lt on lt.id = ltp.lab_test_id
-ORDER BY p.id ASC;
+         FULL OUTER JOIN lab_tests_packages ltp on p.id = ltp.package_id
+         LEFT JOIN lab_tests lt on lt.id = ltp.lab_test_id;
 
 -- name: UpdatePackage :one
 -- description: Update a package
