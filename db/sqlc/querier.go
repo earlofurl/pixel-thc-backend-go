@@ -90,7 +90,7 @@ type Querier interface {
 	GetUomByName(ctx context.Context, name string) (Uom, error)
 	GetUser(ctx context.Context, email string) (User, error)
 	ListAccounts(ctx context.Context, arg ListAccountsParams) ([]Account, error)
-	// description: List all packages with related tag_number, uom, item, lab test, and source package
+	// description: List all ACTIVE packages with related tag_number, uom, item, lab test, and source package
 	ListActivePackages(ctx context.Context) ([]ListActivePackagesRow, error)
 	ListEntries(ctx context.Context, arg ListEntriesParams) ([]Entry, error)
 	// description: List all item types
@@ -103,8 +103,8 @@ type Querier interface {
 	ListOrders(ctx context.Context) ([]Order, error)
 	// description: List all package tags
 	ListPackageTags(ctx context.Context) ([]PackageTag, error)
-	// description: List all packages
-	ListPackages(ctx context.Context) ([]Package, error)
+	// description: List all packages with related tag_number, uom, item, lab test, and source package
+	ListPackages(ctx context.Context) ([]ListPackagesRow, error)
 	// description: List all product categories
 	ListProductCategories(ctx context.Context) ([]ProductCategory, error)
 	// description: List all strains

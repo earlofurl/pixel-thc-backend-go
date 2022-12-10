@@ -837,10 +837,10 @@ func (mr *MockStoreMockRecorder) ListPackageTags(arg0 interface{}) *gomock.Call 
 }
 
 // ListPackages mocks base method.
-func (m *MockStore) ListPackages(arg0 context.Context) ([]db.Package, error) {
+func (m *MockStore) ListPackages(arg0 context.Context) ([]db.ListPackagesRow, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ListPackages", arg0)
-	ret0, _ := ret[0].([]db.Package)
+	ret0, _ := ret[0].([]db.ListPackagesRow)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
