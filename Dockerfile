@@ -13,7 +13,7 @@ COPY --from=builder /app/main .
 # COPY --from=builder /app/migrate.linux-amd64 ./migrate
 # COPY app.env .
 COPY --from=builder /app/start.sh .
-RUN chmod +x /start.sh
+RUN chmod +x /app/start.sh
 COPY db/migration ./db/migration
 
 EXPOSE 8088
