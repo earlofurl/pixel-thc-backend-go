@@ -42,4 +42,4 @@ COPY db/migration ./db/migration
 
 EXPOSE 8080
 
-ENTRYPOINT [ "/pxthc" ]
+ENTRYPOINT [ "/pxthc/cmd/pxthc" ]
