@@ -105,7 +105,7 @@ FROM packages p
          INNER JOIN strains s on i.strain_id = s.id
          INNER JOIN lab_tests_packages ltp on p.id = ltp.package_id
          INNER JOIN lab_tests lt on lt.id = ltp.lab_test_id
-WHERE p.is_active = true;
+WHERE p.is_active;
 
 -- name: ListPackages :many
 -- description: List all packages
