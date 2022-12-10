@@ -37,7 +37,7 @@ FROM alpine:3.16
 
 WORKDIR /
 
-COPY --from=build /pxthc /pxthc
+COPY --from=builder /pxthc /pxthc
 
 EXPOSE 8080
 
