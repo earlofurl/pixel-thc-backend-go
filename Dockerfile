@@ -29,10 +29,9 @@ WORKDIR /app
 
 COPY . .
 
-RUN go build -o /pxthc main.go
+RUN go build -o /pxthc
 
 # Run stage
-
 FROM alpine:3.16
 
 WORKDIR /
