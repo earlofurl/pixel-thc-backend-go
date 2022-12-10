@@ -38,6 +38,7 @@ WORKDIR /
 
 COPY --from=builder /pxthc /pxthc
 COPY app.env .
+COPY db/migration ./db/migration
 
 EXPOSE 8080
 
