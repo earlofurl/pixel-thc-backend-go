@@ -29,7 +29,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN go build -o /pxthc
+RUN go build -o /pxthc main.go
 
 # Run stage
 
