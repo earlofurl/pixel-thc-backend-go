@@ -109,7 +109,10 @@ func (q *Queries) GetPackageTagByTagNumber(ctx context.Context, tagNumber string
 }
 
 const listPackageTags = `-- name: ListPackageTags :many
-SELECT id, created_at, updated_at, tag_number, is_assigned, is_provisional, is_active, assigned_package_id FROM package_tags ORDER BY id
+SELECT id, created_at, updated_at, tag_number, is_assigned, is_provisional, is_active, assigned_package_id
+FROM package_tags
+ORDER BY id
+LIMIT 1000
 `
 
 // description: List all package tags

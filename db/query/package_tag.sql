@@ -20,7 +20,10 @@ LIMIT 1;
 
 -- name: ListPackageTags :many
 -- description: List all package tags
-SELECT * FROM package_tags ORDER BY id;
+SELECT *
+FROM package_tags
+ORDER BY id
+LIMIT 1000;
 
 -- name: UpdatePackageTag :one
 -- description: Update a package tag
