@@ -163,7 +163,7 @@ Table packages {
   tag_id bigint [ref: > package_tags.id]
   package_type varchar(255) [not null] // future enum
   is_active boolean [not null, default: false]
-  quantity numeric(9,6)
+  quantity numeric(19,6)
   notes varchar(1024)
   packaged_date_time timestamptz [not null, default: `now()`]
   harvest_date_time timestamptz
