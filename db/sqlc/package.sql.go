@@ -83,7 +83,7 @@ VALUES ($1,
         $32,
         $33,
         $34)
-RETURNING id, created_at, updated_at, tag_id, package_type, is_active, quantity, notes, packaged_date_time, harvest_date_time, lab_testing_state, lab_testing_state_date_time, is_trade_sample, is_testing_sample, product_requires_remediation, contains_remediated_product, remediation_date_time, received_date_time, received_from_manifest_number, received_from_facility_license_number, received_from_facility_name, is_on_hold, archived_date, finished_date, item_id, provisional_label, is_provisional, is_sold, ppu_default, ppu_on_order, total_package_price_on_order, ppu_sold_price, total_sold_price, packaging_supplies_consumed, is_line_item, order_id, uom_id
+RETURNING id, created_at, updated_at, tag_id, package_type, is_active, quantity, notes, packaged_date_time, harvest_date_time, lab_testing_state, lab_testing_state_date_time, is_trade_sample, is_testing_sample, product_requires_remediation, contains_remediated_product, remediation_date_time, received_date_time, received_from_manifest_number, received_from_facility_license_number, received_from_facility_name, is_on_hold, archived_date, finished_date, item_id, provisional_label, is_provisional, is_sold, ppu_default, ppu_on_order, total_package_price_on_order, ppu_sold_price, total_sold_price, packaging_supplies_consumed, is_line_item, order_id, uom_id, facility_location_id
 `
 
 type CreatePackageParams struct {
@@ -200,6 +200,7 @@ func (q *Queries) CreatePackage(ctx context.Context, arg CreatePackageParams) (P
 		&i.IsLineItem,
 		&i.OrderID,
 		&i.UomID,
+		&i.FacilityLocationID,
 	)
 	return i, err
 }
@@ -217,7 +218,7 @@ func (q *Queries) DeletePackage(ctx context.Context, id int64) error {
 }
 
 const getPackage = `-- name: GetPackage :one
-SELECT id, created_at, updated_at, tag_id, package_type, is_active, quantity, notes, packaged_date_time, harvest_date_time, lab_testing_state, lab_testing_state_date_time, is_trade_sample, is_testing_sample, product_requires_remediation, contains_remediated_product, remediation_date_time, received_date_time, received_from_manifest_number, received_from_facility_license_number, received_from_facility_name, is_on_hold, archived_date, finished_date, item_id, provisional_label, is_provisional, is_sold, ppu_default, ppu_on_order, total_package_price_on_order, ppu_sold_price, total_sold_price, packaging_supplies_consumed, is_line_item, order_id, uom_id
+SELECT id, created_at, updated_at, tag_id, package_type, is_active, quantity, notes, packaged_date_time, harvest_date_time, lab_testing_state, lab_testing_state_date_time, is_trade_sample, is_testing_sample, product_requires_remediation, contains_remediated_product, remediation_date_time, received_date_time, received_from_manifest_number, received_from_facility_license_number, received_from_facility_name, is_on_hold, archived_date, finished_date, item_id, provisional_label, is_provisional, is_sold, ppu_default, ppu_on_order, total_package_price_on_order, ppu_sold_price, total_sold_price, packaging_supplies_consumed, is_line_item, order_id, uom_id, facility_location_id
 FROM packages
 WHERE id = $1
 LIMIT 1
@@ -265,12 +266,13 @@ func (q *Queries) GetPackage(ctx context.Context, id int64) (Package, error) {
 		&i.IsLineItem,
 		&i.OrderID,
 		&i.UomID,
+		&i.FacilityLocationID,
 	)
 	return i, err
 }
 
 const getPackageByTagID = `-- name: GetPackageByTagID :one
-SELECT id, created_at, updated_at, tag_id, package_type, is_active, quantity, notes, packaged_date_time, harvest_date_time, lab_testing_state, lab_testing_state_date_time, is_trade_sample, is_testing_sample, product_requires_remediation, contains_remediated_product, remediation_date_time, received_date_time, received_from_manifest_number, received_from_facility_license_number, received_from_facility_name, is_on_hold, archived_date, finished_date, item_id, provisional_label, is_provisional, is_sold, ppu_default, ppu_on_order, total_package_price_on_order, ppu_sold_price, total_sold_price, packaging_supplies_consumed, is_line_item, order_id, uom_id
+SELECT id, created_at, updated_at, tag_id, package_type, is_active, quantity, notes, packaged_date_time, harvest_date_time, lab_testing_state, lab_testing_state_date_time, is_trade_sample, is_testing_sample, product_requires_remediation, contains_remediated_product, remediation_date_time, received_date_time, received_from_manifest_number, received_from_facility_license_number, received_from_facility_name, is_on_hold, archived_date, finished_date, item_id, provisional_label, is_provisional, is_sold, ppu_default, ppu_on_order, total_package_price_on_order, ppu_sold_price, total_sold_price, packaging_supplies_consumed, is_line_item, order_id, uom_id, facility_location_id
 FROM packages
 WHERE tag_id = $1
 LIMIT 1
@@ -318,12 +320,13 @@ func (q *Queries) GetPackageByTagID(ctx context.Context, tagID nulls.Int64) (Pac
 		&i.IsLineItem,
 		&i.OrderID,
 		&i.UomID,
+		&i.FacilityLocationID,
 	)
 	return i, err
 }
 
 const listActivePackages = `-- name: ListActivePackages :many
-SELECT p.id, p.created_at, p.updated_at, p.tag_id, p.package_type, p.is_active, p.quantity, p.notes, p.packaged_date_time, p.harvest_date_time, p.lab_testing_state, p.lab_testing_state_date_time, p.is_trade_sample, p.is_testing_sample, p.product_requires_remediation, p.contains_remediated_product, p.remediation_date_time, p.received_date_time, p.received_from_manifest_number, p.received_from_facility_license_number, p.received_from_facility_name, p.is_on_hold, p.archived_date, p.finished_date, p.item_id, p.provisional_label, p.is_provisional, p.is_sold, p.ppu_default, p.ppu_on_order, p.total_package_price_on_order, p.ppu_sold_price, p.total_sold_price, p.packaging_supplies_consumed, p.is_line_item, p.order_id, p.uom_id,
+SELECT p.id, p.created_at, p.updated_at, p.tag_id, p.package_type, p.is_active, p.quantity, p.notes, p.packaged_date_time, p.harvest_date_time, p.lab_testing_state, p.lab_testing_state_date_time, p.is_trade_sample, p.is_testing_sample, p.product_requires_remediation, p.contains_remediated_product, p.remediation_date_time, p.received_date_time, p.received_from_manifest_number, p.received_from_facility_license_number, p.received_from_facility_name, p.is_on_hold, p.archived_date, p.finished_date, p.item_id, p.provisional_label, p.is_provisional, p.is_sold, p.ppu_default, p.ppu_on_order, p.total_package_price_on_order, p.ppu_sold_price, p.total_sold_price, p.packaging_supplies_consumed, p.is_line_item, p.order_id, p.uom_id, p.facility_location_id,
        pt.tag_number,
        u.name         AS uom_name,
        u.abbreviation AS uom_abbreviation,
@@ -383,6 +386,7 @@ type ListActivePackagesRow struct {
 	IsLineItem                        bool            `json:"is_line_item"`
 	OrderID                           nulls.Int64     `json:"order_id"`
 	UomID                             nulls.Int64     `json:"uom_id"`
+	FacilityLocationID                nulls.Int64     `json:"facility_location_id"`
 	TagNumber                         string          `json:"tag_number"`
 	UomName                           string          `json:"uom_name"`
 	UomAbbreviation                   string          `json:"uom_abbreviation"`
@@ -480,6 +484,7 @@ func (q *Queries) ListActivePackages(ctx context.Context) ([]ListActivePackagesR
 			&i.IsLineItem,
 			&i.OrderID,
 			&i.UomID,
+			&i.FacilityLocationID,
 			&i.TagNumber,
 			&i.UomName,
 			&i.UomAbbreviation,
@@ -542,7 +547,7 @@ func (q *Queries) ListActivePackages(ctx context.Context) ([]ListActivePackagesR
 }
 
 const listPackages = `-- name: ListPackages :many
-SELECT p.id, p.created_at, p.updated_at, p.tag_id, p.package_type, p.is_active, p.quantity, p.notes, p.packaged_date_time, p.harvest_date_time, p.lab_testing_state, p.lab_testing_state_date_time, p.is_trade_sample, p.is_testing_sample, p.product_requires_remediation, p.contains_remediated_product, p.remediation_date_time, p.received_date_time, p.received_from_manifest_number, p.received_from_facility_license_number, p.received_from_facility_name, p.is_on_hold, p.archived_date, p.finished_date, p.item_id, p.provisional_label, p.is_provisional, p.is_sold, p.ppu_default, p.ppu_on_order, p.total_package_price_on_order, p.ppu_sold_price, p.total_sold_price, p.packaging_supplies_consumed, p.is_line_item, p.order_id, p.uom_id,
+SELECT p.id, p.created_at, p.updated_at, p.tag_id, p.package_type, p.is_active, p.quantity, p.notes, p.packaged_date_time, p.harvest_date_time, p.lab_testing_state, p.lab_testing_state_date_time, p.is_trade_sample, p.is_testing_sample, p.product_requires_remediation, p.contains_remediated_product, p.remediation_date_time, p.received_date_time, p.received_from_manifest_number, p.received_from_facility_license_number, p.received_from_facility_name, p.is_on_hold, p.archived_date, p.finished_date, p.item_id, p.provisional_label, p.is_provisional, p.is_sold, p.ppu_default, p.ppu_on_order, p.total_package_price_on_order, p.ppu_sold_price, p.total_sold_price, p.packaging_supplies_consumed, p.is_line_item, p.order_id, p.uom_id, p.facility_location_id,
        pt.tag_number,
        u.name         AS uom_name,
        u.abbreviation AS uom_abbreviation,
@@ -600,6 +605,7 @@ type ListPackagesRow struct {
 	IsLineItem                        bool            `json:"is_line_item"`
 	OrderID                           nulls.Int64     `json:"order_id"`
 	UomID                             nulls.Int64     `json:"uom_id"`
+	FacilityLocationID                nulls.Int64     `json:"facility_location_id"`
 	TagNumber                         string          `json:"tag_number"`
 	UomName                           string          `json:"uom_name"`
 	UomAbbreviation                   string          `json:"uom_abbreviation"`
@@ -697,6 +703,7 @@ func (q *Queries) ListPackages(ctx context.Context) ([]ListPackagesRow, error) {
 			&i.IsLineItem,
 			&i.OrderID,
 			&i.UomID,
+			&i.FacilityLocationID,
 			&i.TagNumber,
 			&i.UomName,
 			&i.UomAbbreviation,
@@ -795,7 +802,7 @@ SET tag_id                                = $1,
     uom_id                                = $33,
     is_active                             = $34
 WHERE id = $35
-RETURNING id, created_at, updated_at, tag_id, package_type, is_active, quantity, notes, packaged_date_time, harvest_date_time, lab_testing_state, lab_testing_state_date_time, is_trade_sample, is_testing_sample, product_requires_remediation, contains_remediated_product, remediation_date_time, received_date_time, received_from_manifest_number, received_from_facility_license_number, received_from_facility_name, is_on_hold, archived_date, finished_date, item_id, provisional_label, is_provisional, is_sold, ppu_default, ppu_on_order, total_package_price_on_order, ppu_sold_price, total_sold_price, packaging_supplies_consumed, is_line_item, order_id, uom_id
+RETURNING id, created_at, updated_at, tag_id, package_type, is_active, quantity, notes, packaged_date_time, harvest_date_time, lab_testing_state, lab_testing_state_date_time, is_trade_sample, is_testing_sample, product_requires_remediation, contains_remediated_product, remediation_date_time, received_date_time, received_from_manifest_number, received_from_facility_license_number, received_from_facility_name, is_on_hold, archived_date, finished_date, item_id, provisional_label, is_provisional, is_sold, ppu_default, ppu_on_order, total_package_price_on_order, ppu_sold_price, total_sold_price, packaging_supplies_consumed, is_line_item, order_id, uom_id, facility_location_id
 `
 
 type UpdatePackageParams struct {
@@ -914,6 +921,7 @@ func (q *Queries) UpdatePackage(ctx context.Context, arg UpdatePackageParams) (P
 		&i.IsLineItem,
 		&i.OrderID,
 		&i.UomID,
+		&i.FacilityLocationID,
 	)
 	return i, err
 }

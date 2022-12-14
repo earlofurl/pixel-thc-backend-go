@@ -28,6 +28,22 @@ type Entry struct {
 	CreatedAt time.Time `json:"created_at"`
 }
 
+type Facility struct {
+	ID            int64     `json:"id"`
+	CreatedAt     time.Time `json:"created_at"`
+	UpdatedAt     time.Time `json:"updated_at"`
+	Name          string    `json:"name"`
+	LicenseNumber string    `json:"license_number"`
+}
+
+type FacilityLocation struct {
+	ID         int64     `json:"id"`
+	CreatedAt  time.Time `json:"created_at"`
+	UpdatedAt  time.Time `json:"updated_at"`
+	Name       string    `json:"name"`
+	FacilityID int64     `json:"facility_id"`
+}
+
 type Item struct {
 	ID          int64     `json:"id"`
 	CreatedAt   time.Time `json:"created_at"`
@@ -151,6 +167,15 @@ type Package struct {
 	IsLineItem                        bool            `json:"is_line_item"`
 	OrderID                           nulls.Int64     `json:"order_id"`
 	UomID                             nulls.Int64     `json:"uom_id"`
+	FacilityLocationID                nulls.Int64     `json:"facility_location_id"`
+}
+
+type PackageAdjEntry struct {
+	ID        int64 `json:"id"`
+	PackageID int64 `json:"package_id"`
+	// can be negative or positive
+	Amount    int64     `json:"amount"`
+	CreatedAt time.Time `json:"created_at"`
 }
 
 type PackageAdjustment struct {

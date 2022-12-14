@@ -1,6 +1,6 @@
 -- SQL dump generated using DBML (dbml-lang.org)
 -- Database: PostgreSQL
--- Generated at: 2022-12-08T19:19:38.805Z
+-- Generated at: 2022-12-14T09:49:43.372Z
 
 CREATE TABLE "users" (
   "id" bigserial PRIMARY KEY,
@@ -139,7 +139,7 @@ CREATE TABLE "packages" (
   "tag_id" bigint,
   "package_type" varchar(255) NOT NULL,
   "is_active" boolean NOT NULL DEFAULT false,
-  "quantity" numeric(9,6),
+  "quantity" numeric(19,6),
   "notes" varchar(1024),
   "packaged_date_time" timestamptz NOT NULL DEFAULT (now()),
   "harvest_date_time" timestamptz,
@@ -169,7 +169,8 @@ CREATE TABLE "packages" (
   "packaging_supplies_consumed" boolean NOT NULL DEFAULT false,
   "is_line_item" boolean NOT NULL DEFAULT false,
   "order_id" bigint,
-  "uom_id" bigint
+  "uom_id" bigint,
+  "facility_location_id" bigint NOT NULL
 );
 
 CREATE TABLE "source_packages_child_packages" (
@@ -252,6 +253,13 @@ CREATE TABLE "orders" (
   "customer_name" varchar(255) NOT NULL DEFAULT ''
 );
 
+CREATE TABLE "package_adj_entries" (
+  "id" bigserial PRIMARY KEY,
+  "package_id" bigint NOT NULL,
+  "amount" bigint NOT NULL,
+  "created_at" timestamptz NOT NULL DEFAULT (now())
+);
+
 CREATE TABLE "package_adjustments" (
   "id" bigserial PRIMARY KEY,
   "created_at" timestamptz NOT NULL DEFAULT (now()),
@@ -260,6 +268,22 @@ CREATE TABLE "package_adjustments" (
   "to_package_id" bigint NOT NULL,
   "amount" bigint NOT NULL,
   "uom_id" bigint NOT NULL
+);
+
+CREATE TABLE "facilities" (
+  "id" bigserial PRIMARY KEY,
+  "created_at" timestamptz NOT NULL DEFAULT (now()),
+  "updated_at" timestamptz NOT NULL DEFAULT (now()),
+  "name" varchar(255) NOT NULL DEFAULT '',
+  "license_number" varchar(255) NOT NULL DEFAULT ''
+);
+
+CREATE TABLE "facility_locations" (
+  "id" bigserial PRIMARY KEY,
+  "created_at" timestamptz NOT NULL DEFAULT (now()),
+  "updated_at" timestamptz NOT NULL DEFAULT (now()),
+  "name" varchar(255) NOT NULL DEFAULT '',
+  "facility_id" bigint NOT NULL
 );
 
 CREATE UNIQUE INDEX ON "users" ("email");
@@ -292,6 +316,8 @@ CREATE INDEX ON "lab_tests_packages" ("package_id");
 
 CREATE INDEX ON "lab_tests_packages" ("lab_test_id", "package_id");
 
+CREATE INDEX ON "package_adj_entries" ("package_id");
+
 CREATE INDEX ON "package_adjustments" ("from_package_id");
 
 CREATE INDEX ON "package_adjustments" ("to_package_id");
@@ -301,6 +327,8 @@ CREATE INDEX ON "package_adjustments" ("from_package_id", "to_package_id");
 COMMENT ON COLUMN "entries"."amount" IS 'can be negative or positive';
 
 COMMENT ON COLUMN "transfers"."amount" IS 'must be positive';
+
+COMMENT ON COLUMN "package_adj_entries"."amount" IS 'can be negative or positive';
 
 COMMENT ON COLUMN "package_adjustments"."amount" IS 'must be positive';
 
@@ -332,6 +360,8 @@ ALTER TABLE "packages" ADD FOREIGN KEY ("order_id") REFERENCES "orders" ("id");
 
 ALTER TABLE "packages" ADD FOREIGN KEY ("uom_id") REFERENCES "uoms" ("id");
 
+ALTER TABLE "packages" ADD FOREIGN KEY ("facility_location_id") REFERENCES "facility_locations" ("id");
+
 ALTER TABLE "source_packages_child_packages" ADD FOREIGN KEY ("source_package_id") REFERENCES "packages" ("id");
 
 ALTER TABLE "source_packages_child_packages" ADD FOREIGN KEY ("child_package_id") REFERENCES "packages" ("id");
@@ -340,8 +370,12 @@ ALTER TABLE "lab_tests_packages" ADD FOREIGN KEY ("lab_test_id") REFERENCES "lab
 
 ALTER TABLE "lab_tests_packages" ADD FOREIGN KEY ("package_id") REFERENCES "packages" ("id");
 
+ALTER TABLE "package_adj_entries" ADD FOREIGN KEY ("package_id") REFERENCES "packages" ("id");
+
 ALTER TABLE "package_adjustments" ADD FOREIGN KEY ("from_package_id") REFERENCES "packages" ("id");
 
 ALTER TABLE "package_adjustments" ADD FOREIGN KEY ("to_package_id") REFERENCES "packages" ("id");
 
 ALTER TABLE "package_adjustments" ADD FOREIGN KEY ("uom_id") REFERENCES "uoms" ("id");
+
+ALTER TABLE "facility_locations" ADD FOREIGN KEY ("facility_id") REFERENCES "facilities" ("id");

@@ -139,7 +139,7 @@ CREATE TABLE "packages" (
                             "tag_id" bigint,
                             "package_type" varchar(255) NOT NULL,
                             "is_active" boolean NOT NULL DEFAULT false,
-                            "quantity" numeric(9,6),
+                            "quantity" numeric(19,6),
                             "notes" varchar(1024),
                             "packaged_date_time" timestamptz NOT NULL DEFAULT (now()),
                             "harvest_date_time" timestamptz,

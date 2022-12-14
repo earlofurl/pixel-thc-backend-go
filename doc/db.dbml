@@ -163,7 +163,7 @@ Table packages {
   tag_id bigint [ref: > package_tags.id]
   package_type varchar(255) [not null] // future enum
   is_active boolean [not null, default: false]
-  quantity numeric(19,6)
+  quantity numeric(9,6)
   notes varchar(1024)
   packaged_date_time timestamptz [not null, default: `now()`]
   harvest_date_time timestamptz
@@ -197,6 +197,7 @@ Table packages {
   is_line_item boolean [not null, default: false]
   order_id bigint [ref: > orders.id]
   uom_id bigint [ref: > uoms.id]
+  facility_location_id bigint [ref: > facility_locations.id, not null]
 
     Indexes {
         tag_id [unique]
@@ -298,6 +299,17 @@ Table orders {
   // line_item_packages ######
 }
 
+Table package_adj_entries {
+  id bigserial [pk]
+  package_id bigint [ref: > packages.id, not null]
+  amount bigint [not null, note: 'can be negative or positive']
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    package_id
+  }
+}
+
 Table package_adjustments {
   id bigserial [pk]
   created_at timestamptz [not null, default: `now()`]
@@ -314,6 +326,18 @@ Table package_adjustments {
   }
 }
 
+Table facilities {
+  id bigserial [pk]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  name varchar(255) [not null, default: '']
+  license_number varchar(255) [not null, default: '']
+}
 
-
-
+Table facility_locations {
+  id bigserial [pk]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  name varchar(255) [not null, default: '']
+  facility_id bigint [ref: > facilities.id, not null]
+}
