@@ -163,7 +163,7 @@ Table packages {
   tag_id bigint [ref: > package_tags.id]
   package_type varchar(255) [not null] // future enum
   is_active boolean [not null, default: false]
-  quantity numeric(9,6)
+  quantity numeric(19,6)
   notes varchar(1024)
   packaged_date_time timestamptz [not null, default: `now()`]
   harvest_date_time timestamptz
@@ -301,9 +301,10 @@ Table orders {
 
 Table package_adj_entries {
   id bigserial [pk]
-  package_id bigint [ref: > packages.id, not null]
-  amount bigint [not null, note: 'can be negative or positive']
   created_at timestamptz [not null, default: `now()`]
+  package_id bigint [ref: > packages.id, not null]
+  amount numeric(19,6) [not null, note: 'can be negative or positive']
+  uom_id bigint [ref: > uoms.id, not null]
 
   Indexes {
     package_id
@@ -316,7 +317,7 @@ Table package_adjustments {
   updated_at timestamptz [not null, default: `now()`]
   from_package_id bigint [ref: > packages.id, not null]
   to_package_id bigint [ref: > packages.id, not null]
-  amount bigint [not null, note: 'must be positive']
+  amount numeric(19,6) [not null, note: 'must be positive']
   uom_id bigint [ref: > uoms.id, not null]
 
   Indexes {

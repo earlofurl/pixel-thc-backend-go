@@ -168,6 +168,14 @@ SET tag_id                                = $1,
 WHERE id = $35
 RETURNING *;
 
+-- name: AddPackageQuantity :one
+-- description: Add quantity to a package (can be negative to subtract)
+-- arguments: package_id int, quantity float
+UPDATE packages
+SET quantity = quantity + sqlc.arg(amount)
+WHERE id = sqlc.arg(id)
+RETURNING *;
+
 -- name: DeletePackage :exec
 -- description: Delete a package
 DELETE

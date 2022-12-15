@@ -13,10 +13,17 @@ import (
 
 type Querier interface {
 	AddAccountBalance(ctx context.Context, arg AddAccountBalanceParams) (Account, error)
+	// description: Add quantity to a package (can be negative to subtract)
+	// arguments: package_id int, quantity float
+	AddPackageQuantity(ctx context.Context, arg AddPackageQuantityParams) (Package, error)
 	// description: Assign a lab test to a package via junction table
 	AssignLabTestToPackage(ctx context.Context, arg AssignLabTestToPackageParams) error
 	CreateAccount(ctx context.Context, arg CreateAccountParams) (Account, error)
 	CreateEntry(ctx context.Context, arg CreateEntryParams) (Entry, error)
+	// description: Create a new facility
+	CreateFacility(ctx context.Context, arg CreateFacilityParams) (Facility, error)
+	// description: Create a new location within a facility
+	CreateFacilityLocation(ctx context.Context, arg CreateFacilityLocationParams) (FacilityLocation, error)
 	// description: Create a new item
 	CreateItem(ctx context.Context, arg CreateItemParams) (Item, error)
 	// description: Create a new item type
@@ -27,6 +34,10 @@ type Querier interface {
 	CreateOrder(ctx context.Context, arg CreateOrderParams) (Order, error)
 	// description: Create a package
 	CreatePackage(ctx context.Context, arg CreatePackageParams) (Package, error)
+	// description: Create a package adjustment entry
+	CreatePackageAdjEntry(ctx context.Context, arg CreatePackageAdjEntryParams) (PackageAdjEntry, error)
+	// description: Create a package adjustment
+	CreatePackageAdjustment(ctx context.Context, arg CreatePackageAdjustmentParams) (PackageAdjustment, error)
 	// description: Create a package tag
 	CreatePackageTag(ctx context.Context, arg CreatePackageTagParams) (PackageTag, error)
 	// description: Create a new product category
@@ -60,6 +71,10 @@ type Querier interface {
 	GetAccount(ctx context.Context, id int64) (Account, error)
 	GetAccountForUpdate(ctx context.Context, id int64) (Account, error)
 	GetEntry(ctx context.Context, id int64) (Entry, error)
+	// description: Get a facility by ID
+	GetFacility(ctx context.Context, id int64) (Facility, error)
+	// description: Get a location within a facility by ID
+	GetFacilityLocation(ctx context.Context, id int64) (FacilityLocation, error)
 	// description: Get an item by ID
 	GetItem(ctx context.Context, id int64) (Item, error)
 	// description: Get an item type by id
@@ -70,6 +85,10 @@ type Querier interface {
 	GetOrder(ctx context.Context, id int64) (Order, error)
 	// description: Get a package
 	GetPackage(ctx context.Context, id int64) (Package, error)
+	// description: Get a package adjustment entry
+	GetPackageAdjEntry(ctx context.Context, id int64) (PackageAdjEntry, error)
+	// description: Get a package adjustment by id
+	GetPackageAdjustment(ctx context.Context, id int64) (PackageAdjustment, error)
 	// description: Get a package by tag id
 	GetPackageByTagID(ctx context.Context, tagID nulls.Int64) (Package, error)
 	// description: Get a package tag by ID
@@ -93,6 +112,12 @@ type Querier interface {
 	// description: List all ACTIVE packages with related tag_number, uom, item, lab test, and source package
 	ListActivePackages(ctx context.Context) ([]ListActivePackagesRow, error)
 	ListEntries(ctx context.Context, arg ListEntriesParams) ([]Entry, error)
+	// description: List all facilities
+	ListFacilities(ctx context.Context) ([]Facility, error)
+	// description: List all locations within facilities
+	ListFacilityLocations(ctx context.Context) ([]Facility, error)
+	// description: List all locations within a facility
+	ListFacilityLocationsByFacility(ctx context.Context, facilityID int64) ([]FacilityLocation, error)
 	// description: List all item types
 	ListItemTypes(ctx context.Context) ([]ItemType, error)
 	// description: List all items
@@ -101,6 +126,10 @@ type Querier interface {
 	ListLabTests(ctx context.Context) ([]LabTest, error)
 	// description: List all orders
 	ListOrders(ctx context.Context) ([]Order, error)
+	// description: List package adjustment entries by package id
+	ListPackageAdjEntries(ctx context.Context, arg ListPackageAdjEntriesParams) ([]PackageAdjEntry, error)
+	// description: List package adjustments
+	ListPackageAdjustment(ctx context.Context, arg ListPackageAdjustmentParams) ([]PackageAdjustment, error)
 	// description: List all package tags
 	ListPackageTags(ctx context.Context) ([]PackageTag, error)
 	// description: List all packages with related tag_number, uom, item, lab test, and source package

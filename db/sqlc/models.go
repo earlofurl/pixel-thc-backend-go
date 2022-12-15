@@ -171,11 +171,12 @@ type Package struct {
 }
 
 type PackageAdjEntry struct {
-	ID        int64 `json:"id"`
-	PackageID int64 `json:"package_id"`
-	// can be negative or positive
-	Amount    int64     `json:"amount"`
+	ID        int64     `json:"id"`
 	CreatedAt time.Time `json:"created_at"`
+	PackageID int64     `json:"package_id"`
+	// can be negative or positive
+	Amount decimal.Decimal `json:"amount"`
+	UomID  int64           `json:"uom_id"`
 }
 
 type PackageAdjustment struct {
@@ -185,8 +186,8 @@ type PackageAdjustment struct {
 	FromPackageID int64     `json:"from_package_id"`
 	ToPackageID   int64     `json:"to_package_id"`
 	// must be positive
-	Amount int64 `json:"amount"`
-	UomID  int64 `json:"uom_id"`
+	Amount decimal.Decimal `json:"amount"`
+	UomID  int64           `json:"uom_id"`
 }
 
 type PackageTag struct {

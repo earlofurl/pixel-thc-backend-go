@@ -52,6 +52,21 @@ func (mr *MockStoreMockRecorder) AddAccountBalance(arg0, arg1 interface{}) *gomo
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddAccountBalance", reflect.TypeOf((*MockStore)(nil).AddAccountBalance), arg0, arg1)
 }
 
+// AddPackageQuantity mocks base method.
+func (m *MockStore) AddPackageQuantity(arg0 context.Context, arg1 db.AddPackageQuantityParams) (db.Package, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AddPackageQuantity", arg0, arg1)
+	ret0, _ := ret[0].(db.Package)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// AddPackageQuantity indicates an expected call of AddPackageQuantity.
+func (mr *MockStoreMockRecorder) AddPackageQuantity(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddPackageQuantity", reflect.TypeOf((*MockStore)(nil).AddPackageQuantity), arg0, arg1)
+}
+
 // AssignLabTestToPackage mocks base method.
 func (m *MockStore) AssignLabTestToPackage(arg0 context.Context, arg1 db.AssignLabTestToPackageParams) error {
 	m.ctrl.T.Helper()
@@ -94,6 +109,36 @@ func (m *MockStore) CreateEntry(arg0 context.Context, arg1 db.CreateEntryParams)
 func (mr *MockStoreMockRecorder) CreateEntry(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateEntry", reflect.TypeOf((*MockStore)(nil).CreateEntry), arg0, arg1)
+}
+
+// CreateFacility mocks base method.
+func (m *MockStore) CreateFacility(arg0 context.Context, arg1 db.CreateFacilityParams) (db.Facility, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateFacility", arg0, arg1)
+	ret0, _ := ret[0].(db.Facility)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateFacility indicates an expected call of CreateFacility.
+func (mr *MockStoreMockRecorder) CreateFacility(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateFacility", reflect.TypeOf((*MockStore)(nil).CreateFacility), arg0, arg1)
+}
+
+// CreateFacilityLocation mocks base method.
+func (m *MockStore) CreateFacilityLocation(arg0 context.Context, arg1 db.CreateFacilityLocationParams) (db.FacilityLocation, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateFacilityLocation", arg0, arg1)
+	ret0, _ := ret[0].(db.FacilityLocation)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateFacilityLocation indicates an expected call of CreateFacilityLocation.
+func (mr *MockStoreMockRecorder) CreateFacilityLocation(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateFacilityLocation", reflect.TypeOf((*MockStore)(nil).CreateFacilityLocation), arg0, arg1)
 }
 
 // CreateItem mocks base method.
@@ -169,6 +214,36 @@ func (m *MockStore) CreatePackage(arg0 context.Context, arg1 db.CreatePackagePar
 func (mr *MockStoreMockRecorder) CreatePackage(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreatePackage", reflect.TypeOf((*MockStore)(nil).CreatePackage), arg0, arg1)
+}
+
+// CreatePackageAdjEntry mocks base method.
+func (m *MockStore) CreatePackageAdjEntry(arg0 context.Context, arg1 db.CreatePackageAdjEntryParams) (db.PackageAdjEntry, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreatePackageAdjEntry", arg0, arg1)
+	ret0, _ := ret[0].(db.PackageAdjEntry)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreatePackageAdjEntry indicates an expected call of CreatePackageAdjEntry.
+func (mr *MockStoreMockRecorder) CreatePackageAdjEntry(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreatePackageAdjEntry", reflect.TypeOf((*MockStore)(nil).CreatePackageAdjEntry), arg0, arg1)
+}
+
+// CreatePackageAdjustment mocks base method.
+func (m *MockStore) CreatePackageAdjustment(arg0 context.Context, arg1 db.CreatePackageAdjustmentParams) (db.PackageAdjustment, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreatePackageAdjustment", arg0, arg1)
+	ret0, _ := ret[0].(db.PackageAdjustment)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreatePackageAdjustment indicates an expected call of CreatePackageAdjustment.
+func (mr *MockStoreMockRecorder) CreatePackageAdjustment(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreatePackageAdjustment", reflect.TypeOf((*MockStore)(nil).CreatePackageAdjustment), arg0, arg1)
 }
 
 // CreatePackageTag mocks base method.
@@ -476,6 +551,36 @@ func (mr *MockStoreMockRecorder) GetEntry(arg0, arg1 interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEntry", reflect.TypeOf((*MockStore)(nil).GetEntry), arg0, arg1)
 }
 
+// GetFacility mocks base method.
+func (m *MockStore) GetFacility(arg0 context.Context, arg1 int64) (db.Facility, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetFacility", arg0, arg1)
+	ret0, _ := ret[0].(db.Facility)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetFacility indicates an expected call of GetFacility.
+func (mr *MockStoreMockRecorder) GetFacility(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetFacility", reflect.TypeOf((*MockStore)(nil).GetFacility), arg0, arg1)
+}
+
+// GetFacilityLocation mocks base method.
+func (m *MockStore) GetFacilityLocation(arg0 context.Context, arg1 int64) (db.FacilityLocation, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetFacilityLocation", arg0, arg1)
+	ret0, _ := ret[0].(db.FacilityLocation)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetFacilityLocation indicates an expected call of GetFacilityLocation.
+func (mr *MockStoreMockRecorder) GetFacilityLocation(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetFacilityLocation", reflect.TypeOf((*MockStore)(nil).GetFacilityLocation), arg0, arg1)
+}
+
 // GetItem mocks base method.
 func (m *MockStore) GetItem(arg0 context.Context, arg1 int64) (db.Item, error) {
 	m.ctrl.T.Helper()
@@ -549,6 +654,36 @@ func (m *MockStore) GetPackage(arg0 context.Context, arg1 int64) (db.Package, er
 func (mr *MockStoreMockRecorder) GetPackage(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPackage", reflect.TypeOf((*MockStore)(nil).GetPackage), arg0, arg1)
+}
+
+// GetPackageAdjEntry mocks base method.
+func (m *MockStore) GetPackageAdjEntry(arg0 context.Context, arg1 int64) (db.PackageAdjEntry, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetPackageAdjEntry", arg0, arg1)
+	ret0, _ := ret[0].(db.PackageAdjEntry)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetPackageAdjEntry indicates an expected call of GetPackageAdjEntry.
+func (mr *MockStoreMockRecorder) GetPackageAdjEntry(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPackageAdjEntry", reflect.TypeOf((*MockStore)(nil).GetPackageAdjEntry), arg0, arg1)
+}
+
+// GetPackageAdjustment mocks base method.
+func (m *MockStore) GetPackageAdjustment(arg0 context.Context, arg1 int64) (db.PackageAdjustment, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetPackageAdjustment", arg0, arg1)
+	ret0, _ := ret[0].(db.PackageAdjustment)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetPackageAdjustment indicates an expected call of GetPackageAdjustment.
+func (mr *MockStoreMockRecorder) GetPackageAdjustment(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPackageAdjustment", reflect.TypeOf((*MockStore)(nil).GetPackageAdjustment), arg0, arg1)
 }
 
 // GetPackageByTagID mocks base method.
@@ -761,6 +896,51 @@ func (mr *MockStoreMockRecorder) ListEntries(arg0, arg1 interface{}) *gomock.Cal
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListEntries", reflect.TypeOf((*MockStore)(nil).ListEntries), arg0, arg1)
 }
 
+// ListFacilities mocks base method.
+func (m *MockStore) ListFacilities(arg0 context.Context) ([]db.Facility, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListFacilities", arg0)
+	ret0, _ := ret[0].([]db.Facility)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListFacilities indicates an expected call of ListFacilities.
+func (mr *MockStoreMockRecorder) ListFacilities(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListFacilities", reflect.TypeOf((*MockStore)(nil).ListFacilities), arg0)
+}
+
+// ListFacilityLocations mocks base method.
+func (m *MockStore) ListFacilityLocations(arg0 context.Context) ([]db.Facility, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListFacilityLocations", arg0)
+	ret0, _ := ret[0].([]db.Facility)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListFacilityLocations indicates an expected call of ListFacilityLocations.
+func (mr *MockStoreMockRecorder) ListFacilityLocations(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListFacilityLocations", reflect.TypeOf((*MockStore)(nil).ListFacilityLocations), arg0)
+}
+
+// ListFacilityLocationsByFacility mocks base method.
+func (m *MockStore) ListFacilityLocationsByFacility(arg0 context.Context, arg1 int64) ([]db.FacilityLocation, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListFacilityLocationsByFacility", arg0, arg1)
+	ret0, _ := ret[0].([]db.FacilityLocation)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListFacilityLocationsByFacility indicates an expected call of ListFacilityLocationsByFacility.
+func (mr *MockStoreMockRecorder) ListFacilityLocationsByFacility(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListFacilityLocationsByFacility", reflect.TypeOf((*MockStore)(nil).ListFacilityLocationsByFacility), arg0, arg1)
+}
+
 // ListItemTypes mocks base method.
 func (m *MockStore) ListItemTypes(arg0 context.Context) ([]db.ItemType, error) {
 	m.ctrl.T.Helper()
@@ -819,6 +999,36 @@ func (m *MockStore) ListOrders(arg0 context.Context) ([]db.Order, error) {
 func (mr *MockStoreMockRecorder) ListOrders(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListOrders", reflect.TypeOf((*MockStore)(nil).ListOrders), arg0)
+}
+
+// ListPackageAdjEntries mocks base method.
+func (m *MockStore) ListPackageAdjEntries(arg0 context.Context, arg1 db.ListPackageAdjEntriesParams) ([]db.PackageAdjEntry, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListPackageAdjEntries", arg0, arg1)
+	ret0, _ := ret[0].([]db.PackageAdjEntry)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListPackageAdjEntries indicates an expected call of ListPackageAdjEntries.
+func (mr *MockStoreMockRecorder) ListPackageAdjEntries(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListPackageAdjEntries", reflect.TypeOf((*MockStore)(nil).ListPackageAdjEntries), arg0, arg1)
+}
+
+// ListPackageAdjustment mocks base method.
+func (m *MockStore) ListPackageAdjustment(arg0 context.Context, arg1 db.ListPackageAdjustmentParams) ([]db.PackageAdjustment, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListPackageAdjustment", arg0, arg1)
+	ret0, _ := ret[0].([]db.PackageAdjustment)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListPackageAdjustment indicates an expected call of ListPackageAdjustment.
+func (mr *MockStoreMockRecorder) ListPackageAdjustment(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListPackageAdjustment", reflect.TypeOf((*MockStore)(nil).ListPackageAdjustment), arg0, arg1)
 }
 
 // ListPackageTags mocks base method.

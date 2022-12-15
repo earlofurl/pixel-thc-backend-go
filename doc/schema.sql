@@ -1,6 +1,6 @@
 -- SQL dump generated using DBML (dbml-lang.org)
 -- Database: PostgreSQL
--- Generated at: 2022-12-14T09:49:43.372Z
+-- Generated at: 2022-12-15T01:34:54.491Z
 
 CREATE TABLE "users" (
   "id" bigserial PRIMARY KEY,
@@ -255,9 +255,10 @@ CREATE TABLE "orders" (
 
 CREATE TABLE "package_adj_entries" (
   "id" bigserial PRIMARY KEY,
+  "created_at" timestamptz NOT NULL DEFAULT (now()),
   "package_id" bigint NOT NULL,
-  "amount" bigint NOT NULL,
-  "created_at" timestamptz NOT NULL DEFAULT (now())
+  "amount" numeric(19,6) NOT NULL,
+  "uom_id" bigint NOT NULL
 );
 
 CREATE TABLE "package_adjustments" (
@@ -266,7 +267,7 @@ CREATE TABLE "package_adjustments" (
   "updated_at" timestamptz NOT NULL DEFAULT (now()),
   "from_package_id" bigint NOT NULL,
   "to_package_id" bigint NOT NULL,
-  "amount" bigint NOT NULL,
+  "amount" numeric(19,6) NOT NULL,
   "uom_id" bigint NOT NULL
 );
 
@@ -371,6 +372,8 @@ ALTER TABLE "lab_tests_packages" ADD FOREIGN KEY ("lab_test_id") REFERENCES "lab
 ALTER TABLE "lab_tests_packages" ADD FOREIGN KEY ("package_id") REFERENCES "packages" ("id");
 
 ALTER TABLE "package_adj_entries" ADD FOREIGN KEY ("package_id") REFERENCES "packages" ("id");
+
+ALTER TABLE "package_adj_entries" ADD FOREIGN KEY ("uom_id") REFERENCES "uoms" ("id");
 
 ALTER TABLE "package_adjustments" ADD FOREIGN KEY ("from_package_id") REFERENCES "packages" ("id");
 
