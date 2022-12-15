@@ -30,11 +30,11 @@ func createRandomPackageTag(t *testing.T) PackageTag {
 	return packagetag
 }
 
-func TestCreatePackageTag(t *testing.T) {
+func TestQueries_TestCreatePackageTag(t *testing.T) {
 	createRandomPackageTag(t)
 }
 
-func TestGetPackageTag(t *testing.T) {
+func TestQueries_TestGetPackageTag(t *testing.T) {
 	packagetag1 := createRandomPackageTag(t)
 	packagetag2, err := testQueries.GetPackageTag(context.Background(), packagetag1.ID)
 	require.NoError(t, err)
@@ -48,7 +48,7 @@ func TestGetPackageTag(t *testing.T) {
 	require.WithinDuration(t, packagetag1.CreatedAt, packagetag2.CreatedAt, time.Second)
 }
 
-func TestListPackageTags(t *testing.T) {
+func TestQueries_TestListPackageTags(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		createRandomPackageTag(t)
 	}
@@ -77,7 +77,7 @@ func TestQueries_GetPackageTagByTagNumber(t *testing.T) {
 
 }
 
-func TestUpdatePackageTag(t *testing.T) {
+func TestQueries_TestUpdatePackageTag(t *testing.T) {
 	packagetag1 := createRandomPackageTag(t)
 
 	arg := UpdatePackageTagParams{
@@ -99,7 +99,7 @@ func TestUpdatePackageTag(t *testing.T) {
 	require.WithinDuration(t, packagetag1.CreatedAt, packagetag2.CreatedAt, time.Second)
 }
 
-func TestDeletePackageTag(t *testing.T) {
+func TestQueries_TestDeletePackageTag(t *testing.T) {
 	packagetag1 := createRandomPackageTag(t)
 
 	err := testQueries.DeletePackageTag(context.Background(), packagetag1.ID)

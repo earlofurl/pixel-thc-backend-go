@@ -42,11 +42,11 @@ func createRandomUser(t *testing.T) User {
 	return user
 }
 
-func TestCreateUser(t *testing.T) {
+func TestQueries_CreateUser(t *testing.T) {
 	createRandomUser(t)
 }
 
-func TestGetUser(t *testing.T) {
+func TestQueries_GetUser(t *testing.T) {
 	user1 := createRandomUser(t)
 	user2, err := testQueries.GetUser(context.Background(), user1.Email)
 	require.NoError(t, err)
@@ -62,7 +62,7 @@ func TestGetUser(t *testing.T) {
 	require.WithinDuration(t, user1.CreatedAt, user2.CreatedAt, time.Second)
 }
 
-func TestUpdateUserOnlyFirstName(t *testing.T) {
+func TestQueries_UpdateUserOnlyFirstName(t *testing.T) {
 	oldUser := createRandomUser(t)
 
 	newFirstName := util.RandomOwner()
@@ -81,7 +81,7 @@ func TestUpdateUserOnlyFirstName(t *testing.T) {
 	require.Equal(t, oldUser.Role, updatedUser.Role)
 }
 
-func TestUpdateUserOnlyLastName(t *testing.T) {
+func TestQueries_UpdateUserOnlyLastName(t *testing.T) {
 	oldUser := createRandomUser(t)
 
 	newLastName := util.RandomOwner()
@@ -100,7 +100,7 @@ func TestUpdateUserOnlyLastName(t *testing.T) {
 	require.Equal(t, oldUser.Role, updatedUser.Role)
 }
 
-func TestUpdateUserOnlyEmail(t *testing.T) {
+func TestQueries_UpdateUserOnlyEmail(t *testing.T) {
 	oldUser := createRandomUser(t)
 
 	newEmail := util.RandomValidEmail()
@@ -119,7 +119,7 @@ func TestUpdateUserOnlyEmail(t *testing.T) {
 	require.Equal(t, oldUser.Role, updatedUser.Role)
 }
 
-func TestUpdateUserOnlyPassword(t *testing.T) {
+func TestQueries_UpdateUserOnlyPassword(t *testing.T) {
 	oldUser := createRandomUser(t)
 
 	newPassword := util.RandomString(6)
@@ -141,7 +141,7 @@ func TestUpdateUserOnlyPassword(t *testing.T) {
 	require.Equal(t, oldUser.Role, updatedUser.Role)
 }
 
-func TestUpdateUserOnlyPhone(t *testing.T) {
+func TestQueries_UpdateUserOnlyPhone(t *testing.T) {
 	oldUser := createRandomUser(t)
 
 	newPhone := util.RandomPhone()
@@ -160,7 +160,7 @@ func TestUpdateUserOnlyPhone(t *testing.T) {
 	require.Equal(t, oldUser.Role, updatedUser.Role)
 }
 
-func TestUpdateUserOnlyRole(t *testing.T) {
+func TestQueries_UpdateUserOnlyRole(t *testing.T) {
 	oldUser := createRandomUser(t)
 
 	newRole := util.RandomRole()
@@ -179,7 +179,7 @@ func TestUpdateUserOnlyRole(t *testing.T) {
 	require.Equal(t, oldUser.Phone, updatedUser.Phone)
 }
 
-func TestUpdateUserAllFields(t *testing.T) {
+func TestQueries_UpdateUserAllFields(t *testing.T) {
 	oldUser := createRandomUser(t)
 
 	newFirstName := util.RandomOwner()

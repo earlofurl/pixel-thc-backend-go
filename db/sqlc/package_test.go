@@ -24,7 +24,7 @@ func createRandomPackage(t *testing.T) Package {
 		TagID:                             nulls.NewInt64(lastRandomPackageTag.ID),
 		PackageType:                       util.RandomString(10),
 		IsActive:                          util.RandomBool(),
-		Quantity:                          decimal.NewFromFloat(util.RandomDecimalTimes100()),
+		Quantity:                          decimal.NewFromFloatWithExponent(util.RandomDecimalTimes100(), -6),
 		Notes:                             nulls.NewString(util.RandomString(10)),
 		PackagedDateTime:                  time.Now(),
 		HarvestDateTime:                   nulls.NewTime(time.Now()),
@@ -46,11 +46,11 @@ func createRandomPackage(t *testing.T) Package {
 		ProvisionalLabel:                  nulls.NewString(util.RandomString(10)),
 		IsProvisional:                     util.RandomBool(),
 		IsSold:                            util.RandomBool(),
-		PpuDefault:                        decimal.NewFromFloat(util.RandomPercent()),
-		PpuOnOrder:                        decimal.NewFromFloat(util.RandomPercent()),
-		TotalPackagePriceOnOrder:          decimal.NewFromFloat(util.RandomPercent()),
-		PpuSoldPrice:                      decimal.NewFromFloat(util.RandomPercent()),
-		TotalSoldPrice:                    decimal.NewFromFloat(util.RandomPercent()),
+		PpuDefault:                        decimal.NewFromFloatWithExponent(util.RandomPercent(), -4),
+		PpuOnOrder:                        decimal.NewFromFloatWithExponent(util.RandomPercent(), -4),
+		TotalPackagePriceOnOrder:          decimal.NewFromFloatWithExponent(util.RandomPercent(), -4),
+		PpuSoldPrice:                      decimal.NewFromFloatWithExponent(util.RandomPercent(), -4),
+		TotalSoldPrice:                    decimal.NewFromFloatWithExponent(util.RandomPercent(), -4),
 		PackagingSuppliesConsumed:         util.RandomBool(),
 		IsLineItem:                        util.RandomBool(),
 		//OrderID:                           nulls.NewInt64(0), // TODO: add back after Order model is created
@@ -64,7 +64,7 @@ func createRandomPackage(t *testing.T) Package {
 
 	require.Equal(t, arg.TagID, pkg.TagID)
 	require.Equal(t, arg.PackageType, pkg.PackageType)
-	//require.Equal(t, arg.Quantity, pkg.Quantity)
+	require.Equal(t, arg.Quantity, pkg.Quantity)
 	require.Equal(t, arg.Notes, pkg.Notes)
 	//require.Equal(t, arg.PackagedDateTime, pkg.PackagedDateTime)
 	//require.Equal(t, arg.HarvestDateTime, pkg.HarvestDateTime)
@@ -86,11 +86,11 @@ func createRandomPackage(t *testing.T) Package {
 	require.Equal(t, arg.ProvisionalLabel, pkg.ProvisionalLabel)
 	require.Equal(t, arg.IsProvisional, pkg.IsProvisional)
 	require.Equal(t, arg.IsSold, pkg.IsSold)
-	//require.Equal(t, arg.PpuDefault, pkg.PpuDefault)
-	//require.Equal(t, arg.PpuOnOrder, pkg.PpuOnOrder)
-	//require.Equal(t, arg.TotalPackagePriceOnOrder, pkg.TotalPackagePriceOnOrder)
-	//require.Equal(t, arg.PpuSoldPrice, pkg.PpuSoldPrice)
-	//require.Equal(t, arg.TotalSoldPrice, pkg.TotalSoldPrice)
+	require.Equal(t, arg.PpuDefault, pkg.PpuDefault)
+	require.Equal(t, arg.PpuOnOrder, pkg.PpuOnOrder)
+	require.Equal(t, arg.TotalPackagePriceOnOrder, pkg.TotalPackagePriceOnOrder)
+	require.Equal(t, arg.PpuSoldPrice, pkg.PpuSoldPrice)
+	require.Equal(t, arg.TotalSoldPrice, pkg.TotalSoldPrice)
 	require.Equal(t, arg.PackagingSuppliesConsumed, pkg.PackagingSuppliesConsumed)
 	require.Equal(t, arg.IsLineItem, pkg.IsLineItem)
 	//require.Equal(t, arg.OrderID, pkg.OrderID)
@@ -99,11 +99,11 @@ func createRandomPackage(t *testing.T) Package {
 	return pkg
 }
 
-func TestCreatePackage(t *testing.T) {
+func TestQueries_TestCreatePackage(t *testing.T) {
 	createRandomPackage(t)
 }
 
-func TestGetPackage(t *testing.T) {
+func TestQueries_TestGetPackage(t *testing.T) {
 	pkg1 := createRandomPackage(t)
 
 	pkg2, err := testQueries.GetPackage(context.Background(), pkg1.ID)

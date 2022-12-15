@@ -31,13 +31,13 @@ func createRandomPackageAdjustment(t *testing.T, fromPackageID int64, toPackageI
 	return packageAdjustment
 }
 
-func TestCreatePackageAdjustment(t *testing.T) {
+func TestQueries_TestCreatePackageAdjustment(t *testing.T) {
 	fromPackage := createRandomPackage(t)
 	toPackage := createRandomPackage(t)
 	createRandomPackageAdjustment(t, fromPackage.ID, toPackage.ID)
 }
 
-func TestGetPackageAdjustment(t *testing.T) {
+func TestQueries_TestGetPackageAdjustment(t *testing.T) {
 	fromPackage := createRandomPackage(t)
 	toPackage := createRandomPackage(t)
 	packageAdjustment1 := createRandomPackageAdjustment(t, fromPackage.ID, toPackage.ID)
@@ -53,7 +53,7 @@ func TestGetPackageAdjustment(t *testing.T) {
 	require.Equal(t, packageAdjustment1.UomID, packageAdjustment2.UomID)
 }
 
-func TestListPackageAdjustment(t *testing.T) {
+func TestQueries_TestListPackageAdjustment(t *testing.T) {
 	fromPackage := createRandomPackage(t)
 	toPackage := createRandomPackage(t)
 
@@ -72,7 +72,7 @@ func TestListPackageAdjustment(t *testing.T) {
 	require.NoError(t, err)
 	require.NotEmpty(t, packageAdjustments)
 
-	//for _, packageAdjustment := range packageAdjustments {
-	//	require.NotEmpty(t, packageAdjustment)
-	//}
+	for _, packageAdjustment := range packageAdjustments {
+		require.NotEmpty(t, packageAdjustment)
+	}
 }

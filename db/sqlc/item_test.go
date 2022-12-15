@@ -38,11 +38,11 @@ func createRandomItem(t *testing.T) Item {
 	return item
 }
 
-func TestCreateItem(t *testing.T) {
+func TestQueries_CreateItem(t *testing.T) {
 	createRandomItem(t)
 }
 
-func TestGetItem(t *testing.T) {
+func TestQueries_GetItem(t *testing.T) {
 	item1 := createRandomItem(t)
 	item2, err := testQueries.GetItem(context.Background(), item1.ID)
 	require.NoError(t, err)
@@ -55,7 +55,7 @@ func TestGetItem(t *testing.T) {
 	require.Equal(t, item1.StrainID, item2.StrainID)
 }
 
-func TestListItem(t *testing.T) {
+func TestQueries_ListItem(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		createRandomItem(t)
 	}
@@ -69,7 +69,7 @@ func TestListItem(t *testing.T) {
 	}
 }
 
-func TestDeleteItem(t *testing.T) {
+func TestQueries_DeleteItem(t *testing.T) {
 	item1 := createRandomItem(t)
 	err := testQueries.DeleteItem(context.Background(), item1.ID)
 	require.NoError(t, err)
@@ -79,7 +79,7 @@ func TestDeleteItem(t *testing.T) {
 	require.Empty(t, item2)
 }
 
-func TestUpdateItem(t *testing.T) {
+func TestQueries_UpdateItem(t *testing.T) {
 	item1 := createRandomItem(t)
 	itemType1 := createRandomItemType(t)
 	strain1 := createRandomStrain(t)

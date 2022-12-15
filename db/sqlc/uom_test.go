@@ -30,11 +30,11 @@ func createRandomUom(t *testing.T) Uom {
 	return uom
 }
 
-func TestCreateUom(t *testing.T) {
+func TestQueries_TestCreateUom(t *testing.T) {
 	createRandomUom(t)
 }
 
-func TestGetUom(t *testing.T) {
+func TestQueries_TestGetUom(t *testing.T) {
 	uom1 := createRandomUom(t)
 	uom2, err := testQueries.GetUom(context.Background(), uom1.ID)
 	require.NoError(t, err)
@@ -45,7 +45,7 @@ func TestGetUom(t *testing.T) {
 	require.Equal(t, uom1.Abbreviation, uom2.Abbreviation)
 }
 
-func TestListUoms(t *testing.T) {
+func TestQueries_TestListUoms(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		createRandomUom(t)
 	}
@@ -59,7 +59,7 @@ func TestListUoms(t *testing.T) {
 	}
 }
 
-func TestUpdateUom(t *testing.T) {
+func TestQueries_TestUpdateUom(t *testing.T) {
 	uom1 := createRandomUom(t)
 
 	arg := UpdateUomParams{
@@ -79,7 +79,7 @@ func TestUpdateUom(t *testing.T) {
 	require.WithinDuration(t, uom2.UpdatedAt, time.Now(), time.Second)
 }
 
-func TestDeleteUom(t *testing.T) {
+func TestQueries_TestDeleteUom(t *testing.T) {
 	uom1 := createRandomUom(t)
 
 	err := testQueries.DeleteUom(context.Background(), uom1.ID)

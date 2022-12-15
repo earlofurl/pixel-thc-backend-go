@@ -1016,19 +1016,19 @@ func (mr *MockStoreMockRecorder) ListPackageAdjEntries(arg0, arg1 interface{}) *
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListPackageAdjEntries", reflect.TypeOf((*MockStore)(nil).ListPackageAdjEntries), arg0, arg1)
 }
 
-// ListPackageAdjustment mocks base method.
-func (m *MockStore) ListPackageAdjustment(arg0 context.Context, arg1 db.ListPackageAdjustmentParams) ([]db.PackageAdjustment, error) {
+// ListPackageAdjustments mocks base method.
+func (m *MockStore) ListPackageAdjustments(arg0 context.Context, arg1 db.ListPackageAdjustmentsParams) ([]db.PackageAdjustment, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ListPackageAdjustment", arg0, arg1)
+	ret := m.ctrl.Call(m, "ListPackageAdjustments", arg0, arg1)
 	ret0, _ := ret[0].([]db.PackageAdjustment)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// ListPackageAdjustment indicates an expected call of ListPackageAdjustment.
-func (mr *MockStoreMockRecorder) ListPackageAdjustment(arg0, arg1 interface{}) *gomock.Call {
+// ListPackageAdjustments indicates an expected call of ListPackageAdjustments.
+func (mr *MockStoreMockRecorder) ListPackageAdjustments(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListPackageAdjustment", reflect.TypeOf((*MockStore)(nil).ListPackageAdjustment), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListPackageAdjustments", reflect.TypeOf((*MockStore)(nil).ListPackageAdjustments), arg0, arg1)
 }
 
 // ListPackageTags mocks base method.

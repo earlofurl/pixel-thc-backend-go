@@ -36,20 +36,20 @@ func createRandomOrder(t *testing.T) Order {
 	//require.Equal(t, arg.ActualShipDateTime, order.ActualShipDateTime)
 	//require.Equal(t, arg.ActualDeliveryDateTime, order.ActualDeliveryDateTime)
 	//require.Equal(t, arg.OrderTotal, order.OrderTotal)
-	require.Equal(t, arg.Notes, order.Notes)
-	require.Equal(t, arg.Status, order.Status)
-	require.Equal(t, arg.CustomerName, order.CustomerName)
+	//require.Equal(t, arg.Notes, order.Notes)
+	//require.Equal(t, arg.Status, order.Status)
+	//require.Equal(t, arg.CustomerName, order.CustomerName)
 	require.NotZero(t, order.ID)
 	require.NotZero(t, order.CreatedAt)
 
 	return order
 }
 
-func TestCreateOrder(t *testing.T) {
+func TestQueries_TestCreateOrder(t *testing.T) {
 	createRandomOrder(t)
 }
 
-func TestGetOrder(t *testing.T) {
+func TestQueries_TestGetOrder(t *testing.T) {
 	order1 := createRandomOrder(t)
 	order2, err := testQueries.GetOrder(context.Background(), order1.ID)
 	require.NoError(t, err)

@@ -38,11 +38,11 @@ func createRandomItemType(t *testing.T) ItemType {
 	return itemType
 }
 
-func TestCreateItemType(t *testing.T) {
+func TestQueries_CreateItemType(t *testing.T) {
 	createRandomItemType(t)
 }
 
-func TestGetItemType(t *testing.T) {
+func TestQueries_GetItemType(t *testing.T) {
 	itemType1 := createRandomItemType(t)
 	itemType2, err := testQueries.GetItemType(context.Background(), itemType1.ID)
 	require.NoError(t, err)
@@ -55,7 +55,7 @@ func TestGetItemType(t *testing.T) {
 	require.Equal(t, itemType1.ProductCategoryID, itemType2.ProductCategoryID)
 }
 
-func TestListItemTypes(t *testing.T) {
+func TestQueries_ListItemTypes(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		createRandomItemType(t)
 	}
@@ -69,7 +69,7 @@ func TestListItemTypes(t *testing.T) {
 	}
 }
 
-func TestUpdateItemType(t *testing.T) {
+func TestQueries_UpdateItemType(t *testing.T) {
 	itemType1 := createRandomItemType(t)
 
 	uom2 := createRandomUom(t)
@@ -97,7 +97,7 @@ func TestUpdateItemType(t *testing.T) {
 	require.Equal(t, productCategory2.ID, itemType2.ProductCategoryID)
 }
 
-func TestDeleteItemType(t *testing.T) {
+func TestQueries_DeleteItemType(t *testing.T) {
 	itemType1 := createRandomItemType(t)
 
 	err := testQueries.DeleteItemType(context.Background(), itemType1.ID)

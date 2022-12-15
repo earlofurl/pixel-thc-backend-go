@@ -24,11 +24,11 @@ func createRandomProductCategory(t *testing.T) ProductCategory {
 	return productCategory
 }
 
-func TestCreateProductCategory(t *testing.T) {
+func TestQueries_TestCreateProductCategory(t *testing.T) {
 	createRandomProductCategory(t)
 }
 
-func TestGetProductCategory(t *testing.T) {
+func TestQueries_TestGetProductCategory(t *testing.T) {
 	productCategory1 := createRandomProductCategory(t)
 	productCategory2, err := testQueries.GetProductCategory(context.Background(), productCategory1.ID)
 	require.NoError(t, err)
@@ -39,7 +39,7 @@ func TestGetProductCategory(t *testing.T) {
 	require.WithinDuration(t, productCategory1.CreatedAt, productCategory2.CreatedAt, time.Second)
 }
 
-func TestUpdateProductCategory(t *testing.T) {
+func TestQueries_TestUpdateProductCategory(t *testing.T) {
 	productCategory1 := createRandomProductCategory(t)
 
 	arg := UpdateProductCategoryParams{
@@ -57,7 +57,7 @@ func TestUpdateProductCategory(t *testing.T) {
 	require.WithinDuration(t, productCategory2.UpdatedAt, time.Now(), time.Second)
 }
 
-func TestDeleteProductCategory(t *testing.T) {
+func TestQueries_TestDeleteProductCategory(t *testing.T) {
 	productCategory1 := createRandomProductCategory(t)
 
 	err := testQueries.DeleteProductCategory(context.Background(), productCategory1.ID)
@@ -69,7 +69,7 @@ func TestDeleteProductCategory(t *testing.T) {
 	require.Empty(t, productCategory2)
 }
 
-func TestListProductCategories(t *testing.T) {
+func TestQueries_TestListProductCategories(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		createRandomProductCategory(t)
 	}

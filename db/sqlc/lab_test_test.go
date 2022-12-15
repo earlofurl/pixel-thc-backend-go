@@ -21,32 +21,32 @@ func createRandomLabTest(t *testing.T) LabTest {
 		TestTypeName:            util.RandomString(10),
 		TestPassed:              util.RandomBool(),
 		TestComment:             util.RandomString(10),
-		ThcTotalPercent:         decimal.NewFromFloat(util.RandomPercent()),
-		ThcTotalValue:           decimal.NewFromFloat(util.RandomDecimalTimes100()),
-		CbdPercent:              decimal.NewFromFloat(util.RandomPercent()),
-		CbdValue:                decimal.NewFromFloat(util.RandomDecimalTimes100()),
-		TerpeneTotalPercent:     decimal.NewFromFloat(util.RandomPercent()),
-		TerpeneTotalValue:       decimal.NewFromFloat(util.RandomDecimalTimes100()),
-		ThcAPercent:             decimal.NewFromFloat(util.RandomPercent()),
-		ThcAValue:               decimal.NewFromFloat(util.RandomDecimalTimes100()),
-		Delta9ThcPercent:        decimal.NewFromFloat(util.RandomPercent()),
-		Delta9ThcValue:          decimal.NewFromFloat(util.RandomDecimalTimes100()),
-		Delta8ThcPercent:        decimal.NewFromFloat(util.RandomPercent()),
-		Delta8ThcValue:          decimal.NewFromFloat(util.RandomDecimalTimes100()),
-		ThcVPercent:             decimal.NewFromFloat(util.RandomPercent()),
-		ThcVValue:               decimal.NewFromFloat(util.RandomDecimalTimes100()),
-		CbdAPercent:             decimal.NewFromFloat(util.RandomPercent()),
-		CbdAValue:               decimal.NewFromFloat(util.RandomDecimalTimes100()),
-		CbnPercent:              decimal.NewFromFloat(util.RandomPercent()),
-		CbnValue:                decimal.NewFromFloat(util.RandomDecimalTimes100()),
-		CbgAPercent:             decimal.NewFromFloat(util.RandomPercent()),
-		CbgAValue:               decimal.NewFromFloat(util.RandomDecimalTimes100()),
-		CbgPercent:              decimal.NewFromFloat(util.RandomPercent()),
-		CbgValue:                decimal.NewFromFloat(util.RandomDecimalTimes100()),
-		CbcPercent:              decimal.NewFromFloat(util.RandomPercent()),
-		CbcValue:                decimal.NewFromFloat(util.RandomDecimalTimes100()),
-		TotalCannabinoidPercent: decimal.NewFromFloat(util.RandomPercent()),
-		TotalCannabinoidValue:   decimal.NewFromFloat(util.RandomDecimalTimes100()),
+		ThcTotalPercent:         decimal.NewFromFloatWithExponent(util.RandomPercent(), -6),
+		ThcTotalValue:           decimal.NewFromFloatWithExponent(util.RandomDecimalTimes100(), -6),
+		CbdPercent:              decimal.NewFromFloatWithExponent(util.RandomPercent(), -6),
+		CbdValue:                decimal.NewFromFloatWithExponent(util.RandomDecimalTimes100(), -6),
+		TerpeneTotalPercent:     decimal.NewFromFloatWithExponent(util.RandomPercent(), -6),
+		TerpeneTotalValue:       decimal.NewFromFloatWithExponent(util.RandomDecimalTimes100(), -6),
+		ThcAPercent:             decimal.NewFromFloatWithExponent(util.RandomPercent(), -6),
+		ThcAValue:               decimal.NewFromFloatWithExponent(util.RandomDecimalTimes100(), -6),
+		Delta9ThcPercent:        decimal.NewFromFloatWithExponent(util.RandomPercent(), -6),
+		Delta9ThcValue:          decimal.NewFromFloatWithExponent(util.RandomDecimalTimes100(), -6),
+		Delta8ThcPercent:        decimal.NewFromFloatWithExponent(util.RandomPercent(), -6),
+		Delta8ThcValue:          decimal.NewFromFloatWithExponent(util.RandomDecimalTimes100(), -6),
+		ThcVPercent:             decimal.NewFromFloatWithExponent(util.RandomPercent(), -6),
+		ThcVValue:               decimal.NewFromFloatWithExponent(util.RandomDecimalTimes100(), -6),
+		CbdAPercent:             decimal.NewFromFloatWithExponent(util.RandomPercent(), -6),
+		CbdAValue:               decimal.NewFromFloatWithExponent(util.RandomDecimalTimes100(), -6),
+		CbnPercent:              decimal.NewFromFloatWithExponent(util.RandomPercent(), -6),
+		CbnValue:                decimal.NewFromFloatWithExponent(util.RandomDecimalTimes100(), -6),
+		CbgAPercent:             decimal.NewFromFloatWithExponent(util.RandomPercent(), -6),
+		CbgAValue:               decimal.NewFromFloatWithExponent(util.RandomDecimalTimes100(), -6),
+		CbgPercent:              decimal.NewFromFloatWithExponent(util.RandomPercent(), -6),
+		CbgValue:                decimal.NewFromFloatWithExponent(util.RandomDecimalTimes100(), -6),
+		CbcPercent:              decimal.NewFromFloatWithExponent(util.RandomPercent(), -6),
+		CbcValue:                decimal.NewFromFloatWithExponent(util.RandomDecimalTimes100(), -6),
+		TotalCannabinoidPercent: decimal.NewFromFloatWithExponent(util.RandomPercent(), -6),
+		TotalCannabinoidValue:   decimal.NewFromFloatWithExponent(util.RandomDecimalTimes100(), -6),
 	}
 
 	labTest, err := testQueries.CreateLabTest(context.Background(), arg)
@@ -61,32 +61,32 @@ func createRandomLabTest(t *testing.T) LabTest {
 	require.Equal(t, arg.TestTypeName, labTest.TestTypeName)
 	require.Equal(t, arg.TestPassed, labTest.TestPassed)
 	require.Equal(t, arg.TestComment, labTest.TestComment)
-	//require.Equal(t, arg.ThcTotalPercent, labTest.ThcTotalPercent)
-	//require.Equal(t, arg.ThcTotalValue, labTest.ThcTotalValue)
-	//require.Equal(t, arg.CbdPercent, labTest.CbdPercent)
-	//require.Equal(t, arg.CbdValue, labTest.CbdValue)
-	//require.Equal(t, arg.TerpeneTotalPercent, labTest.TerpeneTotalPercent)
-	//require.Equal(t, arg.TerpeneTotalValue, labTest.TerpeneTotalValue)
-	//require.Equal(t, arg.ThcAPercent, labTest.ThcAPercent)
-	//require.Equal(t, arg.ThcAValue, labTest.ThcAValue)
-	//require.Equal(t, arg.Delta9ThcPercent, labTest.Delta9ThcPercent)
-	//require.Equal(t, arg.Delta9ThcValue, labTest.Delta9ThcValue)
-	//require.Equal(t, arg.Delta8ThcPercent, labTest.Delta8ThcPercent)
-	//require.Equal(t, arg.Delta8ThcValue, labTest.Delta8ThcValue)
-	//require.Equal(t, arg.ThcVPercent, labTest.ThcVPercent)
-	//require.Equal(t, arg.ThcVValue, labTest.ThcVValue)
-	//require.Equal(t, arg.CbdAPercent, labTest.CbdAPercent)
-	//require.Equal(t, arg.CbdAValue, labTest.CbdAValue)
-	//require.Equal(t, arg.CbnPercent, labTest.CbnPercent)
-	//require.Equal(t, arg.CbnValue, labTest.CbnValue)
-	//require.Equal(t, arg.CbgAPercent, labTest.CbgAPercent)
-	//require.Equal(t, arg.CbgAValue, labTest.CbgAValue)
-	//require.Equal(t, arg.CbgPercent, labTest.CbgPercent)
-	//require.Equal(t, arg.CbgValue, labTest.CbgValue)
-	//require.Equal(t, arg.CbcPercent, labTest.CbcPercent)
-	//require.Equal(t, arg.CbcValue, labTest.CbcValue)
-	//require.Equal(t, arg.TotalCannabinoidPercent, labTest.TotalCannabinoidPercent)
-	//require.Equal(t, arg.TotalCannabinoidValue, labTest.TotalCannabinoidValue)
+	require.Equal(t, arg.ThcTotalPercent, labTest.ThcTotalPercent)
+	require.Equal(t, arg.ThcTotalValue, labTest.ThcTotalValue)
+	require.Equal(t, arg.CbdPercent, labTest.CbdPercent)
+	require.Equal(t, arg.CbdValue, labTest.CbdValue)
+	require.Equal(t, arg.TerpeneTotalPercent, labTest.TerpeneTotalPercent)
+	require.Equal(t, arg.TerpeneTotalValue, labTest.TerpeneTotalValue)
+	require.Equal(t, arg.ThcAPercent, labTest.ThcAPercent)
+	require.Equal(t, arg.ThcAValue, labTest.ThcAValue)
+	require.Equal(t, arg.Delta9ThcPercent, labTest.Delta9ThcPercent)
+	require.Equal(t, arg.Delta9ThcValue, labTest.Delta9ThcValue)
+	require.Equal(t, arg.Delta8ThcPercent, labTest.Delta8ThcPercent)
+	require.Equal(t, arg.Delta8ThcValue, labTest.Delta8ThcValue)
+	require.Equal(t, arg.ThcVPercent, labTest.ThcVPercent)
+	require.Equal(t, arg.ThcVValue, labTest.ThcVValue)
+	require.Equal(t, arg.CbdAPercent, labTest.CbdAPercent)
+	require.Equal(t, arg.CbdAValue, labTest.CbdAValue)
+	require.Equal(t, arg.CbnPercent, labTest.CbnPercent)
+	require.Equal(t, arg.CbnValue, labTest.CbnValue)
+	require.Equal(t, arg.CbgAPercent, labTest.CbgAPercent)
+	require.Equal(t, arg.CbgAValue, labTest.CbgAValue)
+	require.Equal(t, arg.CbgPercent, labTest.CbgPercent)
+	require.Equal(t, arg.CbgValue, labTest.CbgValue)
+	require.Equal(t, arg.CbcPercent, labTest.CbcPercent)
+	require.Equal(t, arg.CbcValue, labTest.CbcValue)
+	require.Equal(t, arg.TotalCannabinoidPercent, labTest.TotalCannabinoidPercent)
+	require.Equal(t, arg.TotalCannabinoidValue, labTest.TotalCannabinoidValue)
 
 	require.NotZero(t, labTest.ID)
 	require.NotZero(t, labTest.CreatedAt)
@@ -95,7 +95,7 @@ func createRandomLabTest(t *testing.T) LabTest {
 	return labTest
 }
 
-func TestCreateLabTest(t *testing.T) {
+func TestQueries_CreateLabTest(t *testing.T) {
 	createRandomLabTest(t)
 }
 

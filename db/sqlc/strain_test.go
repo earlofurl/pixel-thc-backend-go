@@ -30,11 +30,11 @@ func createRandomStrain(t *testing.T) Strain {
 	return strain
 }
 
-func TestCreateStrain(t *testing.T) {
+func TestQueries_CreateStrain(t *testing.T) {
 	createRandomStrain(t)
 }
 
-func TestGetStrain(t *testing.T) {
+func TestQueries_GetStrain(t *testing.T) {
 	strain1 := createRandomStrain(t)
 	strain2, err := testQueries.GetStrain(context.Background(), strain1.ID)
 	require.NoError(t, err)
@@ -45,7 +45,7 @@ func TestGetStrain(t *testing.T) {
 	require.Equal(t, strain1.Type, strain2.Type)
 }
 
-func TestListStrains(t *testing.T) {
+func TestQueries_ListStrains(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		createRandomStrain(t)
 	}
@@ -59,7 +59,7 @@ func TestListStrains(t *testing.T) {
 	}
 }
 
-func TestUpdateStrain(t *testing.T) {
+func TestQueries_UpdateStrain(t *testing.T) {
 	strain1 := createRandomStrain(t)
 	arg := UpdateStrainParams{
 		ID:   strain1.ID,
@@ -76,7 +76,7 @@ func TestUpdateStrain(t *testing.T) {
 	require.WithinDuration(t, strain1.CreatedAt, strain2.CreatedAt, time.Second)
 }
 
-func TestDeleteStrain(t *testing.T) {
+func TestQueries_DeleteStrain(t *testing.T) {
 	strain1 := createRandomStrain(t)
 	err := testQueries.DeleteStrain(context.Background(), strain1.ID)
 	require.NoError(t, err)
