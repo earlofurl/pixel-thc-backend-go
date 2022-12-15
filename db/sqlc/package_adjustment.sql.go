@@ -71,7 +71,7 @@ func (q *Queries) GetPackageAdjustment(ctx context.Context, id int64) (PackageAd
 	return i, err
 }
 
-const listPackageAdjustment = `-- name: ListPackageAdjustment :many
+const listPackageAdjustments = `-- name: ListPackageAdjustments :many
 SELECT id, created_at, updated_at, from_package_id, to_package_id, amount, uom_id
 FROM package_adjustments
 WHERE from_package_id = $1
@@ -80,7 +80,7 @@ ORDER BY id
 LIMIT $3 OFFSET $4
 `
 
-type ListPackageAdjustmentParams struct {
+type ListPackageAdjustmentsParams struct {
 	FromPackageID int64 `json:"from_package_id"`
 	ToPackageID   int64 `json:"to_package_id"`
 	Limit         int32 `json:"limit"`
@@ -88,8 +88,8 @@ type ListPackageAdjustmentParams struct {
 }
 
 // description: List package adjustments
-func (q *Queries) ListPackageAdjustment(ctx context.Context, arg ListPackageAdjustmentParams) ([]PackageAdjustment, error) {
-	rows, err := q.db.QueryContext(ctx, listPackageAdjustment,
+func (q *Queries) ListPackageAdjustments(ctx context.Context, arg ListPackageAdjustmentsParams) ([]PackageAdjustment, error) {
+	rows, err := q.db.QueryContext(ctx, listPackageAdjustments,
 		arg.FromPackageID,
 		arg.ToPackageID,
 		arg.Limit,

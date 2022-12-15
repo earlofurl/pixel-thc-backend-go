@@ -14,7 +14,7 @@ FROM package_adjustments
 WHERE id = $1
 LIMIT 1;
 
--- name: ListPackageAdjustment :many
+-- name: ListPackageAdjustments :many
 -- description: List package adjustments
 SELECT *
 FROM package_adjustments
