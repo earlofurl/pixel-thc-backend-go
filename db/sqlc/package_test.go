@@ -54,7 +54,7 @@ func createRandomPackage(t *testing.T) Package {
 		PackagingSuppliesConsumed:         util.RandomBool(),
 		IsLineItem:                        util.RandomBool(),
 		//OrderID:                           nulls.NewInt64(0), // TODO: add back after Order model is created
-		UomID: nulls.NewInt64(newRandomUom.ID),
+		UomID: newRandomUom.ID,
 	}
 	pkg, err := testQueries.CreatePackage(context.Background(), arg)
 	require.NoError(t, err)

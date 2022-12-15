@@ -166,7 +166,7 @@ type Package struct {
 	PackagingSuppliesConsumed         bool            `json:"packaging_supplies_consumed"`
 	IsLineItem                        bool            `json:"is_line_item"`
 	OrderID                           nulls.Int64     `json:"order_id"`
-	UomID                             nulls.Int64     `json:"uom_id"`
+	UomID                             int64           `json:"uom_id"`
 	FacilityLocationID                nulls.Int64     `json:"facility_location_id"`
 }
 

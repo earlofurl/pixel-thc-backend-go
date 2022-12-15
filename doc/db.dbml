@@ -196,7 +196,7 @@ Table packages {
   packaging_supplies_consumed boolean [not null, default: false]
   is_line_item boolean [not null, default: false]
   order_id bigint [ref: > orders.id]
-  uom_id bigint [ref: > uoms.id]
+  uom_id bigint [ref: > uoms.id, not null]
   facility_location_id bigint [ref: > facility_locations.id, not null]
 
     Indexes {

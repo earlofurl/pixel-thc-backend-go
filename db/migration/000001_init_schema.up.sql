@@ -169,7 +169,7 @@ CREATE TABLE "packages" (
                             "packaging_supplies_consumed" boolean NOT NULL DEFAULT false,
                             "is_line_item" boolean NOT NULL DEFAULT false,
                             "order_id" bigint,
-                            "uom_id" bigint
+                            "uom_id" bigint NOT NULL
 );
 
 CREATE TABLE "source_packages_child_packages" (

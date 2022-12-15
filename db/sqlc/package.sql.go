@@ -180,7 +180,7 @@ type CreatePackageParams struct {
 	PackagingSuppliesConsumed         bool            `json:"packaging_supplies_consumed"`
 	IsLineItem                        bool            `json:"is_line_item"`
 	OrderID                           nulls.Int64     `json:"order_id"`
-	UomID                             nulls.Int64     `json:"uom_id"`
+	UomID                             int64           `json:"uom_id"`
 }
 
 // description: Create a package
@@ -445,7 +445,7 @@ type ListActivePackagesRow struct {
 	PackagingSuppliesConsumed         bool            `json:"packaging_supplies_consumed"`
 	IsLineItem                        bool            `json:"is_line_item"`
 	OrderID                           nulls.Int64     `json:"order_id"`
-	UomID                             nulls.Int64     `json:"uom_id"`
+	UomID                             int64           `json:"uom_id"`
 	FacilityLocationID                nulls.Int64     `json:"facility_location_id"`
 	TagNumber                         string          `json:"tag_number"`
 	UomName                           string          `json:"uom_name"`
@@ -664,7 +664,7 @@ type ListPackagesRow struct {
 	PackagingSuppliesConsumed         bool            `json:"packaging_supplies_consumed"`
 	IsLineItem                        bool            `json:"is_line_item"`
 	OrderID                           nulls.Int64     `json:"order_id"`
-	UomID                             nulls.Int64     `json:"uom_id"`
+	UomID                             int64           `json:"uom_id"`
 	FacilityLocationID                nulls.Int64     `json:"facility_location_id"`
 	TagNumber                         string          `json:"tag_number"`
 	UomName                           string          `json:"uom_name"`
@@ -898,7 +898,7 @@ type UpdatePackageParams struct {
 	PackagingSuppliesConsumed         bool            `json:"packaging_supplies_consumed"`
 	IsLineItem                        bool            `json:"is_line_item"`
 	OrderID                           nulls.Int64     `json:"order_id"`
-	UomID                             nulls.Int64     `json:"uom_id"`
+	UomID                             int64           `json:"uom_id"`
 	IsActive                          bool            `json:"is_active"`
 	ID                                int64           `json:"id"`
 }
