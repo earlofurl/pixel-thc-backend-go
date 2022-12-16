@@ -1,6 +1,6 @@
 -- SQL dump generated using DBML (dbml-lang.org)
 -- Database: PostgreSQL
--- Generated at: 2022-12-15T11:25:32.930Z
+-- Generated at: 2022-12-16T21:24:06.432Z
 
 CREATE TABLE "users" (
   "id" bigserial PRIMARY KEY,
@@ -174,8 +174,8 @@ CREATE TABLE "packages" (
 );
 
 CREATE TABLE "source_packages_child_packages" (
-  "source_package_id" bigint,
-  "child_package_id" bigint,
+  "source_package_id" bigint NOT NULL,
+  "child_package_id" bigint NOT NULL,
   "created_at" timestamptz NOT NULL DEFAULT (now()),
   "updated_at" timestamptz NOT NULL DEFAULT (now())
 );

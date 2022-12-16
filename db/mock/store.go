@@ -81,6 +81,21 @@ func (mr *MockStoreMockRecorder) AssignLabTestToPackage(arg0, arg1 interface{}) 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AssignLabTestToPackage", reflect.TypeOf((*MockStore)(nil).AssignLabTestToPackage), arg0, arg1)
 }
 
+// AssignSourcePackageChildPackage mocks base method.
+func (m *MockStore) AssignSourcePackageChildPackage(arg0 context.Context, arg1 db.AssignSourcePackageChildPackageParams) (db.SourcePackagesChildPackage, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AssignSourcePackageChildPackage", arg0, arg1)
+	ret0, _ := ret[0].(db.SourcePackagesChildPackage)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// AssignSourcePackageChildPackage indicates an expected call of AssignSourcePackageChildPackage.
+func (mr *MockStoreMockRecorder) AssignSourcePackageChildPackage(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AssignSourcePackageChildPackage", reflect.TypeOf((*MockStore)(nil).AssignSourcePackageChildPackage), arg0, arg1)
+}
+
 // CreateAccount mocks base method.
 func (m *MockStore) CreateAccount(arg0 context.Context, arg1 db.CreateAccountParams) (db.Account, error) {
 	m.ctrl.T.Helper()
@@ -259,6 +274,21 @@ func (m *MockStore) CreatePackageTag(arg0 context.Context, arg1 db.CreatePackage
 func (mr *MockStoreMockRecorder) CreatePackageTag(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreatePackageTag", reflect.TypeOf((*MockStore)(nil).CreatePackageTag), arg0, arg1)
+}
+
+// CreatePckgToPckgTx mocks base method.
+func (m *MockStore) CreatePckgToPckgTx(arg0 context.Context, arg1 db.CreatePckgToPckgTxParams) (db.CreatePckgToPckgTxResult, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreatePckgToPckgTx", arg0, arg1)
+	ret0, _ := ret[0].(db.CreatePckgToPckgTxResult)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreatePckgToPckgTx indicates an expected call of CreatePckgToPckgTx.
+func (mr *MockStoreMockRecorder) CreatePckgToPckgTx(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreatePckgToPckgTx", reflect.TypeOf((*MockStore)(nil).CreatePckgToPckgTx), arg0, arg1)
 }
 
 // CreateProductCategory mocks base method.

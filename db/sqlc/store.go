@@ -12,6 +12,7 @@ type Store interface {
 	TransferTx(ctx context.Context, arg TransferTxParams) (TransferTxResult, error)
 	CreateUserTx(ctx context.Context, arg CreateUserTxParams) (CreateUserTxResult, error)
 	CreatePckgToPckgTx(ctx context.Context, arg CreatePckgToPckgTxParams) (CreatePckgToPckgTxResult, error)
+	CreatePackageTx(ctx context.Context, arg CreatePackageTxParams) (CreatePackageTxResult, error)
 }
 
 // SQLStore provides all functions to execute SQL queries and transactions

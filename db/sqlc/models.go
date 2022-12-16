@@ -239,10 +239,10 @@ type Session struct {
 }
 
 type SourcePackagesChildPackage struct {
-	SourcePackageID nulls.Int64 `json:"source_package_id"`
-	ChildPackageID  nulls.Int64 `json:"child_package_id"`
-	CreatedAt       time.Time   `json:"created_at"`
-	UpdatedAt       time.Time   `json:"updated_at"`
+	SourcePackageID int64     `json:"source_package_id"`
+	ChildPackageID  int64     `json:"child_package_id"`
+	CreatedAt       time.Time `json:"created_at"`
+	UpdatedAt       time.Time `json:"updated_at"`
 }
 
 type Strain struct {

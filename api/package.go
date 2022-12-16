@@ -10,6 +10,7 @@ import (
 )
 
 type createPackageRequest struct {
+	SourcePackageID                   nulls.Int64     `json:"source_package_id"`
 	TagID                             nulls.Int64     `json:"tag_id"`
 	PackageType                       string          `json:"package_type"`
 	Quantity                          decimal.Decimal `json:"quantity"`
@@ -42,17 +43,19 @@ type createPackageRequest struct {
 	PackagingSuppliesConsumed         bool            `json:"packaging_supplies_consumed"`
 	IsLineItem                        bool            `json:"is_line_item"`
 	OrderID                           nulls.Int64     `json:"order_id"`
-	UomID                             nulls.Int64     `json:"uom_id"`
+	UomID                             int64           `json:"uom_id"`
 }
 
 func (server *Server) createPackage(ctx *gin.Context) {
 	var req createPackageRequest
+
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, errorResponse(err))
 		return
 	}
 
-	arg := db.CreatePackageParams{
+	arg := db.CreatePackageTxParams{
+		SourcePackageID:                   req.SourcePackageID,
 		TagID:                             req.TagID,
 		PackageType:                       req.PackageType,
 		Quantity:                          req.Quantity,
@@ -88,7 +91,7 @@ func (server *Server) createPackage(ctx *gin.Context) {
 		UomID:                             req.UomID,
 	}
 
-	productPackage, err := server.store.CreatePackage(ctx, arg)
+	productPackage, err := server.store.CreatePackageTx(ctx, arg)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return

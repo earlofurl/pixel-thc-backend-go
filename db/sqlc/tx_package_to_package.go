@@ -15,11 +15,12 @@ type CreatePckgToPckgTxParams struct {
 
 // CreatePckgToPckgTxResult is the result of the createPckgToPckgTx function.
 type CreatePckgToPckgTxResult struct {
-	PackageAdjustment   PackageAdjustment `json:"package_adjustment"`
-	FromPackage         Package           `json:"from_package"`
-	ToPackage           Package           `json:"to_package"`
-	FromPackageAdjEntry PackageAdjEntry   `json:"from_entry"`
-	ToPackageAdjEntry   PackageAdjEntry   `json:"to_entry"`
+	PackageAdjustment              PackageAdjustment          `json:"package_adjustment"`
+	FromPackage                    Package                    `json:"from_package"`
+	ToPackage                      Package                    `json:"to_package"`
+	FromPackageAdjEntry            PackageAdjEntry            `json:"from_entry"`
+	ToPackageAdjEntry              PackageAdjEntry            `json:"to_entry"`
+	SourcePackageChildPackageEntry SourcePackagesChildPackage `json:"source_packages_child_package"`
 }
 
 // CreatePckgToPckgTx performs a package adjustment from one package to the other.
@@ -53,6 +54,14 @@ func (store *SQLStore) CreatePckgToPckgTx(ctx context.Context, arg CreatePckgToP
 			PackageID: arg.ToPackageID,
 			Amount:    arg.Amount,
 			UomID:     arg.UomID,
+		})
+		if err != nil {
+			return err
+		}
+
+		result.SourcePackageChildPackageEntry, err = q.AssignSourcePackageChildPackage(ctx, AssignSourcePackageChildPackageParams{
+			SourcePackageID: arg.FromPackageID,
+			ChildPackageID:  arg.ToPackageID,
 		})
 		if err != nil {
 			return err

@@ -173,8 +173,8 @@ CREATE TABLE "packages" (
 );
 
 CREATE TABLE "source_packages_child_packages" (
-                                                  "source_package_id" bigint,
-                                                  "child_package_id" bigint,
+                                                  "source_package_id" bigint NOT NULL,
+                                                  "child_package_id" bigint NOT NULL,
                                                   "created_at" timestamptz NOT NULL DEFAULT (now()),
                                                   "updated_at" timestamptz NOT NULL DEFAULT (now())
 );

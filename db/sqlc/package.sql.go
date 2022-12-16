@@ -74,6 +74,28 @@ func (q *Queries) AddPackageQuantity(ctx context.Context, arg AddPackageQuantity
 	return i, err
 }
 
+const assignSourcePackageChildPackage = `-- name: AssignSourcePackageChildPackage :one
+INSERT INTO source_packages_child_packages (source_package_id, child_package_id) VALUES ($1, $2) RETURNING source_package_id, child_package_id, created_at, updated_at
+`
+
+type AssignSourcePackageChildPackageParams struct {
+	SourcePackageID int64 `json:"source_package_id"`
+	ChildPackageID  int64 `json:"child_package_id"`
+}
+
+// description: Assign a source package child package relationship on junction table
+func (q *Queries) AssignSourcePackageChildPackage(ctx context.Context, arg AssignSourcePackageChildPackageParams) (SourcePackagesChildPackage, error) {
+	row := q.db.QueryRowContext(ctx, assignSourcePackageChildPackage, arg.SourcePackageID, arg.ChildPackageID)
+	var i SourcePackagesChildPackage
+	err := row.Scan(
+		&i.SourcePackageID,
+		&i.ChildPackageID,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
 const createPackage = `-- name: CreatePackage :one
 INSERT INTO packages (tag_id,
                       package_type,

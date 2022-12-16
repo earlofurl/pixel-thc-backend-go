@@ -18,6 +18,8 @@ type Querier interface {
 	AddPackageQuantity(ctx context.Context, arg AddPackageQuantityParams) (Package, error)
 	// description: Assign a lab test to a package via junction table
 	AssignLabTestToPackage(ctx context.Context, arg AssignLabTestToPackageParams) error
+	// description: Assign a source package child package relationship on junction table
+	AssignSourcePackageChildPackage(ctx context.Context, arg AssignSourcePackageChildPackageParams) (SourcePackagesChildPackage, error)
 	CreateAccount(ctx context.Context, arg CreateAccountParams) (Account, error)
 	CreateEntry(ctx context.Context, arg CreateEntryParams) (Entry, error)
 	// description: Create a new facility

@@ -205,8 +205,8 @@ Table packages {
 }
 
 Table source_packages_child_packages {
-  source_package_id bigint [ref: > packages.id]
-  child_package_id bigint [ref: > packages.id]
+  source_package_id bigint [ref: > packages.id, not null]
+  child_package_id bigint [ref: > packages.id, not null]
   created_at timestamptz [not null, default: `now()`]
   updated_at timestamptz [not null, default: `now()`]
 

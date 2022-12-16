@@ -181,3 +181,7 @@ RETURNING *;
 DELETE
 FROM packages
 WHERE id = $1;
+
+-- name: AssignSourcePackageChildPackage :one
+-- description: Assign a source package child package relationship on junction table
+INSERT INTO source_packages_child_packages (source_package_id, child_package_id) VALUES ($1, $2) RETURNING *;
