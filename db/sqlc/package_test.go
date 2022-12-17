@@ -21,7 +21,6 @@ func createRandomPackage(t *testing.T) Package {
 	newRandomItem := createRandomItem(t)
 
 	arg := CreatePackageParams{
-		//SourcePackageID:                   nulls.Int64{Valid: false},
 		TagID:                             nulls.NewInt64(lastRandomPackageTag.ID),
 		PackageType:                       util.RandomString(10),
 		IsActive:                          util.RandomBool(),

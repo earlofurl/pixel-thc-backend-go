@@ -276,6 +276,21 @@ func (mr *MockStoreMockRecorder) CreatePackageTag(arg0, arg1 interface{}) *gomoc
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreatePackageTag", reflect.TypeOf((*MockStore)(nil).CreatePackageTag), arg0, arg1)
 }
 
+// CreatePackageTx mocks base method.
+func (m *MockStore) CreatePackageTx(arg0 context.Context, arg1 db.CreatePackageTxParams) (db.CreatePackageTxResult, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreatePackageTx", arg0, arg1)
+	ret0, _ := ret[0].(db.CreatePackageTxResult)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreatePackageTx indicates an expected call of CreatePackageTx.
+func (mr *MockStoreMockRecorder) CreatePackageTx(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreatePackageTx", reflect.TypeOf((*MockStore)(nil).CreatePackageTx), arg0, arg1)
+}
+
 // CreatePckgToPckgTx mocks base method.
 func (m *MockStore) CreatePckgToPckgTx(arg0 context.Context, arg1 db.CreatePckgToPckgTxParams) (db.CreatePckgToPckgTxResult, error) {
 	m.ctrl.T.Helper()
