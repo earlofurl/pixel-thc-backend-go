@@ -2,6 +2,7 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/gobuffalo/nulls"
 	"github.com/shopspring/decimal"
 	"net/http"
 	db "pixel-thc-backend-go/db/sqlc"
@@ -114,7 +115,7 @@ func (server *Server) getLabTest(ctx *gin.Context) {
 	}
 
 	// Get lab test
-	labTest, err := server.store.GetLabTest(ctx.Request.Context(), req.ID)
+	labTest, err := server.store.GetLabTest(ctx.Request.Context(), nulls.NewInt64(req.ID))
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -140,7 +141,7 @@ func (server *Server) deleteLabTest(ctx *gin.Context) {
 	}
 
 	// Delete lab test
-	if err := server.store.DeleteLabTest(ctx.Request.Context(), req.ID); err != nil {
+	if err := server.store.DeleteLabTest(ctx.Request.Context(), nulls.NewInt64(req.ID)); err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

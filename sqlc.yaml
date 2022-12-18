@@ -28,6 +28,46 @@ sql:
             "nullable": true
           },
           {
+            "go_type": "github.com/gobuffalo/nulls.Int64",
+            "column": "public.lab_tests.id",
+            "nullable": true
+          },
+          {
+            "go_type": "github.com/gobuffalo/nulls.Int64",
+            "column": "public.lab_tests.lab_test_id",
+            "nullable": true
+          },
+          {
+            "go_type": "github.com/gobuffalo/nulls.Int64",
+            "column": "public.lab_tests_packages.lab_test_id",
+            "nullable": true
+          },
+          {
+            "go_type": "github.com/gobuffalo/nulls.Int64",
+            "column": "public.packages.lab_test_id",
+            "nullable": true
+          },
+          {
+            "go_type": "github.com/gobuffalo/nulls.Int64",
+            "db_type": "pg_catalog.serial8",
+            "nullable": true
+          },
+          {
+            "go_type": "github.com/gobuffalo/nulls.Int64",
+            "db_type": "pg_catalog.interval",
+            "nullable": true
+          },
+          {
+            "go_type": "github.com/gobuffalo/nulls.Int32",
+            "db_type": "pg_catalog.int4",
+            "nullable": true
+          },
+          {
+            "go_type": "github.com/gobuffalo/nulls.Int16",
+            "db_type": "pg_catalog.int2",
+            "nullable": true
+          },
+          {
             "go_type": "github.com/gobuffalo/nulls.Time",
             "db_type": "timestamptz",
             "nullable": true

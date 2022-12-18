@@ -454,7 +454,7 @@ func (mr *MockStoreMockRecorder) DeleteItemType(arg0, arg1 interface{}) *gomock.
 }
 
 // DeleteLabTest mocks base method.
-func (m *MockStore) DeleteLabTest(arg0 context.Context, arg1 int64) error {
+func (m *MockStore) DeleteLabTest(arg0 context.Context, arg1 nulls.Int64) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DeleteLabTest", arg0, arg1)
 	ret0, _ := ret[0].(error)
@@ -657,7 +657,7 @@ func (mr *MockStoreMockRecorder) GetItemType(arg0, arg1 interface{}) *gomock.Cal
 }
 
 // GetLabTest mocks base method.
-func (m *MockStore) GetLabTest(arg0 context.Context, arg1 int64) (db.LabTest, error) {
+func (m *MockStore) GetLabTest(arg0 context.Context, arg1 nulls.Int64) (db.LabTest, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetLabTest", arg0, arg1)
 	ret0, _ := ret[0].(db.LabTest)

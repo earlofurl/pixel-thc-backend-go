@@ -7,7 +7,6 @@ package db
 
 import (
 	"context"
-	"database/sql"
 	"time"
 
 	"github.com/gobuffalo/nulls"
@@ -478,8 +477,8 @@ type ListActivePackagesRow struct {
 	ProductModifier                   string          `json:"product_modifier"`
 	StrainName                        string          `json:"strain_name"`
 	StrainType                        string          `json:"strain_type"`
-	LabTestID                         sql.NullInt64   `json:"lab_test_id"`
-	ID_2                              sql.NullInt64   `json:"id_2"`
+	LabTestID                         nulls.Int64     `json:"lab_test_id"`
+	ID_2                              nulls.Int64     `json:"id_2"`
 	CreatedAt_2                       nulls.Time      `json:"created_at_2"`
 	UpdatedAt_2                       nulls.Time      `json:"updated_at_2"`
 	TestName                          nulls.String    `json:"test_name"`
@@ -700,8 +699,8 @@ type ListPackagesRow struct {
 	ProductModifier                   string          `json:"product_modifier"`
 	StrainName                        string          `json:"strain_name"`
 	StrainType                        string          `json:"strain_type"`
-	LabTestID                         sql.NullInt64   `json:"lab_test_id"`
-	ID_2                              sql.NullInt64   `json:"id_2"`
+	LabTestID                         nulls.Int64     `json:"lab_test_id"`
+	ID_2                              nulls.Int64     `json:"id_2"`
 	CreatedAt_2                       nulls.Time      `json:"created_at_2"`
 	UpdatedAt_2                       nulls.Time      `json:"updated_at_2"`
 	TestName                          nulls.String    `json:"test_name"`

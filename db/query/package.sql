@@ -33,7 +33,7 @@ INSERT INTO packages (tag_id,
                       packaging_supplies_consumed,
                       is_line_item,
                       order_id,
-                      uom_id,)
+                      uom_id)
 VALUES ($1,
         $2,
         $3,

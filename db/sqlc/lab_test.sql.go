@@ -198,7 +198,7 @@ WHERE id = $1
 `
 
 // description: Delete a lab test by ID
-func (q *Queries) DeleteLabTest(ctx context.Context, id int64) error {
+func (q *Queries) DeleteLabTest(ctx context.Context, id nulls.Int64) error {
 	_, err := q.db.ExecContext(ctx, deleteLabTest, id)
 	return err
 }
@@ -211,7 +211,7 @@ LIMIT 1
 `
 
 // description: Get a lab test by ID
-func (q *Queries) GetLabTest(ctx context.Context, id int64) (LabTest, error) {
+func (q *Queries) GetLabTest(ctx context.Context, id nulls.Int64) (LabTest, error) {
 	row := q.db.QueryRowContext(ctx, getLabTest, id)
 	var i LabTest
 	err := row.Scan(
@@ -405,7 +405,7 @@ type UpdateLabTestParams struct {
 	CbcValue                decimal.Decimal `json:"cbc_value"`
 	TotalCannabinoidPercent decimal.Decimal `json:"total_cannabinoid_percent"`
 	TotalCannabinoidValue   decimal.Decimal `json:"total_cannabinoid_value"`
-	ID                      int64           `json:"id"`
+	ID                      nulls.Int64     `json:"id"`
 }
 
 // description: Update a lab test

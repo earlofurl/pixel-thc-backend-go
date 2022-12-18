@@ -57,7 +57,7 @@ type Querier interface {
 	// description: Delete an item type by ID
 	DeleteItemType(ctx context.Context, id int64) error
 	// description: Delete a lab test by ID
-	DeleteLabTest(ctx context.Context, id int64) error
+	DeleteLabTest(ctx context.Context, id nulls.Int64) error
 	// description: Delete a single order by id
 	DeleteOrder(ctx context.Context, id int64) error
 	// description: Delete a package
@@ -82,7 +82,7 @@ type Querier interface {
 	// description: Get an item type by id
 	GetItemType(ctx context.Context, id int64) (ItemType, error)
 	// description: Get a lab test by ID
-	GetLabTest(ctx context.Context, id int64) (LabTest, error)
+	GetLabTest(ctx context.Context, id nulls.Int64) (LabTest, error)
 	// description: Get a single order by id
 	GetOrder(ctx context.Context, id int64) (Order, error)
 	// description: Get a package

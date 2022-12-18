@@ -65,7 +65,7 @@ type ItemType struct {
 }
 
 type LabTest struct {
-	ID                      int64           `json:"id"`
+	ID                      nulls.Int64     `json:"id"`
 	CreatedAt               time.Time       `json:"created_at"`
 	UpdatedAt               time.Time       `json:"updated_at"`
 	TestName                string          `json:"test_name"`
