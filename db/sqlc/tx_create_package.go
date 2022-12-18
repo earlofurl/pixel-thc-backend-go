@@ -44,6 +44,7 @@ type CreatePackageTxParams struct {
 	IsLineItem                        bool            `json:"is_line_item"`
 	OrderID                           nulls.Int64     `json:"order_id"`
 	UomID                             int64           `json:"uom_id"`
+	LabTestID                         nulls.Int64     `json:"lab_test_id"`
 }
 
 // CreatePackageTxResult contains the output parameters for the createPackageTx function.
@@ -109,6 +110,7 @@ func (store *SQLStore) CreatePackageTx(ctx context.Context, arg CreatePackageTxP
 			println("ToPackageID: ", result.CreatedPackage.ID)
 			println("Quantity: ", arg.Quantity.String())
 			println("UomID: ", arg.UomID)
+			println("LabTestID: ", arg.LabTestID.Int64)
 
 			// nested tx_package_to_package transaction to connect the new package to the source package
 			result.CreatePckgToPckgTxResult, err = store.CreatePckgToPckgTx(ctx, CreatePckgToPckgTxParams{
@@ -116,6 +118,7 @@ func (store *SQLStore) CreatePackageTx(ctx context.Context, arg CreatePackageTxP
 				ToPackageID:   result.CreatedPackage.ID,
 				Amount:        arg.Quantity,
 				UomID:         arg.UomID,
+				LabTestID:     arg.LabTestID.Int64,
 			})
 			if err != nil {
 				return err

@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"github.com/gobuffalo/nulls"
 	"github.com/shopspring/decimal"
 )
 
@@ -11,6 +12,7 @@ type CreatePckgToPckgTxParams struct {
 	ToPackageID   int64           `json:"to_package_id"`
 	Amount        decimal.Decimal `json:"amount"`
 	UomID         int64           `json:"uom_id"`
+	LabTestID     int64           `json:"lab_test_id"`
 }
 
 // CreatePckgToPckgTxResult is the result of the createPckgToPckgTx function.
@@ -65,6 +67,16 @@ func (store *SQLStore) CreatePckgToPckgTx(ctx context.Context, arg CreatePckgToP
 		})
 		if err != nil {
 			return err
+		}
+
+		if arg.LabTestID != 0 {
+			err = q.AssignLabTestToPackage(ctx, AssignLabTestToPackageParams{
+				LabTestID: nulls.NewInt64(arg.LabTestID),
+				PackageID: nulls.NewInt64(arg.ToPackageID),
+			})
+			if err != nil {
+				return err
+			}
 		}
 
 		if arg.FromPackageID < arg.ToPackageID {

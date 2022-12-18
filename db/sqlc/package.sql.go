@@ -417,6 +417,7 @@ SELECT p.id, p.created_at, p.updated_at, p.tag_id, p.package_type, p.is_active, 
        it.product_modifier,
        s.name         as strain_name,
        s.type         as strain_type,
+       lt.id as lab_test_id,
        lt.id, lt.created_at, lt.updated_at, lt.test_name, lt.batch_code, lt.test_id_code, lt.lab_facility_name, lt.test_performed_date_time, lt.test_completed, lt.overall_passed, lt.test_type_name, lt.test_passed, lt.test_comment, lt.thc_total_percent, lt.thc_total_value, lt.cbd_percent, lt.cbd_value, lt.terpene_total_percent, lt.terpene_total_value, lt.thc_a_percent, lt.thc_a_value, lt.delta9_thc_percent, lt.delta9_thc_value, lt.delta8_thc_percent, lt.delta8_thc_value, lt.thc_v_percent, lt.thc_v_value, lt.cbd_a_percent, lt.cbd_a_value, lt.cbn_percent, lt.cbn_value, lt.cbg_a_percent, lt.cbg_a_value, lt.cbg_percent, lt.cbg_value, lt.cbc_percent, lt.cbc_value, lt.total_cannabinoid_percent, lt.total_cannabinoid_value
 FROM packages p
          INNER JOIN package_tags pt ON p.tag_id = pt.id
@@ -477,6 +478,7 @@ type ListActivePackagesRow struct {
 	ProductModifier                   string          `json:"product_modifier"`
 	StrainName                        string          `json:"strain_name"`
 	StrainType                        string          `json:"strain_type"`
+	LabTestID                         sql.NullInt64   `json:"lab_test_id"`
 	ID_2                              sql.NullInt64   `json:"id_2"`
 	CreatedAt_2                       nulls.Time      `json:"created_at_2"`
 	UpdatedAt_2                       nulls.Time      `json:"updated_at_2"`
@@ -575,6 +577,7 @@ func (q *Queries) ListActivePackages(ctx context.Context) ([]ListActivePackagesR
 			&i.ProductModifier,
 			&i.StrainName,
 			&i.StrainType,
+			&i.LabTestID,
 			&i.ID_2,
 			&i.CreatedAt_2,
 			&i.UpdatedAt_2,
@@ -638,6 +641,7 @@ SELECT p.id, p.created_at, p.updated_at, p.tag_id, p.package_type, p.is_active, 
        it.product_modifier,
        s.name         as strain_name,
        s.type         as strain_type,
+       lt.id as lab_test_id,
        lt.id, lt.created_at, lt.updated_at, lt.test_name, lt.batch_code, lt.test_id_code, lt.lab_facility_name, lt.test_performed_date_time, lt.test_completed, lt.overall_passed, lt.test_type_name, lt.test_passed, lt.test_comment, lt.thc_total_percent, lt.thc_total_value, lt.cbd_percent, lt.cbd_value, lt.terpene_total_percent, lt.terpene_total_value, lt.thc_a_percent, lt.thc_a_value, lt.delta9_thc_percent, lt.delta9_thc_value, lt.delta8_thc_percent, lt.delta8_thc_value, lt.thc_v_percent, lt.thc_v_value, lt.cbd_a_percent, lt.cbd_a_value, lt.cbn_percent, lt.cbn_value, lt.cbg_a_percent, lt.cbg_a_value, lt.cbg_percent, lt.cbg_value, lt.cbc_percent, lt.cbc_value, lt.total_cannabinoid_percent, lt.total_cannabinoid_value
 FROM packages p
          INNER JOIN package_tags pt ON p.tag_id = pt.id
@@ -696,6 +700,7 @@ type ListPackagesRow struct {
 	ProductModifier                   string          `json:"product_modifier"`
 	StrainName                        string          `json:"strain_name"`
 	StrainType                        string          `json:"strain_type"`
+	LabTestID                         sql.NullInt64   `json:"lab_test_id"`
 	ID_2                              sql.NullInt64   `json:"id_2"`
 	CreatedAt_2                       nulls.Time      `json:"created_at_2"`
 	UpdatedAt_2                       nulls.Time      `json:"updated_at_2"`
@@ -794,6 +799,7 @@ func (q *Queries) ListPackages(ctx context.Context) ([]ListPackagesRow, error) {
 			&i.ProductModifier,
 			&i.StrainName,
 			&i.StrainType,
+			&i.LabTestID,
 			&i.ID_2,
 			&i.CreatedAt_2,
 			&i.UpdatedAt_2,

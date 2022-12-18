@@ -33,7 +33,7 @@ INSERT INTO packages (tag_id,
                       packaging_supplies_consumed,
                       is_line_item,
                       order_id,
-                      uom_id)
+                      uom_id,)
 VALUES ($1,
         $2,
         $3,
@@ -95,6 +95,7 @@ SELECT p.*,
        it.product_modifier,
        s.name         as strain_name,
        s.type         as strain_type,
+       lt.id as lab_test_id,
        lt.*
 FROM packages p
          INNER JOIN package_tags pt ON p.tag_id = pt.id
@@ -118,6 +119,7 @@ SELECT p.*,
        it.product_modifier,
        s.name         as strain_name,
        s.type         as strain_type,
+       lt.id as lab_test_id,
        lt.*
 FROM packages p
          INNER JOIN package_tags pt ON p.tag_id = pt.id

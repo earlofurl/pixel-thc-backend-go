@@ -169,6 +169,7 @@ func TestQueries_PackageToPackageTx(t *testing.T) {
 
 	package1 := createRandomPackage(t)
 	package2 := createRandomPackage(t)
+	labTest1 := createRandomLabTest(t)
 	fmt.Println(">> before:", package1.Quantity, package2.Quantity)
 
 	n := 5
@@ -185,6 +186,7 @@ func TestQueries_PackageToPackageTx(t *testing.T) {
 				ToPackageID:   package2.ID,
 				Amount:        amount,
 				UomID:         package1.UomID,
+				LabTestID:     labTest1.ID,
 			})
 
 			errs <- err
