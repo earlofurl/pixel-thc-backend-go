@@ -33,7 +33,8 @@ INSERT INTO packages (tag_id,
                       packaging_supplies_consumed,
                       is_line_item,
                       order_id,
-                      uom_id)
+                      uom_id,
+                      facility_location_id)
 VALUES ($1,
         $2,
         $3,
@@ -67,7 +68,8 @@ VALUES ($1,
         $31,
         $32,
         $33,
-        $34)
+        $34,
+        $35)
 RETURNING *;
 
 -- name: GetPackage :one

@@ -14,10 +14,10 @@ type createPackageRequest struct {
 	TagID                             nulls.Int64     `json:"tag_id"`
 	PackageType                       string          `json:"package_type"`
 	Quantity                          decimal.Decimal `json:"quantity"`
-	Notes                             nulls.String    `json:"notes"`
+	Notes                             string          `json:"notes"`
 	PackagedDateTime                  time.Time       `json:"packaged_date_time"`
 	HarvestDateTime                   nulls.Time      `json:"harvest_date_time"`
-	LabTestingState                   nulls.String    `json:"lab_testing_state"`
+	LabTestingState                   string          `json:"lab_testing_state"`
 	LabTestingStateDateTime           nulls.Time      `json:"lab_testing_state_date_time"`
 	IsTradeSample                     bool            `json:"is_trade_sample"`
 	IsTestingSample                   bool            `json:"is_testing_sample"`

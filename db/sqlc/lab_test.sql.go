@@ -19,7 +19,7 @@ INSERT INTO lab_tests_packages (lab_test_id, package_id) VALUES ($1, $2)
 
 type AssignLabTestToPackageParams struct {
 	LabTestID nulls.Int64 `json:"lab_test_id"`
-	PackageID nulls.Int64 `json:"package_id"`
+	PackageID int64       `json:"package_id"`
 }
 
 // description: Assign a lab test to a package via junction table

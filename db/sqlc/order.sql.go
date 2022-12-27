@@ -7,6 +7,7 @@ package db
 
 import (
 	"context"
+	"time"
 
 	"github.com/gobuffalo/nulls"
 	"github.com/shopspring/decimal"
@@ -21,14 +22,14 @@ RETURNING id, created_at, updated_at, scheduled_pack_date_time, scheduled_ship_d
 `
 
 type CreateOrderParams struct {
-	ScheduledPackDateTime     nulls.Time      `json:"scheduled_pack_date_time"`
-	ScheduledShipDateTime     nulls.Time      `json:"scheduled_ship_date_time"`
-	ScheduledDeliveryDateTime nulls.Time      `json:"scheduled_delivery_date_time"`
+	ScheduledPackDateTime     time.Time       `json:"scheduled_pack_date_time"`
+	ScheduledShipDateTime     time.Time       `json:"scheduled_ship_date_time"`
+	ScheduledDeliveryDateTime time.Time       `json:"scheduled_delivery_date_time"`
 	ActualPackDateTime        nulls.Time      `json:"actual_pack_date_time"`
 	ActualShipDateTime        nulls.Time      `json:"actual_ship_date_time"`
 	ActualDeliveryDateTime    nulls.Time      `json:"actual_delivery_date_time"`
 	OrderTotal                decimal.Decimal `json:"order_total"`
-	Notes                     nulls.String    `json:"notes"`
+	Notes                     string          `json:"notes"`
 	Status                    string          `json:"status"`
 	CustomerName              string          `json:"customer_name"`
 }
@@ -168,14 +169,14 @@ RETURNING id, created_at, updated_at, scheduled_pack_date_time, scheduled_ship_d
 `
 
 type UpdateOrderParams struct {
-	ScheduledPackDateTime     nulls.Time      `json:"scheduled_pack_date_time"`
-	ScheduledShipDateTime     nulls.Time      `json:"scheduled_ship_date_time"`
-	ScheduledDeliveryDateTime nulls.Time      `json:"scheduled_delivery_date_time"`
+	ScheduledPackDateTime     time.Time       `json:"scheduled_pack_date_time"`
+	ScheduledShipDateTime     time.Time       `json:"scheduled_ship_date_time"`
+	ScheduledDeliveryDateTime time.Time       `json:"scheduled_delivery_date_time"`
 	ActualPackDateTime        nulls.Time      `json:"actual_pack_date_time"`
 	ActualShipDateTime        nulls.Time      `json:"actual_ship_date_time"`
 	ActualDeliveryDateTime    nulls.Time      `json:"actual_delivery_date_time"`
 	OrderTotal                decimal.Decimal `json:"order_total"`
-	Notes                     nulls.String    `json:"notes"`
+	Notes                     string          `json:"notes"`
 	Status                    string          `json:"status"`
 	CustomerName              string          `json:"customer_name"`
 	ID                        int64           `json:"id"`

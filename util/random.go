@@ -2,6 +2,7 @@ package util
 
 import (
 	"fmt"
+	"github.com/gobuffalo/nulls"
 	"math/rand"
 	"strings"
 	"time"
@@ -36,14 +37,19 @@ func RandomString(n int) string {
 	return sb.String()
 }
 
+// RandomNullsString generates a random nulls.String
+func RandomNullsString(n int) nulls.String {
+	return nulls.NewString(RandomString(n))
+}
+
 // RandomOwner generates a random owner name
 func RandomOwner() string {
 	return RandomString(6)
 }
 
 // RandomPhone generates a random phone number
-func RandomPhone() string {
-	return RandomString(10)
+func RandomPhone() nulls.String {
+	return nulls.NewString(RandomString(10))
 }
 
 // RandomRole generates a random role

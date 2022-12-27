@@ -33,16 +33,6 @@ func (store *SQLStore) CreatePckgToPckgTx(ctx context.Context, arg CreatePckgToP
 	err := store.execTx(ctx, func(q *Queries) error {
 		var err error
 
-		result.PackageAdjustment, err = q.CreatePackageAdjustment(ctx, CreatePackageAdjustmentParams{
-			FromPackageID: arg.FromPackageID,
-			ToPackageID:   arg.ToPackageID,
-			Amount:        arg.Amount,
-			UomID:         arg.UomID,
-		})
-		if err != nil {
-			return err
-		}
-
 		result.FromPackageAdjEntry, err = q.CreatePackageAdjEntry(ctx, CreatePackageAdjEntryParams{
 			PackageID: arg.FromPackageID,
 			Amount:    decimal.NewFromFloat(-1).Mul(arg.Amount),
@@ -69,10 +59,20 @@ func (store *SQLStore) CreatePckgToPckgTx(ctx context.Context, arg CreatePckgToP
 			return err
 		}
 
+		result.PackageAdjustment, err = q.CreatePackageAdjustment(ctx, CreatePackageAdjustmentParams{
+			FromPackageID: arg.FromPackageID,
+			ToPackageID:   arg.ToPackageID,
+			Amount:        arg.Amount,
+			UomID:         arg.UomID,
+		})
+		if err != nil {
+			return err
+		}
+
 		if arg.LabTestID != 0 {
 			err = q.AssignLabTestToPackage(ctx, AssignLabTestToPackageParams{
 				LabTestID: nulls.NewInt64(arg.LabTestID),
-				PackageID: nulls.NewInt64(arg.ToPackageID),
+				PackageID: arg.ToPackageID,
 			})
 			if err != nil {
 				return err

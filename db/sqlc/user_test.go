@@ -20,7 +20,7 @@ func createRandomUser(t *testing.T) User {
 		Email:          util.RandomValidEmail(),
 		FirstName:      util.RandomString(10),
 		LastName:       util.RandomString(10),
-		Phone:          util.RandomString(10),
+		Phone:          util.RandomPhone(),
 		Role:           "user",
 	}
 	user, err := testQueries.CreateUser(context.Background(), arg)
@@ -147,7 +147,7 @@ func TestQueries_UpdateUserOnlyPhone(t *testing.T) {
 	newPhone := util.RandomPhone()
 	updatedUser, err := testQueries.UpdateUser(context.Background(), UpdateUserParams{
 		Username: oldUser.Username,
-		Phone:    nulls.NewString(newPhone),
+		Phone:    newPhone,
 	})
 
 	require.NoError(t, err)
@@ -197,7 +197,7 @@ func TestQueries_UpdateUserAllFields(t *testing.T) {
 		LastName:       nulls.NewString(newLastName),
 		Email:          nulls.NewString(newEmail),
 		HashedPassword: nulls.NewString(newHashedPassword),
-		Phone:          nulls.NewString(newPhone),
+		Phone:          newPhone,
 		Role:           nulls.NewString(newRole),
 	})
 

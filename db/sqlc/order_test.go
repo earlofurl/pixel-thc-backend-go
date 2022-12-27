@@ -12,14 +12,14 @@ import (
 
 func createRandomOrder(t *testing.T) Order {
 	arg := CreateOrderParams{
-		ScheduledPackDateTime:     nulls.NewTime(time.Now()),
-		ScheduledShipDateTime:     nulls.NewTime(time.Now()),
-		ScheduledDeliveryDateTime: nulls.NewTime(time.Now()),
+		ScheduledPackDateTime:     time.Now(),
+		ScheduledShipDateTime:     time.Now(),
+		ScheduledDeliveryDateTime: time.Now(),
 		ActualPackDateTime:        nulls.NewTime(time.Now()),
 		ActualShipDateTime:        nulls.NewTime(time.Now()),
 		ActualDeliveryDateTime:    nulls.NewTime(time.Now()),
 		OrderTotal:                decimal.NewFromFloat(util.RandomDecimalTimes100()),
-		Notes:                     nulls.NewString(util.RandomString(10)),
+		Notes:                     util.RandomString(10),
 		Status:                    util.RandomString(10),
 		CustomerName:              util.RandomString(10),
 	}

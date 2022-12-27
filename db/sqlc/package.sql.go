@@ -129,7 +129,8 @@ INSERT INTO packages (tag_id,
                       packaging_supplies_consumed,
                       is_line_item,
                       order_id,
-                      uom_id)
+                      uom_id,
+                      facility_location_id)
 VALUES ($1,
         $2,
         $3,
@@ -163,7 +164,8 @@ VALUES ($1,
         $31,
         $32,
         $33,
-        $34)
+        $34,
+        $35)
 RETURNING id, created_at, updated_at, tag_id, package_type, is_active, quantity, notes, packaged_date_time, harvest_date_time, lab_testing_state, lab_testing_state_date_time, is_trade_sample, is_testing_sample, product_requires_remediation, contains_remediated_product, remediation_date_time, received_date_time, received_from_manifest_number, received_from_facility_license_number, received_from_facility_name, is_on_hold, archived_date, finished_date, item_id, provisional_label, is_provisional, is_sold, ppu_default, ppu_on_order, total_package_price_on_order, ppu_sold_price, total_sold_price, packaging_supplies_consumed, is_line_item, order_id, uom_id, facility_location_id
 `
 
@@ -172,10 +174,10 @@ type CreatePackageParams struct {
 	PackageType                       string          `json:"package_type"`
 	IsActive                          bool            `json:"is_active"`
 	Quantity                          decimal.Decimal `json:"quantity"`
-	Notes                             nulls.String    `json:"notes"`
+	Notes                             string          `json:"notes"`
 	PackagedDateTime                  time.Time       `json:"packaged_date_time"`
 	HarvestDateTime                   nulls.Time      `json:"harvest_date_time"`
-	LabTestingState                   nulls.String    `json:"lab_testing_state"`
+	LabTestingState                   string          `json:"lab_testing_state"`
 	LabTestingStateDateTime           nulls.Time      `json:"lab_testing_state_date_time"`
 	IsTradeSample                     bool            `json:"is_trade_sample"`
 	IsTestingSample                   bool            `json:"is_testing_sample"`
@@ -202,6 +204,7 @@ type CreatePackageParams struct {
 	IsLineItem                        bool            `json:"is_line_item"`
 	OrderID                           nulls.Int64     `json:"order_id"`
 	UomID                             int64           `json:"uom_id"`
+	FacilityLocationID                int64           `json:"facility_location_id"`
 }
 
 // description: Create a package
@@ -241,6 +244,7 @@ func (q *Queries) CreatePackage(ctx context.Context, arg CreatePackageParams) (P
 		arg.IsLineItem,
 		arg.OrderID,
 		arg.UomID,
+		arg.FacilityLocationID,
 	)
 	var i Package
 	err := row.Scan(
@@ -438,10 +442,10 @@ type ListActivePackagesRow struct {
 	PackageType                       string          `json:"package_type"`
 	IsActive                          bool            `json:"is_active"`
 	Quantity                          decimal.Decimal `json:"quantity"`
-	Notes                             nulls.String    `json:"notes"`
+	Notes                             string          `json:"notes"`
 	PackagedDateTime                  time.Time       `json:"packaged_date_time"`
 	HarvestDateTime                   nulls.Time      `json:"harvest_date_time"`
-	LabTestingState                   nulls.String    `json:"lab_testing_state"`
+	LabTestingState                   string          `json:"lab_testing_state"`
 	LabTestingStateDateTime           nulls.Time      `json:"lab_testing_state_date_time"`
 	IsTradeSample                     bool            `json:"is_trade_sample"`
 	IsTestingSample                   bool            `json:"is_testing_sample"`
@@ -468,7 +472,7 @@ type ListActivePackagesRow struct {
 	IsLineItem                        bool            `json:"is_line_item"`
 	OrderID                           nulls.Int64     `json:"order_id"`
 	UomID                             int64           `json:"uom_id"`
-	FacilityLocationID                nulls.Int64     `json:"facility_location_id"`
+	FacilityLocationID                int64           `json:"facility_location_id"`
 	TagNumber                         string          `json:"tag_number"`
 	UomName                           string          `json:"uom_name"`
 	UomAbbreviation                   string          `json:"uom_abbreviation"`
@@ -660,10 +664,10 @@ type ListPackagesRow struct {
 	PackageType                       string          `json:"package_type"`
 	IsActive                          bool            `json:"is_active"`
 	Quantity                          decimal.Decimal `json:"quantity"`
-	Notes                             nulls.String    `json:"notes"`
+	Notes                             string          `json:"notes"`
 	PackagedDateTime                  time.Time       `json:"packaged_date_time"`
 	HarvestDateTime                   nulls.Time      `json:"harvest_date_time"`
-	LabTestingState                   nulls.String    `json:"lab_testing_state"`
+	LabTestingState                   string          `json:"lab_testing_state"`
 	LabTestingStateDateTime           nulls.Time      `json:"lab_testing_state_date_time"`
 	IsTradeSample                     bool            `json:"is_trade_sample"`
 	IsTestingSample                   bool            `json:"is_testing_sample"`
@@ -690,7 +694,7 @@ type ListPackagesRow struct {
 	IsLineItem                        bool            `json:"is_line_item"`
 	OrderID                           nulls.Int64     `json:"order_id"`
 	UomID                             int64           `json:"uom_id"`
-	FacilityLocationID                nulls.Int64     `json:"facility_location_id"`
+	FacilityLocationID                int64           `json:"facility_location_id"`
 	TagNumber                         string          `json:"tag_number"`
 	UomName                           string          `json:"uom_name"`
 	UomAbbreviation                   string          `json:"uom_abbreviation"`
@@ -896,10 +900,10 @@ type UpdatePackageParams struct {
 	TagID                             nulls.Int64     `json:"tag_id"`
 	PackageType                       string          `json:"package_type"`
 	Quantity                          decimal.Decimal `json:"quantity"`
-	Notes                             nulls.String    `json:"notes"`
+	Notes                             string          `json:"notes"`
 	PackagedDateTime                  time.Time       `json:"packaged_date_time"`
 	HarvestDateTime                   nulls.Time      `json:"harvest_date_time"`
-	LabTestingState                   nulls.String    `json:"lab_testing_state"`
+	LabTestingState                   string          `json:"lab_testing_state"`
 	LabTestingStateDateTime           nulls.Time      `json:"lab_testing_state_date_time"`
 	IsTradeSample                     bool            `json:"is_trade_sample"`
 	IsTestingSample                   bool            `json:"is_testing_sample"`

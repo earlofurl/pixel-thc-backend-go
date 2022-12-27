@@ -3,6 +3,7 @@ package api
 import (
 	"database/sql"
 	"encoding/json"
+	"github.com/gobuffalo/nulls"
 	"net/http"
 	"time"
 
@@ -15,24 +16,24 @@ import (
 
 // TODO: refactor Role to be determined on the backend rather than passed as a parameter
 type createUserRequest struct {
-	Username  string `json:"username" binding:"required,alphanum,min=4,max=20"`
-	Email     string `json:"email" binding:"required,email"`
-	Password  string `json:"password" binding:"required,min=6"`
-	FirstName string `json:"first_name" binding:"required"`
-	LastName  string `json:"last_name" binding:"required"`
-	Phone     string `json:"phone" binding:"required"`
-	Role      string `json:"role" binding:"required"`
+	Username  string       `json:"username" binding:"required,alphanum,min=4,max=20"`
+	Email     string       `json:"email" binding:"required,email"`
+	Password  string       `json:"password" binding:"required,min=6"`
+	FirstName string       `json:"first_name" binding:"required"`
+	LastName  string       `json:"last_name" binding:"required"`
+	Phone     nulls.String `json:"phone" binding:"required"`
+	Role      string       `json:"role" binding:"required"`
 }
 
 type userResponse struct {
-	Username          string    `json:"username"`
-	FirstName         string    `json:"first_name"`
-	LastName          string    `json:"last_name"`
-	Email             string    `json:"email"`
-	Phone             string    `json:"phone"`
-	Role              string    `json:"role"`
-	PasswordChangedAt time.Time `json:"password_changed_at"`
-	CreatedAt         time.Time `json:"created_at"`
+	Username          string       `json:"username"`
+	FirstName         string       `json:"first_name"`
+	LastName          string       `json:"last_name"`
+	Email             string       `json:"email"`
+	Phone             nulls.String `json:"phone"`
+	Role              string       `json:"role"`
+	PasswordChangedAt time.Time    `json:"password_changed_at"`
+	CreatedAt         time.Time    `json:"created_at"`
 }
 
 func newUserResponse(user db.User) userResponse {

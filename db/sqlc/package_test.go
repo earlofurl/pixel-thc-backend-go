@@ -25,10 +25,10 @@ func createRandomPackage(t *testing.T) Package {
 		PackageType:                       util.RandomString(10),
 		IsActive:                          util.RandomBool(),
 		Quantity:                          decimal.NewFromFloatWithExponent(util.RandomDecimalTimes100(), -6),
-		Notes:                             nulls.NewString(util.RandomString(10)),
+		Notes:                             util.RandomString(10),
 		PackagedDateTime:                  time.Now(),
 		HarvestDateTime:                   nulls.NewTime(time.Now()),
-		LabTestingState:                   nulls.NewString(util.RandomString(10)),
+		LabTestingState:                   util.RandomString(10),
 		LabTestingStateDateTime:           nulls.NewTime(time.Now()),
 		IsTradeSample:                     util.RandomBool(),
 		IsTestingSample:                   util.RandomBool(),
@@ -53,6 +53,7 @@ func createRandomPackage(t *testing.T) Package {
 		TotalSoldPrice:                    decimal.NewFromFloatWithExponent(util.RandomPercent(), -4),
 		PackagingSuppliesConsumed:         util.RandomBool(),
 		IsLineItem:                        util.RandomBool(),
+		FacilityLocationID:                1,
 		//OrderID:                           nulls.NewInt64(0), // TODO: add back after Order model is created
 		UomID: newRandomUom.ID,
 		// TODO: add Lab Testing connection in random package creation

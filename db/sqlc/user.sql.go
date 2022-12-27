@@ -18,13 +18,13 @@ RETURNING id, hashed_password, username, email, first_name, last_name, phone, ro
 `
 
 type CreateUserParams struct {
-	Username       string `json:"username"`
-	Email          string `json:"email"`
-	HashedPassword string `json:"hashed_password"`
-	FirstName      string `json:"first_name"`
-	LastName       string `json:"last_name"`
-	Phone          string `json:"phone"`
-	Role           string `json:"role"`
+	Username       string       `json:"username"`
+	Email          string       `json:"email"`
+	HashedPassword string       `json:"hashed_password"`
+	FirstName      string       `json:"first_name"`
+	LastName       string       `json:"last_name"`
+	Phone          nulls.String `json:"phone"`
+	Role           string       `json:"role"`
 }
 
 func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, error) {

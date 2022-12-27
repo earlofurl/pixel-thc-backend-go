@@ -53,8 +53,8 @@ type CreateStrainParams struct {
 	Terp5Value              decimal.Decimal `json:"terp_5_value"`
 	ThcAverage              decimal.Decimal `json:"thc_average"`
 	TotalCannabinoidAverage decimal.Decimal `json:"total_cannabinoid_average"`
-	LightDep2022            nulls.String    `json:"light_dep_2022"`
-	FallHarvest2022         nulls.String    `json:"fall_harvest_2022"`
+	LightDep2022            string          `json:"light_dep_2022"`
+	FallHarvest2022         string          `json:"fall_harvest_2022"`
 	QuantityAvailable       decimal.Decimal `json:"quantity_available"`
 }
 
@@ -255,8 +255,8 @@ type UpdateStrainParams struct {
 	Terp5Value              decimal.Decimal `json:"terp_5_value"`
 	ThcAverage              decimal.Decimal `json:"thc_average"`
 	TotalCannabinoidAverage decimal.Decimal `json:"total_cannabinoid_average"`
-	LightDep2022            nulls.String    `json:"light_dep_2022"`
-	FallHarvest2022         nulls.String    `json:"fall_harvest_2022"`
+	LightDep2022            string          `json:"light_dep_2022"`
+	FallHarvest2022         string          `json:"fall_harvest_2022"`
 	QuantityAvailable       decimal.Decimal `json:"quantity_available"`
 }
 

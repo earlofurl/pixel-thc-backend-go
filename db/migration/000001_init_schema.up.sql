@@ -1,42 +1,19 @@
 -- SQL dump generated using DBML (dbml-lang.org)
 -- Database: PostgreSQL
--- Generated at: 2022-12-08T19:19:38.805Z
+-- Generated at: 2022-12-27T10:59:07.358Z
 
 CREATE TABLE "users" (
                          "id" bigserial PRIMARY KEY,
                          "hashed_password" varchar(64) NOT NULL,
                          "username" varchar(64) UNIQUE NOT NULL,
                          "email" varchar(255) UNIQUE NOT NULL,
-                         "first_name" varchar(255) NOT NULL,
-                         "last_name" varchar(255) NOT NULL,
-                         "phone" varchar(26) NOT NULL,
-                         "role" varchar(255) NOT NULL,
+                         "first_name" varchar(255) NOT NULL DEFAULT '',
+                         "last_name" varchar(255) NOT NULL DEFAULT '',
+                         "phone" varchar(26) UNIQUE,
+                         "role" varchar(255) NOT NULL DEFAULT 'user',
                          "created_at" timestamptz NOT NULL DEFAULT (now()),
-                         "password_changed_at" timestamptz NOT NULL DEFAULT '0001-01-01',
+                         "password_changed_at" timestamptz NOT NULL DEFAULT (now()),
                          "updated_at" timestamptz NOT NULL DEFAULT (now())
-);
-
-CREATE TABLE "accounts" (
-                            "id" bigserial PRIMARY KEY,
-                            "owner" varchar(64) NOT NULL,
-                            "balance" bigint NOT NULL,
-                            "currency" varchar(3) NOT NULL,
-                            "created_at" timestamptz NOT NULL DEFAULT (now())
-);
-
-CREATE TABLE "entries" (
-                           "id" bigserial PRIMARY KEY,
-                           "account_id" bigint NOT NULL,
-                           "amount" bigint NOT NULL,
-                           "created_at" timestamptz NOT NULL DEFAULT (now())
-);
-
-CREATE TABLE "transfers" (
-                             "id" bigserial PRIMARY KEY,
-                             "from_account_id" bigint NOT NULL,
-                             "to_account_id" bigint NOT NULL,
-                             "amount" bigint NOT NULL,
-                             "created_at" timestamptz NOT NULL DEFAULT (now())
 );
 
 CREATE TABLE "sessions" (
@@ -77,9 +54,9 @@ CREATE TABLE "strains" (
                            "terp_5_value" numeric(9,6),
                            "thc_average" numeric(9,6),
                            "total_cannabinoid_average" numeric(9,6),
-                           "light_dep_2022" varchar DEFAULT 'false',
-                           "fall_harvest_2022" varchar DEFAULT 'false',
-                           "quantity_available" numeric(9,6)
+                           "light_dep_2022" varchar NOT NULL DEFAULT 'false',
+                           "fall_harvest_2022" varchar NOT NULL DEFAULT 'false',
+                           "quantity_available" numeric(9,6) NOT NULL DEFAULT 0
 );
 
 CREATE TABLE "retailer_locations" (
@@ -87,18 +64,17 @@ CREATE TABLE "retailer_locations" (
                                       "created_at" timestamptz NOT NULL DEFAULT (now()),
                                       "updated_at" timestamptz NOT NULL DEFAULT (now()),
                                       "name" varchar(255) UNIQUE NOT NULL,
-                                      "address" varchar(255) NOT NULL,
-                                      "city" varchar(255) NOT NULL,
-                                      "state" varchar(255) NOT NULL,
-                                      "zip" varchar(10) NOT NULL,
-                                      "latitude" numeric(9,6) NOT NULL DEFAULT 0,
-                                      "longitude" numeric(9,6) NOT NULL DEFAULT 0,
-                                      "note" varchar(1024),
+                                      "address" varchar(255) NOT NULL DEFAULT '',
+                                      "city" varchar(255) NOT NULL DEFAULT '',
+                                      "state" varchar(255) NOT NULL DEFAULT '',
+                                      "zip" varchar(10) NOT NULL DEFAULT '',
+                                      "latitude" numeric(9,6) NOT NULL DEFAULT 90,
+                                      "longitude" numeric(9,6) NOT NULL DEFAULT 135,
+                                      "note" varchar(1024) NOT NULL DEFAULT '',
                                       "website" varchar(2083),
-                                      "sells_flower" boolean DEFAULT false,
-                                      "sells_prerolls" boolean DEFAULT false,
-                                      "sells_pressed_hash" boolean DEFAULT false,
-                                      "created_by" varchar(255)
+                                      "sells_flower" boolean NOT NULL DEFAULT false,
+                                      "sells_prerolls" boolean NOT NULL DEFAULT false,
+                                      "sells_pressed_hash" boolean NOT NULL DEFAULT false
 );
 
 CREATE TABLE "items" (
@@ -115,8 +91,8 @@ CREATE TABLE "item_types" (
                               "id" bigserial PRIMARY KEY,
                               "created_at" timestamptz NOT NULL DEFAULT (now()),
                               "updated_at" timestamptz NOT NULL DEFAULT (now()),
-                              "product_form" varchar(255) NOT NULL,
-                              "product_modifier" varchar(255) NOT NULL,
+                              "product_form" varchar(255) NOT NULL DEFAULT '',
+                              "product_modifier" varchar(255) NOT NULL DEFAULT '',
                               "uom_default" bigint NOT NULL,
                               "product_category_id" bigint NOT NULL
 );
@@ -137,13 +113,13 @@ CREATE TABLE "packages" (
                             "created_at" timestamptz NOT NULL DEFAULT (now()),
                             "updated_at" timestamptz NOT NULL DEFAULT (now()),
                             "tag_id" bigint,
-                            "package_type" varchar(255) NOT NULL,
+                            "package_type" varchar(255) NOT NULL DEFAULT '',
                             "is_active" boolean NOT NULL DEFAULT false,
-                            "quantity" numeric(19,6),
-                            "notes" varchar(1024),
+                            "quantity" numeric(19,6) NOT NULL DEFAULT 0,
+                            "notes" varchar(1024) NOT NULL DEFAULT '',
                             "packaged_date_time" timestamptz NOT NULL DEFAULT (now()),
                             "harvest_date_time" timestamptz,
-                            "lab_testing_state" varchar(255),
+                            "lab_testing_state" varchar(255) NOT NULL DEFAULT 'Untested',
                             "lab_testing_state_date_time" timestamptz,
                             "is_trade_sample" boolean NOT NULL DEFAULT false,
                             "is_testing_sample" boolean NOT NULL DEFAULT false,
@@ -161,15 +137,16 @@ CREATE TABLE "packages" (
                             "provisional_label" varchar(255),
                             "is_provisional" boolean NOT NULL DEFAULT false,
                             "is_sold" boolean NOT NULL DEFAULT false,
-                            "ppu_default" numeric(19,4),
-                            "ppu_on_order" numeric(19,4),
-                            "total_package_price_on_order" numeric(19,4),
-                            "ppu_sold_price" numeric(19,4),
-                            "total_sold_price" numeric(19,4),
+                            "ppu_default" numeric(19,4) NOT NULL DEFAULT 0,
+                            "ppu_on_order" numeric(19,4) NOT NULL DEFAULT 0,
+                            "total_package_price_on_order" numeric(19,4) NOT NULL DEFAULT 0,
+                            "ppu_sold_price" numeric(19,4) NOT NULL DEFAULT 0,
+                            "total_sold_price" numeric(19,4) NOT NULL DEFAULT 0,
                             "packaging_supplies_consumed" boolean NOT NULL DEFAULT false,
                             "is_line_item" boolean NOT NULL DEFAULT false,
                             "order_id" bigint,
-                            "uom_id" bigint NOT NULL
+                            "uom_id" bigint NOT NULL,
+                            "facility_location_id" bigint NOT NULL DEFAULT 1
 );
 
 CREATE TABLE "source_packages_child_packages" (
@@ -193,37 +170,37 @@ CREATE TABLE "lab_tests" (
                              "test_type_name" varchar(255) NOT NULL DEFAULT '',
                              "test_passed" boolean NOT NULL DEFAULT false,
                              "test_comment" varchar(255) NOT NULL DEFAULT '',
-                             "thc_total_percent" numeric(9,6),
-                             "thc_total_value" numeric(9,6),
-                             "cbd_percent" numeric(9,6),
-                             "cbd_value" numeric(9,6),
-                             "terpene_total_percent" numeric(9,6),
-                             "terpene_total_value" numeric(9,6),
-                             "thc_a_percent" numeric(9,6),
-                             "thc_a_value" numeric(9,6),
-                             "delta9_thc_percent" numeric(9,6),
-                             "delta9_thc_value" numeric(9,6),
-                             "delta8_thc_percent" numeric(9,6),
-                             "delta8_thc_value" numeric(9,6),
-                             "thc_v_percent" numeric(9,6),
-                             "thc_v_value" numeric(9,6),
-                             "cbd_a_percent" numeric(9,6),
-                             "cbd_a_value" numeric(9,6),
-                             "cbn_percent" numeric(9,6),
-                             "cbn_value" numeric(9,6),
-                             "cbg_a_percent" numeric(9,6),
-                             "cbg_a_value" numeric(9,6),
-                             "cbg_percent" numeric(9,6),
-                             "cbg_value" numeric(9,6),
-                             "cbc_percent" numeric(9,6),
-                             "cbc_value" numeric(9,6),
-                             "total_cannabinoid_percent" numeric(9,6),
-                             "total_cannabinoid_value" numeric(9,6)
+                             "thc_total_percent" numeric(9,6) NOT NULL DEFAULT 0,
+                             "thc_total_value" numeric(9,6) NOT NULL DEFAULT 0,
+                             "cbd_percent" numeric(9,6) NOT NULL DEFAULT 0,
+                             "cbd_value" numeric(9,6) NOT NULL DEFAULT 0,
+                             "terpene_total_percent" numeric(9,6) NOT NULL DEFAULT 0,
+                             "terpene_total_value" numeric(9,6) NOT NULL DEFAULT 0,
+                             "thc_a_percent" numeric(9,6) NOT NULL DEFAULT 0,
+                             "thc_a_value" numeric(9,6) NOT NULL DEFAULT 0,
+                             "delta9_thc_percent" numeric(9,6) NOT NULL DEFAULT 0,
+                             "delta9_thc_value" numeric(9,6) NOT NULL DEFAULT 0,
+                             "delta8_thc_percent" numeric(9,6) NOT NULL DEFAULT 0,
+                             "delta8_thc_value" numeric(9,6) NOT NULL DEFAULT 0,
+                             "thc_v_percent" numeric(9,6) NOT NULL DEFAULT 0,
+                             "thc_v_value" numeric(9,6) NOT NULL DEFAULT 0,
+                             "cbd_a_percent" numeric(9,6) NOT NULL DEFAULT 0,
+                             "cbd_a_value" numeric(9,6) NOT NULL DEFAULT 0,
+                             "cbn_percent" numeric(9,6) NOT NULL DEFAULT 0,
+                             "cbn_value" numeric(9,6) NOT NULL DEFAULT 0,
+                             "cbg_a_percent" numeric(9,6) NOT NULL DEFAULT 0,
+                             "cbg_a_value" numeric(9,6) NOT NULL DEFAULT 0,
+                             "cbg_percent" numeric(9,6) NOT NULL DEFAULT 0,
+                             "cbg_value" numeric(9,6) NOT NULL DEFAULT 0,
+                             "cbc_percent" numeric(9,6) NOT NULL DEFAULT 0,
+                             "cbc_value" numeric(9,6) NOT NULL DEFAULT 0,
+                             "total_cannabinoid_percent" numeric(9,6) NOT NULL DEFAULT 0,
+                             "total_cannabinoid_value" numeric(9,6) NOT NULL DEFAULT 0
 );
 
 CREATE TABLE "lab_tests_packages" (
-                                      "lab_test_id" bigint,
-                                      "package_id" bigint,
+                                      "lab_test_id" bigint NOT NULL,
+                                      "package_id" bigint NOT NULL,
                                       "created_at" timestamptz NOT NULL DEFAULT (now()),
                                       "updated_at" timestamptz NOT NULL DEFAULT (now())
 );
@@ -232,24 +209,32 @@ CREATE TABLE "uoms" (
                         "id" bigserial PRIMARY KEY,
                         "created_at" timestamptz NOT NULL DEFAULT (now()),
                         "updated_at" timestamptz NOT NULL DEFAULT (now()),
-                        "name" varchar(32) NOT NULL,
-                        "abbreviation" varchar(16) NOT NULL
+                        "name" varchar(32) NOT NULL DEFAULT '',
+                        "abbreviation" varchar(16) NOT NULL DEFAULT ''
 );
 
 CREATE TABLE "orders" (
                           "id" bigserial PRIMARY KEY,
                           "created_at" timestamptz NOT NULL DEFAULT (now()),
                           "updated_at" timestamptz NOT NULL DEFAULT (now()),
-                          "scheduled_pack_date_time" timestamptz,
-                          "scheduled_ship_date_time" timestamptz,
-                          "scheduled_delivery_date_time" timestamptz,
+                          "scheduled_pack_date_time" timestamptz NOT NULL DEFAULT (now()),
+                          "scheduled_ship_date_time" timestamptz NOT NULL DEFAULT (now()),
+                          "scheduled_delivery_date_time" timestamptz NOT NULL DEFAULT (now()),
                           "actual_pack_date_time" timestamptz,
                           "actual_ship_date_time" timestamptz,
                           "actual_delivery_date_time" timestamptz,
-                          "order_total" numeric(19,4),
-                          "notes" varchar(1024),
+                          "order_total" numeric(19,4) NOT NULL DEFAULT 0,
+                          "notes" varchar(1024) NOT NULL DEFAULT '',
                           "status" varchar(255) NOT NULL DEFAULT '',
                           "customer_name" varchar(255) NOT NULL DEFAULT ''
+);
+
+CREATE TABLE "package_adj_entries" (
+                                       "id" bigserial PRIMARY KEY,
+                                       "created_at" timestamptz NOT NULL DEFAULT (now()),
+                                       "package_id" bigint NOT NULL,
+                                       "amount" numeric(19,6) NOT NULL,
+                                       "uom_id" bigint NOT NULL
 );
 
 CREATE TABLE "package_adjustments" (
@@ -258,23 +243,27 @@ CREATE TABLE "package_adjustments" (
                                        "updated_at" timestamptz NOT NULL DEFAULT (now()),
                                        "from_package_id" bigint NOT NULL,
                                        "to_package_id" bigint NOT NULL,
-                                       "amount" bigint NOT NULL,
+                                       "amount" numeric(19,6) NOT NULL,
                                        "uom_id" bigint NOT NULL
 );
 
+CREATE TABLE "facilities" (
+                              "id" bigserial PRIMARY KEY,
+                              "created_at" timestamptz NOT NULL DEFAULT (now()),
+                              "updated_at" timestamptz NOT NULL DEFAULT (now()),
+                              "name" varchar(255) NOT NULL DEFAULT '',
+                              "license_number" varchar(255) NOT NULL DEFAULT ''
+);
+
+CREATE TABLE "facility_locations" (
+                                      "id" bigserial PRIMARY KEY,
+                                      "created_at" timestamptz NOT NULL DEFAULT (now()),
+                                      "updated_at" timestamptz NOT NULL DEFAULT (now()),
+                                      "name" varchar(255) NOT NULL DEFAULT '',
+                                      "facility_id" bigint NOT NULL
+);
+
 CREATE UNIQUE INDEX ON "users" ("email");
-
-CREATE INDEX ON "accounts" ("owner");
-
-CREATE UNIQUE INDEX ON "accounts" ("owner", "currency");
-
-CREATE INDEX ON "entries" ("account_id");
-
-CREATE INDEX ON "transfers" ("from_account_id");
-
-CREATE INDEX ON "transfers" ("to_account_id");
-
-CREATE INDEX ON "transfers" ("from_account_id", "to_account_id");
 
 CREATE UNIQUE INDEX ON "package_tags" ("tag_number");
 
@@ -292,25 +281,17 @@ CREATE INDEX ON "lab_tests_packages" ("package_id");
 
 CREATE INDEX ON "lab_tests_packages" ("lab_test_id", "package_id");
 
+CREATE INDEX ON "package_adj_entries" ("package_id");
+
 CREATE INDEX ON "package_adjustments" ("from_package_id");
 
 CREATE INDEX ON "package_adjustments" ("to_package_id");
 
 CREATE INDEX ON "package_adjustments" ("from_package_id", "to_package_id");
 
-COMMENT ON COLUMN "entries"."amount" IS 'can be negative or positive';
-
-COMMENT ON COLUMN "transfers"."amount" IS 'must be positive';
+COMMENT ON COLUMN "package_adj_entries"."amount" IS 'can be negative or positive';
 
 COMMENT ON COLUMN "package_adjustments"."amount" IS 'must be positive';
-
-ALTER TABLE "accounts" ADD FOREIGN KEY ("owner") REFERENCES "users" ("username");
-
-ALTER TABLE "entries" ADD FOREIGN KEY ("account_id") REFERENCES "accounts" ("id");
-
-ALTER TABLE "transfers" ADD FOREIGN KEY ("from_account_id") REFERENCES "accounts" ("id");
-
-ALTER TABLE "transfers" ADD FOREIGN KEY ("to_account_id") REFERENCES "accounts" ("id");
 
 ALTER TABLE "sessions" ADD FOREIGN KEY ("username") REFERENCES "users" ("username");
 
@@ -332,6 +313,8 @@ ALTER TABLE "packages" ADD FOREIGN KEY ("order_id") REFERENCES "orders" ("id");
 
 ALTER TABLE "packages" ADD FOREIGN KEY ("uom_id") REFERENCES "uoms" ("id");
 
+ALTER TABLE "packages" ADD FOREIGN KEY ("facility_location_id") REFERENCES "facility_locations" ("id");
+
 ALTER TABLE "source_packages_child_packages" ADD FOREIGN KEY ("source_package_id") REFERENCES "packages" ("id");
 
 ALTER TABLE "source_packages_child_packages" ADD FOREIGN KEY ("child_package_id") REFERENCES "packages" ("id");
@@ -340,8 +323,14 @@ ALTER TABLE "lab_tests_packages" ADD FOREIGN KEY ("lab_test_id") REFERENCES "lab
 
 ALTER TABLE "lab_tests_packages" ADD FOREIGN KEY ("package_id") REFERENCES "packages" ("id");
 
+ALTER TABLE "package_adj_entries" ADD FOREIGN KEY ("package_id") REFERENCES "packages" ("id");
+
+ALTER TABLE "package_adj_entries" ADD FOREIGN KEY ("uom_id") REFERENCES "uoms" ("id");
+
 ALTER TABLE "package_adjustments" ADD FOREIGN KEY ("from_package_id") REFERENCES "packages" ("id");
 
 ALTER TABLE "package_adjustments" ADD FOREIGN KEY ("to_package_id") REFERENCES "packages" ("id");
 
 ALTER TABLE "package_adjustments" ADD FOREIGN KEY ("uom_id") REFERENCES "uoms" ("id");
+
+ALTER TABLE "facility_locations" ADD FOREIGN KEY ("facility_id") REFERENCES "facilities" ("id");

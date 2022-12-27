@@ -12,22 +12,6 @@ import (
 	"github.com/shopspring/decimal"
 )
 
-type Account struct {
-	ID        int64     `json:"id"`
-	Owner     string    `json:"owner"`
-	Balance   int64     `json:"balance"`
-	Currency  string    `json:"currency"`
-	CreatedAt time.Time `json:"created_at"`
-}
-
-type Entry struct {
-	ID        int64 `json:"id"`
-	AccountID int64 `json:"account_id"`
-	// can be negative or positive
-	Amount    int64     `json:"amount"`
-	CreatedAt time.Time `json:"created_at"`
-}
-
 type Facility struct {
 	ID            int64     `json:"id"`
 	CreatedAt     time.Time `json:"created_at"`
@@ -108,7 +92,7 @@ type LabTest struct {
 
 type LabTestsPackage struct {
 	LabTestID nulls.Int64 `json:"lab_test_id"`
-	PackageID nulls.Int64 `json:"package_id"`
+	PackageID int64       `json:"package_id"`
 	CreatedAt time.Time   `json:"created_at"`
 	UpdatedAt time.Time   `json:"updated_at"`
 }
@@ -117,14 +101,14 @@ type Order struct {
 	ID                        int64           `json:"id"`
 	CreatedAt                 time.Time       `json:"created_at"`
 	UpdatedAt                 time.Time       `json:"updated_at"`
-	ScheduledPackDateTime     nulls.Time      `json:"scheduled_pack_date_time"`
-	ScheduledShipDateTime     nulls.Time      `json:"scheduled_ship_date_time"`
-	ScheduledDeliveryDateTime nulls.Time      `json:"scheduled_delivery_date_time"`
+	ScheduledPackDateTime     time.Time       `json:"scheduled_pack_date_time"`
+	ScheduledShipDateTime     time.Time       `json:"scheduled_ship_date_time"`
+	ScheduledDeliveryDateTime time.Time       `json:"scheduled_delivery_date_time"`
 	ActualPackDateTime        nulls.Time      `json:"actual_pack_date_time"`
 	ActualShipDateTime        nulls.Time      `json:"actual_ship_date_time"`
 	ActualDeliveryDateTime    nulls.Time      `json:"actual_delivery_date_time"`
 	OrderTotal                decimal.Decimal `json:"order_total"`
-	Notes                     nulls.String    `json:"notes"`
+	Notes                     string          `json:"notes"`
 	Status                    string          `json:"status"`
 	CustomerName              string          `json:"customer_name"`
 }
@@ -137,10 +121,10 @@ type Package struct {
 	PackageType                       string          `json:"package_type"`
 	IsActive                          bool            `json:"is_active"`
 	Quantity                          decimal.Decimal `json:"quantity"`
-	Notes                             nulls.String    `json:"notes"`
+	Notes                             string          `json:"notes"`
 	PackagedDateTime                  time.Time       `json:"packaged_date_time"`
 	HarvestDateTime                   nulls.Time      `json:"harvest_date_time"`
-	LabTestingState                   nulls.String    `json:"lab_testing_state"`
+	LabTestingState                   string          `json:"lab_testing_state"`
 	LabTestingStateDateTime           nulls.Time      `json:"lab_testing_state_date_time"`
 	IsTradeSample                     bool            `json:"is_trade_sample"`
 	IsTestingSample                   bool            `json:"is_testing_sample"`
@@ -167,7 +151,7 @@ type Package struct {
 	IsLineItem                        bool            `json:"is_line_item"`
 	OrderID                           nulls.Int64     `json:"order_id"`
 	UomID                             int64           `json:"uom_id"`
-	FacilityLocationID                nulls.Int64     `json:"facility_location_id"`
+	FacilityLocationID                int64           `json:"facility_location_id"`
 }
 
 type PackageAdjEntry struct {
@@ -219,12 +203,11 @@ type RetailerLocation struct {
 	Zip              string          `json:"zip"`
 	Latitude         decimal.Decimal `json:"latitude"`
 	Longitude        decimal.Decimal `json:"longitude"`
-	Note             nulls.String    `json:"note"`
+	Note             string          `json:"note"`
 	Website          nulls.String    `json:"website"`
-	SellsFlower      nulls.Bool      `json:"sells_flower"`
-	SellsPrerolls    nulls.Bool      `json:"sells_prerolls"`
-	SellsPressedHash nulls.Bool      `json:"sells_pressed_hash"`
-	CreatedBy        nulls.String    `json:"created_by"`
+	SellsFlower      bool            `json:"sells_flower"`
+	SellsPrerolls    bool            `json:"sells_prerolls"`
+	SellsPressedHash bool            `json:"sells_pressed_hash"`
 }
 
 type Session struct {
@@ -265,18 +248,9 @@ type Strain struct {
 	Terp5Value              decimal.Decimal `json:"terp_5_value"`
 	ThcAverage              decimal.Decimal `json:"thc_average"`
 	TotalCannabinoidAverage decimal.Decimal `json:"total_cannabinoid_average"`
-	LightDep2022            nulls.String    `json:"light_dep_2022"`
-	FallHarvest2022         nulls.String    `json:"fall_harvest_2022"`
+	LightDep2022            string          `json:"light_dep_2022"`
+	FallHarvest2022         string          `json:"fall_harvest_2022"`
 	QuantityAvailable       decimal.Decimal `json:"quantity_available"`
-}
-
-type Transfer struct {
-	ID            int64 `json:"id"`
-	FromAccountID int64 `json:"from_account_id"`
-	ToAccountID   int64 `json:"to_account_id"`
-	// must be positive
-	Amount    int64     `json:"amount"`
-	CreatedAt time.Time `json:"created_at"`
 }
 
 type Uom struct {
@@ -288,15 +262,15 @@ type Uom struct {
 }
 
 type User struct {
-	ID                int64     `json:"id"`
-	HashedPassword    string    `json:"hashed_password"`
-	Username          string    `json:"username"`
-	Email             string    `json:"email"`
-	FirstName         string    `json:"first_name"`
-	LastName          string    `json:"last_name"`
-	Phone             string    `json:"phone"`
-	Role              string    `json:"role"`
-	CreatedAt         time.Time `json:"created_at"`
-	PasswordChangedAt time.Time `json:"password_changed_at"`
-	UpdatedAt         time.Time `json:"updated_at"`
+	ID                int64        `json:"id"`
+	HashedPassword    string       `json:"hashed_password"`
+	Username          string       `json:"username"`
+	Email             string       `json:"email"`
+	FirstName         string       `json:"first_name"`
+	LastName          string       `json:"last_name"`
+	Phone             nulls.String `json:"phone"`
+	Role              string       `json:"role"`
+	CreatedAt         time.Time    `json:"created_at"`
+	PasswordChangedAt time.Time    `json:"password_changed_at"`
+	UpdatedAt         time.Time    `json:"updated_at"`
 }

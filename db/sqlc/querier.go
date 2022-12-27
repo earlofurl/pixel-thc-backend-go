@@ -12,7 +12,6 @@ import (
 )
 
 type Querier interface {
-	AddAccountBalance(ctx context.Context, arg AddAccountBalanceParams) (Account, error)
 	// description: Add quantity to a package (can be negative to subtract)
 	// arguments: package_id int, quantity float
 	AddPackageQuantity(ctx context.Context, arg AddPackageQuantityParams) (Package, error)
@@ -20,8 +19,6 @@ type Querier interface {
 	AssignLabTestToPackage(ctx context.Context, arg AssignLabTestToPackageParams) error
 	// description: Assign a source package child package relationship on junction table
 	AssignSourcePackageChildPackage(ctx context.Context, arg AssignSourcePackageChildPackageParams) (SourcePackagesChildPackage, error)
-	CreateAccount(ctx context.Context, arg CreateAccountParams) (Account, error)
-	CreateEntry(ctx context.Context, arg CreateEntryParams) (Entry, error)
 	// description: Create a new facility
 	CreateFacility(ctx context.Context, arg CreateFacilityParams) (Facility, error)
 	// description: Create a new location within a facility
@@ -47,11 +44,9 @@ type Querier interface {
 	CreateSession(ctx context.Context, arg CreateSessionParams) (Session, error)
 	// description: Create a strain
 	CreateStrain(ctx context.Context, arg CreateStrainParams) (Strain, error)
-	CreateTransfer(ctx context.Context, arg CreateTransferParams) (Transfer, error)
 	// description: Create a new UOM
 	CreateUom(ctx context.Context, arg CreateUomParams) (Uom, error)
 	CreateUser(ctx context.Context, arg CreateUserParams) (User, error)
-	DeleteAccount(ctx context.Context, id int64) error
 	// description: Delete an item by ID
 	DeleteItem(ctx context.Context, id int64) error
 	// description: Delete an item type by ID
@@ -70,9 +65,6 @@ type Querier interface {
 	DeleteStrain(ctx context.Context, id int64) error
 	// description: Delete a UOM by ID
 	DeleteUom(ctx context.Context, id int64) error
-	GetAccount(ctx context.Context, id int64) (Account, error)
-	GetAccountForUpdate(ctx context.Context, id int64) (Account, error)
-	GetEntry(ctx context.Context, id int64) (Entry, error)
 	// description: Get a facility by ID
 	GetFacility(ctx context.Context, id int64) (Facility, error)
 	// description: Get a location within a facility by ID
@@ -104,16 +96,13 @@ type Querier interface {
 	GetSession(ctx context.Context, id uuid.UUID) (Session, error)
 	// description: Get a strain by ID
 	GetStrain(ctx context.Context, id int64) (Strain, error)
-	GetTransfer(ctx context.Context, id int64) (Transfer, error)
 	// description: Get a UOM by ID
 	GetUom(ctx context.Context, id int64) (Uom, error)
 	// description: Get a UOM by name
 	GetUomByName(ctx context.Context, name string) (Uom, error)
 	GetUser(ctx context.Context, email string) (User, error)
-	ListAccounts(ctx context.Context, arg ListAccountsParams) ([]Account, error)
 	// description: List all ACTIVE packages with related tag_number, uom, item, lab test, and source package
 	ListActivePackages(ctx context.Context) ([]ListActivePackagesRow, error)
-	ListEntries(ctx context.Context, arg ListEntriesParams) ([]Entry, error)
 	// description: List all facilities
 	ListFacilities(ctx context.Context) ([]Facility, error)
 	// description: List all locations within facilities
@@ -140,10 +129,8 @@ type Querier interface {
 	ListProductCategories(ctx context.Context) ([]ProductCategory, error)
 	// description: List all strains
 	ListStrains(ctx context.Context) ([]Strain, error)
-	ListTransfers(ctx context.Context, arg ListTransfersParams) ([]Transfer, error)
 	// description: List all UOMs
 	ListUoms(ctx context.Context) ([]Uom, error)
-	UpdateAccount(ctx context.Context, arg UpdateAccountParams) (Account, error)
 	// description: Update an item by ID
 	UpdateItem(ctx context.Context, arg UpdateItemParams) (Item, error)
 	// description: Update an item type by ID
