@@ -56,14 +56,38 @@ func (server *Server) getPackageTag(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, packageTag)
 }
 
+type listPackageTagsRequest struct {
+	IsAssigned bool  `form:"is_assigned"`
+	Limit      int32 `form:"limit,default=100" binding:"max=100"`
+	Offset     int32 `form:"offset,default=0"`
+}
+
 func (server *Server) listPackageTags(ctx *gin.Context) {
-	packageTags, err := server.store.ListPackageTags(ctx)
+	var req listPackageTagsRequest
+	if err := ctx.ShouldBindQuery(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, errorResponse(err))
+		return
+	}
+	packageTags, err := server.store.ListPackageTags(ctx, db.ListPackageTagsParams{
+		IsAssigned: req.IsAssigned,
+		Limit:      req.Limit,
+		Offset:     req.Offset,
+	})
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
 	ctx.JSON(http.StatusOK, packageTags)
 }
+
+//func (server *Server) listPackageTags(ctx *gin.Context) {
+//	packageTags, err := server.store.ListPackageTags(ctx)
+//	if err != nil {
+//		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
+//		return
+//	}
+//	ctx.JSON(http.StatusOK, packageTags)
+//}
 
 type getPackageTagByTagNumberRequest struct {
 	TagNumber string `uri:"tag_number" binding:"required"`

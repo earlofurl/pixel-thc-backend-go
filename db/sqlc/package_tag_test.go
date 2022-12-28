@@ -55,11 +55,17 @@ func TestQueries_TestGetPackageTag(t *testing.T) {
 }
 
 func TestQueries_TestListPackageTags(t *testing.T) {
+	arg := ListPackageTagsParams{
+		IsAssigned: false,
+		Limit:      20,
+		Offset:     0,
+	}
+
 	for i := 0; i < 10; i++ {
 		createRandomPackageTag(t)
 	}
 
-	packagetags, err := testQueries.ListPackageTags(context.Background())
+	packagetags, err := testQueries.ListPackageTags(context.Background(), arg)
 	require.NoError(t, err)
 	require.NotEmpty(t, packagetags)
 

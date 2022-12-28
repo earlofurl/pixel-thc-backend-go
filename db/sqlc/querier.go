@@ -127,8 +127,8 @@ type Querier interface {
 	ListPackageAdjEntries(ctx context.Context, arg ListPackageAdjEntriesParams) ([]PackageAdjEntry, error)
 	// description: List package adjustments
 	ListPackageAdjustments(ctx context.Context, arg ListPackageAdjustmentsParams) ([]PackageAdjustment, error)
-	// description: List all package tags
-	ListPackageTags(ctx context.Context) ([]PackageTag, error)
+	// description: List package tags by limit and offset
+	ListPackageTags(ctx context.Context, arg ListPackageTagsParams) ([]PackageTag, error)
 	// description: List all packages with related tag_number, uom, item, lab test, and source package
 	ListPackages(ctx context.Context) ([]ListPackagesRow, error)
 	// description: List all product categories

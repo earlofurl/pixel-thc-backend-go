@@ -1,6 +1,6 @@
 -- SQL dump generated using DBML (dbml-lang.org)
 -- Database: PostgreSQL
--- Generated at: 2022-12-28T07:08:42.015Z
+-- Generated at: 2022-12-28T10:09:26.071Z
 
 CREATE TABLE "users" (
   "id" bigserial PRIMARY KEY,
@@ -251,8 +251,8 @@ CREATE TABLE "facilities" (
   "id" bigserial PRIMARY KEY,
   "created_at" timestamptz NOT NULL DEFAULT (now()),
   "updated_at" timestamptz NOT NULL DEFAULT (now()),
-  "name" varchar(255) NOT NULL DEFAULT '',
-  "license_number" varchar(255) NOT NULL DEFAULT ''
+  "name" varchar(255) UNIQUE NOT NULL DEFAULT '',
+  "license_number" varchar(255) UNIQUE NOT NULL DEFAULT ''
 );
 
 CREATE TABLE "facility_locations" (

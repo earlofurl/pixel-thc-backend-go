@@ -109,15 +109,18 @@ func (q *Queries) GetPackageTagByTagNumber(ctx context.Context, tagNumber string
 }
 
 const listPackageTags = `-- name: ListPackageTags :many
-SELECT id, created_at, updated_at, tag_number, is_assigned, is_provisional, is_active, assigned_package_id
-FROM package_tags
-ORDER BY id
-LIMIT 1000
+SELECT id, created_at, updated_at, tag_number, is_assigned, is_provisional, is_active, assigned_package_id FROM package_tags WHERE is_assigned = $1 ORDER BY id LIMIT $2 OFFSET $3
 `
 
-// description: List all package tags
-func (q *Queries) ListPackageTags(ctx context.Context) ([]PackageTag, error) {
-	rows, err := q.db.QueryContext(ctx, listPackageTags)
+type ListPackageTagsParams struct {
+	IsAssigned bool  `json:"is_assigned"`
+	Limit      int32 `json:"limit"`
+	Offset     int32 `json:"offset"`
+}
+
+// description: List package tags by limit and offset
+func (q *Queries) ListPackageTags(ctx context.Context, arg ListPackageTagsParams) ([]PackageTag, error) {
+	rows, err := q.db.QueryContext(ctx, listPackageTags, arg.IsAssigned, arg.Limit, arg.Offset)
 	if err != nil {
 		return nil, err
 	}

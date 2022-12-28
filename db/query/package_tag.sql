@@ -19,11 +19,8 @@ WHERE tag_number = $1
 LIMIT 1;
 
 -- name: ListPackageTags :many
--- description: List all package tags
-SELECT *
-FROM package_tags
-ORDER BY id
-LIMIT 1000;
+-- description: List package tags by limit and offset
+SELECT * FROM package_tags WHERE is_assigned = $1 ORDER BY id LIMIT $2 OFFSET $3;
 
 -- name: UpdatePackageTag :one
 -- description: Update a package tag
