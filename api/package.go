@@ -45,6 +45,7 @@ type createPackageRequest struct {
 	OrderID                           nulls.Int64     `json:"order_id"`
 	UomID                             int64           `json:"uom_id"`
 	LabTestID                         nulls.Int64     `json:"lab_test_id"`
+	FacilityLocationID                int64           `json:"facility_location_id"`
 }
 
 func (server *Server) createPackage(ctx *gin.Context) {
@@ -89,6 +90,7 @@ func (server *Server) createPackage(ctx *gin.Context) {
 		IsLineItem:                        req.IsLineItem,
 		OrderID:                           req.OrderID,
 		UomID:                             req.UomID,
+		FacilityLocationID:                req.FacilityLocationID,
 	}
 
 	arg := db.CreatePackageTxParams{

@@ -122,10 +122,6 @@ func TestQueries_PackageToPackageTx(t *testing.T) {
 func TestQueries_CreatePackageTx(t *testing.T) {
 	store := NewStore(testDB)
 
-	//package1 := createRandomPackage(t)
-	//fmt.Println("Pckg 1 ID:", package1.ID)
-	//fmt.Println("Pckg 1 Qty >> before:", package1.Quantity)
-
 	n := 5
 	amount := decimal.NewFromFloatWithExponent(util.RandomFloat(1, 20), -6)
 

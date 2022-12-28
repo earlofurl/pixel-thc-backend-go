@@ -84,9 +84,12 @@ func (store *SQLStore) CreatePackageTx(ctx context.Context, arg CreatePackageTxP
 			result.ToPackage, result.FromPackage, err = addPckgQty(ctx, q, pkg.ID, arg.CreatePackageParams.Quantity, arg.SourcePackageID.Int64, decimal.NewFromFloat(-1).Mul(arg.CreatePackageParams.Quantity))
 		}
 
+		// Get Lab Test connected to the source package
+		labTest, err := q.GetLabTestByPackageID(ctx, arg.SourcePackageID.Int64)
+
 		// Create Lab Test Package Assignment Entry
 		err = q.AssignLabTestToPackage(ctx, AssignLabTestToPackageParams{
-			LabTestID: nulls.NewInt64(1), // TODO: Get the lab test ID from the parent package
+			LabTestID: labTest.LabTestID,
 			PackageID: pkg.ID,
 		})
 		if err != nil {

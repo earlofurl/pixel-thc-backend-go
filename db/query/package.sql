@@ -189,3 +189,7 @@ WHERE id = $1;
 -- name: AssignSourcePackageChildPackage :one
 -- description: Assign a source package child package relationship on junction table
 INSERT INTO source_packages_child_packages (source_package_id, child_package_id) VALUES ($1, $2) RETURNING *;
+
+-- name: GetLabTestByPackageID :one
+-- description: Get a lab test connected to package by package id in lab_tests_packages junction table
+SELECT * FROM lab_tests_packages WHERE package_id = $1 LIMIT 1;

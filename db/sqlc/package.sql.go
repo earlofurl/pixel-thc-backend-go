@@ -302,6 +302,23 @@ func (q *Queries) DeletePackage(ctx context.Context, id int64) error {
 	return err
 }
 
+const getLabTestByPackageID = `-- name: GetLabTestByPackageID :one
+SELECT lab_test_id, package_id, created_at, updated_at FROM lab_tests_packages WHERE package_id = $1 LIMIT 1
+`
+
+// description: Get a lab test connected to package by package id in lab_tests_packages junction table
+func (q *Queries) GetLabTestByPackageID(ctx context.Context, packageID int64) (LabTestsPackage, error) {
+	row := q.db.QueryRowContext(ctx, getLabTestByPackageID, packageID)
+	var i LabTestsPackage
+	err := row.Scan(
+		&i.LabTestID,
+		&i.PackageID,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
 const getPackage = `-- name: GetPackage :one
 SELECT id, created_at, updated_at, tag_id, package_type, is_active, quantity, notes, packaged_date_time, harvest_date_time, lab_testing_state, lab_testing_state_date_time, is_trade_sample, is_testing_sample, product_requires_remediation, contains_remediated_product, remediation_date_time, received_date_time, received_from_manifest_number, received_from_facility_license_number, received_from_facility_name, is_on_hold, archived_date, finished_date, item_id, provisional_label, is_provisional, is_sold, ppu_default, ppu_on_order, total_package_price_on_order, ppu_sold_price, total_sold_price, packaging_supplies_consumed, is_line_item, order_id, uom_id, facility_location_id
 FROM packages
