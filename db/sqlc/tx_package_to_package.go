@@ -30,6 +30,12 @@ type CreatePckgToPckgTxResult struct {
 func (store *SQLStore) CreatePckgToPckgTx(ctx context.Context, arg CreatePckgToPckgTxParams) (CreatePckgToPckgTxResult, error) {
 	var result CreatePckgToPckgTxResult
 
+	println("FromPackageID (p->p): ", arg.FromPackageID)
+	println("ToPackageID (p->p): ", arg.ToPackageID)
+	println("Quantity (p->p): ", arg.Amount.String())
+	println("UomID (p->p): ", arg.UomID)
+	println("LabTestID (p->p): ", arg.LabTestID)
+
 	err := store.execTx(ctx, func(q *Queries) error {
 		var err error
 

@@ -34,6 +34,12 @@ func TestQueries_TestCreatePackageTag(t *testing.T) {
 	createRandomPackageTag(t)
 }
 
+func TestQueries_Create1000PackageTags(t *testing.T) {
+	for i := 0; i < 1000; i++ {
+		createRandomPackageTag(t)
+	}
+}
+
 func TestQueries_TestGetPackageTag(t *testing.T) {
 	packagetag1 := createRandomPackageTag(t)
 	packagetag2, err := testQueries.GetPackageTag(context.Background(), packagetag1.ID)

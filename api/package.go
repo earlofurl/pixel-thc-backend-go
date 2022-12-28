@@ -55,8 +55,7 @@ func (server *Server) createPackage(ctx *gin.Context) {
 		return
 	}
 
-	arg := db.CreatePackageTxParams{
-		SourcePackageID:                   req.SourcePackageID,
+	packageParams := db.CreatePackageParams{
 		TagID:                             req.TagID,
 		PackageType:                       req.PackageType,
 		Quantity:                          req.Quantity,
@@ -90,7 +89,11 @@ func (server *Server) createPackage(ctx *gin.Context) {
 		IsLineItem:                        req.IsLineItem,
 		OrderID:                           req.OrderID,
 		UomID:                             req.UomID,
-		LabTestID:                         req.LabTestID,
+	}
+
+	arg := db.CreatePackageTxParams{
+		SourcePackageID:     req.SourcePackageID,
+		CreatePackageParams: packageParams,
 	}
 
 	productPackage, err := server.store.CreatePackageTx(ctx, arg)

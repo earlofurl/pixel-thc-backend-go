@@ -4,123 +4,96 @@ import (
 	"context"
 	"github.com/gobuffalo/nulls"
 	"github.com/shopspring/decimal"
-	"time"
 )
 
 // CreatePackageTxParams contains the input parameters for the createPackageTx function.
 type CreatePackageTxParams struct {
-	SourcePackageID                   nulls.Int64     `json:"source_package_id"`
-	TagID                             nulls.Int64     `json:"tag_id"`
-	PackageType                       string          `json:"package_type"`
-	IsActive                          bool            `json:"is_active"`
-	Quantity                          decimal.Decimal `json:"quantity"`
-	Notes                             string          `json:"notes"`
-	PackagedDateTime                  time.Time       `json:"packaged_date_time"`
-	HarvestDateTime                   nulls.Time      `json:"harvest_date_time"`
-	LabTestingState                   string          `json:"lab_testing_state"`
-	LabTestingStateDateTime           nulls.Time      `json:"lab_testing_state_date_time"`
-	IsTradeSample                     bool            `json:"is_trade_sample"`
-	IsTestingSample                   bool            `json:"is_testing_sample"`
-	ProductRequiresRemediation        bool            `json:"product_requires_remediation"`
-	ContainsRemediatedProduct         bool            `json:"contains_remediated_product"`
-	RemediationDateTime               nulls.Time      `json:"remediation_date_time"`
-	ReceivedDateTime                  nulls.Time      `json:"received_date_time"`
-	ReceivedFromManifestNumber        nulls.String    `json:"received_from_manifest_number"`
-	ReceivedFromFacilityLicenseNumber nulls.String    `json:"received_from_facility_license_number"`
-	ReceivedFromFacilityName          nulls.String    `json:"received_from_facility_name"`
-	IsOnHold                          bool            `json:"is_on_hold"`
-	ArchivedDate                      nulls.Time      `json:"archived_date"`
-	FinishedDate                      nulls.Time      `json:"finished_date"`
-	ItemID                            nulls.Int64     `json:"item_id"`
-	ProvisionalLabel                  nulls.String    `json:"provisional_label"`
-	IsProvisional                     bool            `json:"is_provisional"`
-	IsSold                            bool            `json:"is_sold"`
-	PpuDefault                        decimal.Decimal `json:"ppu_default"`
-	PpuOnOrder                        decimal.Decimal `json:"ppu_on_order"`
-	TotalPackagePriceOnOrder          decimal.Decimal `json:"total_package_price_on_order"`
-	PpuSoldPrice                      decimal.Decimal `json:"ppu_sold_price"`
-	TotalSoldPrice                    decimal.Decimal `json:"total_sold_price"`
-	PackagingSuppliesConsumed         bool            `json:"packaging_supplies_consumed"`
-	IsLineItem                        bool            `json:"is_line_item"`
-	OrderID                           nulls.Int64     `json:"order_id"`
-	UomID                             int64           `json:"uom_id"`
-	LabTestID                         nulls.Int64     `json:"lab_test_id"`
-	FacilityLocationID                nulls.Int64     `json:"facility_location_id"`
+	SourcePackageID     nulls.Int64
+	CreatePackageParams CreatePackageParams
 }
 
 // CreatePackageTxResult contains the output parameters for the createPackageTx function.
 type CreatePackageTxResult struct {
-	CreatedPackage      Package                  `json:"created_package"`
-	CreatedPckgToPckgTx CreatePckgToPckgTxResult `json:"create_pckg_to_pckg_tx_result"`
+	CreatedPackage                 Package                    `json:"created_package"`
+	PackageAdjustment              PackageAdjustment          `json:"package_adjustment"`
+	FromPackage                    Package                    `json:"from_package"`
+	ToPackage                      Package                    `json:"to_package"`
+	FromPackageAdjEntry            PackageAdjEntry            `json:"from_entry"`
+	ToPackageAdjEntry              PackageAdjEntry            `json:"to_entry"`
+	SourcePackageChildPackageEntry SourcePackagesChildPackage `json:"source_packages_child_package"`
 }
 
-// CreatePackageTx creates a new package, connects it to the source package and lab tests, and returns the new package ID.
+// CreatePackageTx creates a new package, and optionally creates a package adjustment and/or a package to package relationship.
 func (store *SQLStore) CreatePackageTx(ctx context.Context, arg CreatePackageTxParams) (CreatePackageTxResult, error) {
 	var result CreatePackageTxResult
 
 	err := store.execTx(ctx, func(q *Queries) error {
-		var err error
-
-		result.CreatedPackage, err = q.CreatePackage(ctx, CreatePackageParams{
-			TagID:                             arg.TagID,
-			PackageType:                       arg.PackageType,
-			IsActive:                          arg.IsActive,
-			Quantity:                          arg.Quantity,
-			Notes:                             arg.Notes,
-			PackagedDateTime:                  arg.PackagedDateTime,
-			HarvestDateTime:                   arg.HarvestDateTime,
-			LabTestingState:                   arg.LabTestingState,
-			LabTestingStateDateTime:           arg.LabTestingStateDateTime,
-			IsTradeSample:                     arg.IsTradeSample,
-			IsTestingSample:                   arg.IsTestingSample,
-			ProductRequiresRemediation:        arg.ProductRequiresRemediation,
-			ContainsRemediatedProduct:         arg.ContainsRemediatedProduct,
-			RemediationDateTime:               arg.RemediationDateTime,
-			ReceivedDateTime:                  arg.ReceivedDateTime,
-			ReceivedFromManifestNumber:        arg.ReceivedFromManifestNumber,
-			ReceivedFromFacilityLicenseNumber: arg.ReceivedFromFacilityLicenseNumber,
-			ReceivedFromFacilityName:          arg.ReceivedFromFacilityName,
-			IsOnHold:                          arg.IsOnHold,
-			ArchivedDate:                      arg.ArchivedDate,
-			FinishedDate:                      arg.FinishedDate,
-			ItemID:                            arg.ItemID,
-			ProvisionalLabel:                  arg.ProvisionalLabel,
-			IsProvisional:                     arg.IsProvisional,
-			IsSold:                            arg.IsSold,
-			PpuDefault:                        arg.PpuDefault,
-			PpuOnOrder:                        arg.PpuOnOrder,
-			TotalPackagePriceOnOrder:          arg.TotalPackagePriceOnOrder,
-			PpuSoldPrice:                      arg.PpuSoldPrice,
-			TotalSoldPrice:                    arg.TotalSoldPrice,
-			PackagingSuppliesConsumed:         arg.PackagingSuppliesConsumed,
-			IsLineItem:                        arg.IsLineItem,
-			OrderID:                           arg.OrderID,
-			UomID:                             arg.UomID,
-			FacilityLocationID:                arg.FacilityLocationID.Int64,
-		})
-
-		if arg.SourcePackageID != (nulls.Int64{Valid: false}) { // if source package is not null
-			println("FromPackageID: ", arg.SourcePackageID.Int64)
-			println("ToPackageID: ", result.CreatedPackage.ID)
-			println("Quantity: ", arg.Quantity.String())
-			println("UomID: ", arg.UomID)
-			println("LabTestID: ", arg.LabTestID.Int64)
-
-			// nested tx_package_to_package transaction to connect the new package to the source package
-			result.CreatedPckgToPckgTx, err = store.CreatePckgToPckgTx(ctx, CreatePckgToPckgTxParams{
-				FromPackageID: arg.SourcePackageID.Int64,
-				ToPackageID:   result.CreatedPackage.ID,
-				Amount:        arg.Quantity,
-				UomID:         arg.UomID,
-				LabTestID:     arg.LabTestID.Int64,
-			})
-		}
-
+		// Create the package
+		pkg, err := q.CreatePackage(ctx, arg.CreatePackageParams)
 		if err != nil {
 			return err
 		}
-		return err
-	})
+		result.CreatedPackage = pkg
 
+		// Create a package adjustment
+		pkgAdj, err := q.CreatePackageAdjustment(ctx, CreatePackageAdjustmentParams{
+			FromPackageID: arg.SourcePackageID.Int64,
+			ToPackageID:   pkg.ID,
+			Amount:        arg.CreatePackageParams.Quantity,
+			UomID:         arg.CreatePackageParams.UomID,
+		})
+		if err != nil {
+			return err
+		}
+		result.PackageAdjustment = pkgAdj
+
+		// Create package adjustment entries
+		fromPckgAdjEntry, err := q.CreatePackageAdjEntry(ctx, CreatePackageAdjEntryParams{
+			PackageID: arg.SourcePackageID.Int64,
+			Amount:    decimal.NewFromFloat(-1).Mul(arg.CreatePackageParams.Quantity),
+			UomID:     arg.CreatePackageParams.UomID,
+		})
+		if err != nil {
+			return err
+		}
+		result.FromPackageAdjEntry = fromPckgAdjEntry
+
+		toPckgAdjEntry, err := q.CreatePackageAdjEntry(ctx, CreatePackageAdjEntryParams{
+			PackageID: pkg.ID,
+			Amount:    arg.CreatePackageParams.Quantity,
+			UomID:     arg.CreatePackageParams.UomID,
+		})
+		if err != nil {
+			return err
+		}
+		result.ToPackageAdjEntry = toPckgAdjEntry
+
+		sourcePackageChildPackageEntry, err := q.AssignSourcePackageChildPackage(ctx, AssignSourcePackageChildPackageParams{
+			SourcePackageID: arg.SourcePackageID.Int64,
+			ChildPackageID:  result.CreatedPackage.ID,
+		})
+		if err != nil {
+			return err
+		}
+		result.SourcePackageChildPackageEntry = sourcePackageChildPackageEntry
+
+		// Make the quantity transfer
+		if arg.SourcePackageID.Int64 < pkg.ID {
+			result.FromPackage, result.ToPackage, err = addPckgQty(ctx, q, arg.SourcePackageID.Int64, decimal.NewFromFloat(-1).Mul(arg.CreatePackageParams.Quantity), pkg.ID, arg.CreatePackageParams.Quantity)
+		} else {
+			result.ToPackage, result.FromPackage, err = addPckgQty(ctx, q, pkg.ID, arg.CreatePackageParams.Quantity, arg.SourcePackageID.Int64, decimal.NewFromFloat(-1).Mul(arg.CreatePackageParams.Quantity))
+		}
+
+		// Create Lab Test Package Assignment Entry
+		err = q.AssignLabTestToPackage(ctx, AssignLabTestToPackageParams{
+			LabTestID: nulls.NewInt64(1), // TODO: Get the lab test ID from the parent package
+			PackageID: pkg.ID,
+		})
+		if err != nil {
+			return err
+		}
+
+		return nil
+	})
 	return result, err
 }

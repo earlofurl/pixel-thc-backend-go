@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/gobuffalo/nulls"
 	"github.com/shopspring/decimal"
+	"pixel-thc-backend-go/util"
 	"testing"
 	"time"
 
@@ -17,7 +18,7 @@ func TestQueries_PackageToPackageTx(t *testing.T) {
 	package1 := createRandomPackage(t)
 	package2 := createRandomPackage(t)
 	labTest1 := createRandomLabTest(t)
-	fmt.Println(">> before:", package1.Quantity, package2.Quantity)
+	fmt.Println(">> before:", "Pckg 1:", package1.Quantity, "Pckg 2:", package2.Quantity)
 
 	n := 5
 	amount := decimal.NewFromFloatWithExponent(10.0, -6)
@@ -121,11 +122,12 @@ func TestQueries_PackageToPackageTx(t *testing.T) {
 func TestQueries_CreatePackageTx(t *testing.T) {
 	store := NewStore(testDB)
 
-	package1 := createRandomPackage(t)
-	fmt.Println(">> before:", package1.Quantity)
+	//package1 := createRandomPackage(t)
+	//fmt.Println("Pckg 1 ID:", package1.ID)
+	//fmt.Println("Pckg 1 Qty >> before:", package1.Quantity)
 
 	n := 5
-	amount := decimal.NewFromFloatWithExponent(10.0, -6)
+	amount := decimal.NewFromFloatWithExponent(util.RandomFloat(1, 20), -6)
 
 	errs := make(chan error)
 	results := make(chan CreatePackageTxResult)
@@ -134,15 +136,19 @@ func TestQueries_CreatePackageTx(t *testing.T) {
 	for i := 0; i < n; i++ {
 		i := i
 		go func() {
-			result, err := store.CreatePackageTx(context.Background(), CreatePackageTxParams{
-				SourcePackageID:                   nulls.NewInt64(int64(i + 1)),
-				TagID:                             nulls.NewInt64(int64(i + 20)),
+			randomSourcePackage := createRandomPackage(t)
+
+			fmt.Println("Source Package ID:", randomSourcePackage.ID)
+			fmt.Println("Source Package Qty >> before:", randomSourcePackage.Quantity)
+
+			createPackageParams := CreatePackageParams{
+				TagID:                             nulls.NewInt64(int64(i) + util.RandomInt(1, 1000)),
 				PackageType:                       "test",
 				IsActive:                          true,
 				Quantity:                          amount,
 				Notes:                             "test",
 				PackagedDateTime:                  time.Now(),
-				HarvestDateTime:                   package1.HarvestDateTime,
+				HarvestDateTime:                   randomSourcePackage.HarvestDateTime,
 				LabTestingState:                   "test",
 				LabTestingStateDateTime:           nulls.NewTime(time.Now()),
 				IsTradeSample:                     false,
@@ -157,7 +163,7 @@ func TestQueries_CreatePackageTx(t *testing.T) {
 				IsOnHold:                          false,
 				ArchivedDate:                      nulls.NewTime(time.Now()),
 				FinishedDate:                      nulls.NewTime(time.Now()),
-				ItemID:                            nulls.NewInt64(int64(i + 21)),
+				ItemID:                            nulls.NewInt64(util.RandomInt(1, 5)),
 				ProvisionalLabel:                  nulls.NewString("test"),
 				IsProvisional:                     false,
 				IsSold:                            false,
@@ -170,8 +176,12 @@ func TestQueries_CreatePackageTx(t *testing.T) {
 				IsLineItem:                        false,
 				OrderID:                           nulls.NewInt64(1),
 				UomID:                             1,
-				LabTestID:                         nulls.NewInt64(1),
-				FacilityLocationID:                nulls.NewInt64(1),
+				FacilityLocationID:                1,
+			}
+
+			result, err := store.CreatePackageTx(context.Background(), CreatePackageTxParams{
+				SourcePackageID:     nulls.NewInt64(randomSourcePackage.ID),
+				CreatePackageParams: createPackageParams,
 			})
 
 			results <- result
@@ -180,19 +190,25 @@ func TestQueries_CreatePackageTx(t *testing.T) {
 	}
 
 	// check the results
-	existed := make(map[int]bool)
+	//existed := make(map[int]bool)
 	for i := 0; i < n; i++ {
 		result := <-results
 		err := <-errs
 		require.NoError(t, err)
 		require.NotEmpty(t, result)
 
+		fmt.Println("Created Package:", result.CreatedPackage)
+		fmt.Println("Created Package Adjustment:", result.PackageAdjustment)
+		fmt.Println("From Package Adj Entry:", result.FromPackageAdjEntry)
+		fmt.Println("To Package Adj Entry:", result.ToPackageAdjEntry)
+		fmt.Println("Source Package Child Package Entry:", result.SourcePackageChildPackageEntry)
+
 		// check the diff of balance
-		diff1 := result.CreatedPackage.Quantity.Sub(package1.Quantity)
-		require.Equal(t, amount, diff1)
-		k := diff1.Div(amount)
-		require.True(t, k.GreaterThanOrEqual(decimal.NewFromInt(1)) && k.LessThanOrEqual(decimal.NewFromInt(int64(n))))
-		require.NotContains(t, existed, k)
-		existed[int(k.IntPart())] = true
+		//diff1 := result.CreatedPackage.Quantity.Sub(package1.Quantity)
+		//require.Equal(t, amount, diff1)
+		//k := diff1.Div(amount)
+		//require.True(t, k.GreaterThanOrEqual(decimal.NewFromInt(1)) && k.LessThanOrEqual(decimal.NewFromInt(int64(n))))
+		//require.NotContains(t, existed, k)
+		//existed[int(k.IntPart())] = true
 	}
 }
