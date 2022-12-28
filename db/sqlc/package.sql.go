@@ -873,6 +873,66 @@ func (q *Queries) ListPackages(ctx context.Context) ([]ListPackagesRow, error) {
 	return items, nil
 }
 
+const subtractPackageQuantity = `-- name: SubtractPackageQuantity :one
+UPDATE packages
+SET quantity = quantity - $1
+WHERE id = $2
+RETURNING id, created_at, updated_at, tag_id, package_type, is_active, quantity, notes, packaged_date_time, harvest_date_time, lab_testing_state, lab_testing_state_date_time, is_trade_sample, is_testing_sample, product_requires_remediation, contains_remediated_product, remediation_date_time, received_date_time, received_from_manifest_number, received_from_facility_license_number, received_from_facility_name, is_on_hold, archived_date, finished_date, item_id, provisional_label, is_provisional, is_sold, ppu_default, ppu_on_order, total_package_price_on_order, ppu_sold_price, total_sold_price, packaging_supplies_consumed, is_line_item, order_id, uom_id, facility_location_id
+`
+
+type SubtractPackageQuantityParams struct {
+	Amount decimal.Decimal `json:"amount"`
+	ID     int64           `json:"id"`
+}
+
+// description: Subtract quantity from a package (can be negative to add)
+// arguments: package_id int, quantity float
+func (q *Queries) SubtractPackageQuantity(ctx context.Context, arg SubtractPackageQuantityParams) (Package, error) {
+	row := q.db.QueryRowContext(ctx, subtractPackageQuantity, arg.Amount, arg.ID)
+	var i Package
+	err := row.Scan(
+		&i.ID,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+		&i.TagID,
+		&i.PackageType,
+		&i.IsActive,
+		&i.Quantity,
+		&i.Notes,
+		&i.PackagedDateTime,
+		&i.HarvestDateTime,
+		&i.LabTestingState,
+		&i.LabTestingStateDateTime,
+		&i.IsTradeSample,
+		&i.IsTestingSample,
+		&i.ProductRequiresRemediation,
+		&i.ContainsRemediatedProduct,
+		&i.RemediationDateTime,
+		&i.ReceivedDateTime,
+		&i.ReceivedFromManifestNumber,
+		&i.ReceivedFromFacilityLicenseNumber,
+		&i.ReceivedFromFacilityName,
+		&i.IsOnHold,
+		&i.ArchivedDate,
+		&i.FinishedDate,
+		&i.ItemID,
+		&i.ProvisionalLabel,
+		&i.IsProvisional,
+		&i.IsSold,
+		&i.PpuDefault,
+		&i.PpuOnOrder,
+		&i.TotalPackagePriceOnOrder,
+		&i.PpuSoldPrice,
+		&i.TotalSoldPrice,
+		&i.PackagingSuppliesConsumed,
+		&i.IsLineItem,
+		&i.OrderID,
+		&i.UomID,
+		&i.FacilityLocationID,
+	)
+	return i, err
+}
+
 const updatePackage = `-- name: UpdatePackage :one
 UPDATE packages
 SET tag_id                                = $1,

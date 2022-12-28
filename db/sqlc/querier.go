@@ -133,6 +133,9 @@ type Querier interface {
 	ListStrains(ctx context.Context) ([]Strain, error)
 	// description: List all UOMs
 	ListUoms(ctx context.Context) ([]Uom, error)
+	// description: Subtract quantity from a package (can be negative to add)
+	// arguments: package_id int, quantity float
+	SubtractPackageQuantity(ctx context.Context, arg SubtractPackageQuantityParams) (Package, error)
 	// description: Update an item by ID
 	UpdateItem(ctx context.Context, arg UpdateItemParams) (Item, error)
 	// description: Update an item type by ID

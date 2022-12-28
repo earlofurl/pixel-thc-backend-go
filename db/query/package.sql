@@ -180,6 +180,14 @@ SET quantity = quantity + sqlc.arg(amount)
 WHERE id = sqlc.arg(id)
 RETURNING *;
 
+-- name: SubtractPackageQuantity :one
+-- description: Subtract quantity from a package (can be negative to add)
+-- arguments: package_id int, quantity float
+UPDATE packages
+SET quantity = quantity - sqlc.arg(amount)
+WHERE id = sqlc.arg(id)
+RETURNING *;
+
 -- name: DeletePackage :exec
 -- description: Delete a package
 DELETE

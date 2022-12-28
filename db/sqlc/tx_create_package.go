@@ -78,11 +78,18 @@ func (store *SQLStore) CreatePackageTx(ctx context.Context, arg CreatePackageTxP
 		result.SourcePackageChildPackageEntry = sourcePackageChildPackageEntry
 
 		// Make the quantity transfer
-		if arg.SourcePackageID.Int64 < pkg.ID {
-			result.FromPackage, result.ToPackage, err = addPckgQty(ctx, q, arg.SourcePackageID.Int64, decimal.NewFromFloat(-1).Mul(arg.CreatePackageParams.Quantity), pkg.ID, arg.CreatePackageParams.Quantity)
-		} else {
-			result.ToPackage, result.FromPackage, err = addPckgQty(ctx, q, pkg.ID, arg.CreatePackageParams.Quantity, arg.SourcePackageID.Int64, decimal.NewFromFloat(-1).Mul(arg.CreatePackageParams.Quantity))
-		}
+		//if arg.SourcePackageID.Int64 < pkg.ID {
+		//	result.FromPackage, result.ToPackage, err = addPckgQty(ctx, q, arg.SourcePackageID.Int64, decimal.NewFromFloat(-1).Mul(arg.CreatePackageParams.Quantity), pkg.ID, arg.CreatePackageParams.Quantity)
+		//} else {
+		//	result.ToPackage, result.FromPackage, err = addPckgQty(ctx, q, pkg.ID, arg.CreatePackageParams.Quantity, arg.SourcePackageID.Int64, decimal.NewFromFloat(-1).Mul(arg.CreatePackageParams.Quantity))
+		//}
+		//result.FromPackage, result.ToPackage, err = addPckgQty(ctx, q, arg.SourcePackageID.Int64, decimal.NewFromFloat(-1).Mul(arg.CreatePackageParams.Quantity), pkg.ID, arg.CreatePackageParams.Quantity)
+
+		// Subtract the quantity from the source package
+		result.FromPackage, err = q.SubtractPackageQuantity(ctx, SubtractPackageQuantityParams{
+			ID:     arg.SourcePackageID.Int64,
+			Amount: arg.CreatePackageParams.Quantity,
+		})
 
 		// Get Lab Test connected to the source package
 		labTest, err := q.GetLabTestByPackageID(ctx, arg.SourcePackageID.Int64)

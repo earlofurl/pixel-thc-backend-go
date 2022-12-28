@@ -112,3 +112,15 @@ func addPckgQty(ctx context.Context, q *Queries, fromPckgID int64, fromAmount de
 	})
 	return fromPckg, toPckg, err
 }
+
+func subtractPckgQty(ctx context.Context, q *Queries, fromPckgID int64, fromAmount decimal.Decimal) (fromPckg Package, err error) {
+	fromPckg, err = q.SubtractPackageQuantity(ctx, SubtractPackageQuantityParams{
+		ID:     fromPckgID,
+		Amount: fromAmount,
+	})
+	if err != nil {
+		return fromPckg, err
+	}
+
+	return fromPckg, err
+}
