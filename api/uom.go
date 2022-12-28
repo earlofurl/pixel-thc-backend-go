@@ -28,7 +28,7 @@ func (server *Server) createUom(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
-	ctx.JSON(http.StatusOK, uom)
+	ctx.JSON(http.StatusCreated, uom)
 }
 
 type getUomRequest struct {

@@ -35,7 +35,7 @@ func (server *Server) createPackageTag(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
-	ctx.JSON(http.StatusOK, packageTag)
+	ctx.JSON(http.StatusCreated, packageTag)
 }
 
 type getPackageTagRequest struct {

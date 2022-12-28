@@ -99,7 +99,7 @@ func (server *Server) createLabTest(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	ctx.JSON(http.StatusOK, labTest)
+	ctx.JSON(http.StatusCreated, labTest)
 }
 
 type getLabTestRequest struct {

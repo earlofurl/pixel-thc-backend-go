@@ -47,6 +47,10 @@ type Querier interface {
 	// description: Create a new UOM
 	CreateUom(ctx context.Context, arg CreateUomParams) (Uom, error)
 	CreateUser(ctx context.Context, arg CreateUserParams) (User, error)
+	// description: Delete a facility by ID
+	DeleteFacility(ctx context.Context, id int64) error
+	// description: Delete a location within a facility
+	DeleteFacilityLocation(ctx context.Context, id int64) error
 	// description: Delete an item by ID
 	DeleteItem(ctx context.Context, id int64) error
 	// description: Delete an item type by ID
@@ -108,7 +112,7 @@ type Querier interface {
 	// description: List all facilities
 	ListFacilities(ctx context.Context) ([]Facility, error)
 	// description: List all locations within facilities
-	ListFacilityLocations(ctx context.Context) ([]Facility, error)
+	ListFacilityLocations(ctx context.Context) ([]FacilityLocation, error)
 	// description: List all locations within a facility
 	ListFacilityLocationsByFacility(ctx context.Context, facilityID int64) ([]FacilityLocation, error)
 	// description: List all item types
@@ -136,6 +140,10 @@ type Querier interface {
 	// description: Subtract quantity from a package (can be negative to add)
 	// arguments: package_id int, quantity float
 	SubtractPackageQuantity(ctx context.Context, arg SubtractPackageQuantityParams) (Package, error)
+	// description: Update a facility by ID
+	UpdateFacility(ctx context.Context, arg UpdateFacilityParams) (Facility, error)
+	// description: Update a location within a facility
+	UpdateFacilityLocation(ctx context.Context, arg UpdateFacilityLocationParams) (FacilityLocation, error)
 	// description: Update an item by ID
 	UpdateItem(ctx context.Context, arg UpdateItemParams) (Item, error)
 	// description: Update an item type by ID

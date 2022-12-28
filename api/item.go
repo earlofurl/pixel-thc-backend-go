@@ -32,7 +32,7 @@ func (server *Server) createItem(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
-	ctx.JSON(http.StatusOK, item)
+	ctx.JSON(http.StatusCreated, item)
 }
 
 type getItemRequest struct {

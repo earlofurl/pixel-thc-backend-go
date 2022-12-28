@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gobuffalo/nulls"
 	"github.com/shopspring/decimal"
+	"net/http"
 	db "pixel-thc-backend-go/db/sqlc"
 	"time"
 )
@@ -41,13 +42,13 @@ func (server *Server) createOrder(ctx *gin.Context) {
 		CustomerName:              req.CustomerName,
 	}
 
-	order, err := server.store.CreateOrder(ctx, arg)
+	order, err := server.store.CreateOrder(ctx.Request.Context(), arg)
 	if err != nil {
-		ctx.JSON(500, gin.H{"error": err.Error()})
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	ctx.JSON(200, order)
+	ctx.JSON(http.StatusCreated, order)
 }
 
 type getOrderRequest struct {

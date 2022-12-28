@@ -103,7 +103,7 @@ func (server *Server) createPackage(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
-	ctx.JSON(http.StatusOK, productPackage)
+	ctx.JSON(http.StatusCreated, productPackage)
 }
 
 type getPackageRequest struct {

@@ -104,6 +104,20 @@ func (server *Server) setupRouter() {
 	authRoutes.PUT("/orders/:id", server.updateOrder)
 	authRoutes.DELETE("/orders/:id", server.deleteOrder)
 
+	// facilities
+	authRoutes.GET("/facilities", server.listFacilities)
+	authRoutes.GET("/facilities/:id", server.getFacility)
+	authRoutes.POST("/facilities", server.createFacility)
+	authRoutes.PUT("/facilities/:id", server.updateFacility)
+	authRoutes.DELETE("/facilities/:id", server.deleteFacility)
+
+	// facility_locations
+	authRoutes.GET("/facility-locations", server.listFacilityLocations)
+	authRoutes.GET("/facility-locations/:id", server.getFacilityLocation)
+	authRoutes.POST("/facility-locations", server.createFacilityLocation)
+	authRoutes.PUT("/facility-locations/:id", server.updateFacilityLocation)
+	authRoutes.DELETE("/facility-locations/:id", server.deleteFacilityLocation)
+
 	server.router = router
 }
 

@@ -13,10 +13,24 @@ WHERE id = $1;
 -- name: ListFacilityLocations :many
 -- description: List all locations within facilities
 SELECT *
-FROM facilities;
+FROM facility_locations;
 
 -- name: ListFacilityLocationsByFacility :many
 -- description: List all locations within a facility
 SELECT *
 FROM facility_locations
 WHERE facility_id = $1;
+
+-- name: UpdateFacilityLocation :one
+-- description: Update a location within a facility
+UPDATE facility_locations
+SET name        = $1,
+    facility_id = $2
+WHERE id = $3
+RETURNING *;
+
+-- name: DeleteFacilityLocation :exec
+-- description: Delete a location within a facility
+DELETE
+FROM facility_locations
+WHERE id = $1;

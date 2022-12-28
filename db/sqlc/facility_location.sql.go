@@ -34,6 +34,18 @@ func (q *Queries) CreateFacilityLocation(ctx context.Context, arg CreateFacility
 	return i, err
 }
 
+const deleteFacilityLocation = `-- name: DeleteFacilityLocation :exec
+DELETE
+FROM facility_locations
+WHERE id = $1
+`
+
+// description: Delete a location within a facility
+func (q *Queries) DeleteFacilityLocation(ctx context.Context, id int64) error {
+	_, err := q.db.ExecContext(ctx, deleteFacilityLocation, id)
+	return err
+}
+
 const getFacilityLocation = `-- name: GetFacilityLocation :one
 SELECT id, created_at, updated_at, name, facility_id
 FROM facility_locations
@@ -55,26 +67,26 @@ func (q *Queries) GetFacilityLocation(ctx context.Context, id int64) (FacilityLo
 }
 
 const listFacilityLocations = `-- name: ListFacilityLocations :many
-SELECT id, created_at, updated_at, name, license_number
-FROM facilities
+SELECT id, created_at, updated_at, name, facility_id
+FROM facility_locations
 `
 
 // description: List all locations within facilities
-func (q *Queries) ListFacilityLocations(ctx context.Context) ([]Facility, error) {
+func (q *Queries) ListFacilityLocations(ctx context.Context) ([]FacilityLocation, error) {
 	rows, err := q.db.QueryContext(ctx, listFacilityLocations)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	items := []Facility{}
+	items := []FacilityLocation{}
 	for rows.Next() {
-		var i Facility
+		var i FacilityLocation
 		if err := rows.Scan(
 			&i.ID,
 			&i.CreatedAt,
 			&i.UpdatedAt,
 			&i.Name,
-			&i.LicenseNumber,
+			&i.FacilityID,
 		); err != nil {
 			return nil, err
 		}
@@ -123,4 +135,32 @@ func (q *Queries) ListFacilityLocationsByFacility(ctx context.Context, facilityI
 		return nil, err
 	}
 	return items, nil
+}
+
+const updateFacilityLocation = `-- name: UpdateFacilityLocation :one
+UPDATE facility_locations
+SET name        = $1,
+    facility_id = $2
+WHERE id = $3
+RETURNING id, created_at, updated_at, name, facility_id
+`
+
+type UpdateFacilityLocationParams struct {
+	Name       string `json:"name"`
+	FacilityID int64  `json:"facility_id"`
+	ID         int64  `json:"id"`
+}
+
+// description: Update a location within a facility
+func (q *Queries) UpdateFacilityLocation(ctx context.Context, arg UpdateFacilityLocationParams) (FacilityLocation, error) {
+	row := q.db.QueryRowContext(ctx, updateFacilityLocation, arg.Name, arg.FacilityID, arg.ID)
+	var i FacilityLocation
+	err := row.Scan(
+		&i.ID,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+		&i.Name,
+		&i.FacilityID,
+	)
+	return i, err
 }

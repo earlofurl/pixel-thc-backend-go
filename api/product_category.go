@@ -21,7 +21,7 @@ func (server *Server) createProductCategory(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
-	ctx.JSON(http.StatusOK, productCategory)
+	ctx.JSON(http.StatusCreated, productCategory)
 }
 
 type getProductCategoryRequest struct {

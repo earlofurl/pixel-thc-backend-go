@@ -34,6 +34,17 @@ func (q *Queries) CreateFacility(ctx context.Context, arg CreateFacilityParams) 
 	return i, err
 }
 
+const deleteFacility = `-- name: DeleteFacility :exec
+DELETE FROM facilities
+WHERE id = $1
+`
+
+// description: Delete a facility by ID
+func (q *Queries) DeleteFacility(ctx context.Context, id int64) error {
+	_, err := q.db.ExecContext(ctx, deleteFacility, id)
+	return err
+}
+
 const getFacility = `-- name: GetFacility :one
 SELECT id, created_at, updated_at, name, license_number
 FROM facilities
@@ -87,4 +98,31 @@ func (q *Queries) ListFacilities(ctx context.Context) ([]Facility, error) {
 		return nil, err
 	}
 	return items, nil
+}
+
+const updateFacility = `-- name: UpdateFacility :one
+UPDATE facilities
+SET name = $2, license_number = $3
+WHERE id = $1
+RETURNING id, created_at, updated_at, name, license_number
+`
+
+type UpdateFacilityParams struct {
+	ID            int64  `json:"id"`
+	Name          string `json:"name"`
+	LicenseNumber string `json:"license_number"`
+}
+
+// description: Update a facility by ID
+func (q *Queries) UpdateFacility(ctx context.Context, arg UpdateFacilityParams) (Facility, error) {
+	row := q.db.QueryRowContext(ctx, updateFacility, arg.ID, arg.Name, arg.LicenseNumber)
+	var i Facility
+	err := row.Scan(
+		&i.ID,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+		&i.Name,
+		&i.LicenseNumber,
+	)
+	return i, err
 }

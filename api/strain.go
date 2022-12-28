@@ -28,7 +28,7 @@ func (server *Server) createStrain(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
-	ctx.JSON(http.StatusOK, strain)
+	ctx.JSON(http.StatusCreated, strain)
 }
 
 type getStrainRequest struct {
