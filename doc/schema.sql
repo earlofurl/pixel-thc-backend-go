@@ -1,6 +1,6 @@
 -- SQL dump generated using DBML (dbml-lang.org)
 -- Database: PostgreSQL
--- Generated at: 2022-12-27T10:59:07.358Z
+-- Generated at: 2022-12-28T07:08:42.015Z
 
 CREATE TABLE "users" (
   "id" bigserial PRIMARY KEY,
@@ -114,7 +114,7 @@ CREATE TABLE "packages" (
   "updated_at" timestamptz NOT NULL DEFAULT (now()),
   "tag_id" bigint,
   "package_type" varchar(255) NOT NULL DEFAULT '',
-  "is_active" boolean NOT NULL DEFAULT false,
+  "is_active" boolean NOT NULL DEFAULT true,
   "quantity" numeric(19,6) NOT NULL DEFAULT 0,
   "notes" varchar(1024) NOT NULL DEFAULT '',
   "packaged_date_time" timestamptz NOT NULL DEFAULT (now()),

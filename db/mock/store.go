@@ -351,6 +351,34 @@ func (mr *MockStoreMockRecorder) CreateUserTx(arg0, arg1 interface{}) *gomock.Ca
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateUserTx", reflect.TypeOf((*MockStore)(nil).CreateUserTx), arg0, arg1)
 }
 
+// DeleteFacility mocks base method.
+func (m *MockStore) DeleteFacility(arg0 context.Context, arg1 int64) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteFacility", arg0, arg1)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteFacility indicates an expected call of DeleteFacility.
+func (mr *MockStoreMockRecorder) DeleteFacility(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteFacility", reflect.TypeOf((*MockStore)(nil).DeleteFacility), arg0, arg1)
+}
+
+// DeleteFacilityLocation mocks base method.
+func (m *MockStore) DeleteFacilityLocation(arg0 context.Context, arg1 int64) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteFacilityLocation", arg0, arg1)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteFacilityLocation indicates an expected call of DeleteFacilityLocation.
+func (mr *MockStoreMockRecorder) DeleteFacilityLocation(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteFacilityLocation", reflect.TypeOf((*MockStore)(nil).DeleteFacilityLocation), arg0, arg1)
+}
+
 // DeleteItem mocks base method.
 func (m *MockStore) DeleteItem(arg0 context.Context, arg1 int64) error {
 	m.ctrl.T.Helper()
@@ -552,19 +580,19 @@ func (mr *MockStoreMockRecorder) GetLabTest(arg0, arg1 interface{}) *gomock.Call
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetLabTest", reflect.TypeOf((*MockStore)(nil).GetLabTest), arg0, arg1)
 }
 
-// GetLabTestPackage mocks base method.
-func (m *MockStore) GetLabTestPackage(arg0 context.Context, arg1 int64) (db.LabTestsPackage, error) {
+// GetLabTestByPackageID mocks base method.
+func (m *MockStore) GetLabTestByPackageID(arg0 context.Context, arg1 int64) (db.LabTestsPackage, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetLabTestPackage", arg0, arg1)
+	ret := m.ctrl.Call(m, "GetLabTestByPackageID", arg0, arg1)
 	ret0, _ := ret[0].(db.LabTestsPackage)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetLabTestPackage indicates an expected call of GetLabTestPackage.
-func (mr *MockStoreMockRecorder) GetLabTestPackage(arg0, arg1 interface{}) *gomock.Call {
+// GetLabTestByPackageID indicates an expected call of GetLabTestByPackageID.
+func (mr *MockStoreMockRecorder) GetLabTestByPackageID(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetLabTestPackage", reflect.TypeOf((*MockStore)(nil).GetLabTestPackage), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetLabTestByPackageID", reflect.TypeOf((*MockStore)(nil).GetLabTestByPackageID), arg0, arg1)
 }
 
 // GetOrder mocks base method.
@@ -808,10 +836,10 @@ func (mr *MockStoreMockRecorder) ListFacilities(arg0 interface{}) *gomock.Call {
 }
 
 // ListFacilityLocations mocks base method.
-func (m *MockStore) ListFacilityLocations(arg0 context.Context) ([]db.Facility, error) {
+func (m *MockStore) ListFacilityLocations(arg0 context.Context) ([]db.FacilityLocation, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ListFacilityLocations", arg0)
-	ret0, _ := ret[0].([]db.Facility)
+	ret0, _ := ret[0].([]db.FacilityLocation)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -1000,6 +1028,51 @@ func (m *MockStore) ListUoms(arg0 context.Context) ([]db.Uom, error) {
 func (mr *MockStoreMockRecorder) ListUoms(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListUoms", reflect.TypeOf((*MockStore)(nil).ListUoms), arg0)
+}
+
+// SubtractPackageQuantity mocks base method.
+func (m *MockStore) SubtractPackageQuantity(arg0 context.Context, arg1 db.SubtractPackageQuantityParams) (db.Package, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SubtractPackageQuantity", arg0, arg1)
+	ret0, _ := ret[0].(db.Package)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SubtractPackageQuantity indicates an expected call of SubtractPackageQuantity.
+func (mr *MockStoreMockRecorder) SubtractPackageQuantity(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SubtractPackageQuantity", reflect.TypeOf((*MockStore)(nil).SubtractPackageQuantity), arg0, arg1)
+}
+
+// UpdateFacility mocks base method.
+func (m *MockStore) UpdateFacility(arg0 context.Context, arg1 db.UpdateFacilityParams) (db.Facility, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateFacility", arg0, arg1)
+	ret0, _ := ret[0].(db.Facility)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UpdateFacility indicates an expected call of UpdateFacility.
+func (mr *MockStoreMockRecorder) UpdateFacility(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateFacility", reflect.TypeOf((*MockStore)(nil).UpdateFacility), arg0, arg1)
+}
+
+// UpdateFacilityLocation mocks base method.
+func (m *MockStore) UpdateFacilityLocation(arg0 context.Context, arg1 db.UpdateFacilityLocationParams) (db.FacilityLocation, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateFacilityLocation", arg0, arg1)
+	ret0, _ := ret[0].(db.FacilityLocation)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UpdateFacilityLocation indicates an expected call of UpdateFacilityLocation.
+func (mr *MockStoreMockRecorder) UpdateFacilityLocation(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateFacilityLocation", reflect.TypeOf((*MockStore)(nil).UpdateFacilityLocation), arg0, arg1)
 }
 
 // UpdateItem mocks base method.

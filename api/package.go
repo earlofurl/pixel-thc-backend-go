@@ -13,6 +13,7 @@ type createPackageRequest struct {
 	SourcePackageID                   nulls.Int64     `json:"source_package_id"`
 	TagID                             nulls.Int64     `json:"tag_id"`
 	PackageType                       string          `json:"package_type"`
+	IsActive                          bool            `json:"is_active"`
 	Quantity                          decimal.Decimal `json:"quantity"`
 	Notes                             string          `json:"notes"`
 	PackagedDateTime                  time.Time       `json:"packaged_date_time"`
@@ -59,6 +60,7 @@ func (server *Server) createPackage(ctx *gin.Context) {
 	packageParams := db.CreatePackageParams{
 		TagID:                             req.TagID,
 		PackageType:                       req.PackageType,
+		IsActive:                          req.IsActive,
 		Quantity:                          req.Quantity,
 		Notes:                             req.Notes,
 		PackagedDateTime:                  req.PackagedDateTime,
