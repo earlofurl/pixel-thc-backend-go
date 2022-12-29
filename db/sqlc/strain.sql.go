@@ -37,25 +37,25 @@ RETURNING id, created_at, updated_at, name, type, yield_average, terp_average_to
 `
 
 type CreateStrainParams struct {
-	Name                    string          `json:"name"`
-	Type                    string          `json:"type"`
-	YieldAverage            decimal.Decimal `json:"yield_average"`
-	TerpAverageTotal        decimal.Decimal `json:"terp_average_total"`
-	Terp1                   nulls.String    `json:"terp_1"`
-	Terp1Value              decimal.Decimal `json:"terp_1_value"`
-	Terp2                   nulls.String    `json:"terp_2"`
-	Terp2Value              decimal.Decimal `json:"terp_2_value"`
-	Terp3                   nulls.String    `json:"terp_3"`
-	Terp3Value              decimal.Decimal `json:"terp_3_value"`
-	Terp4                   nulls.String    `json:"terp_4"`
-	Terp4Value              decimal.Decimal `json:"terp_4_value"`
-	Terp5                   nulls.String    `json:"terp_5"`
-	Terp5Value              decimal.Decimal `json:"terp_5_value"`
-	ThcAverage              decimal.Decimal `json:"thc_average"`
-	TotalCannabinoidAverage decimal.Decimal `json:"total_cannabinoid_average"`
-	LightDep2022            string          `json:"light_dep_2022"`
-	FallHarvest2022         string          `json:"fall_harvest_2022"`
-	QuantityAvailable       decimal.Decimal `json:"quantity_available"`
+	Name                    string              `json:"name"`
+	Type                    string              `json:"type"`
+	YieldAverage            decimal.NullDecimal `json:"yield_average"`
+	TerpAverageTotal        decimal.NullDecimal `json:"terp_average_total"`
+	Terp1                   nulls.String        `json:"terp_1"`
+	Terp1Value              decimal.NullDecimal `json:"terp_1_value"`
+	Terp2                   nulls.String        `json:"terp_2"`
+	Terp2Value              decimal.NullDecimal `json:"terp_2_value"`
+	Terp3                   nulls.String        `json:"terp_3"`
+	Terp3Value              decimal.NullDecimal `json:"terp_3_value"`
+	Terp4                   nulls.String        `json:"terp_4"`
+	Terp4Value              decimal.NullDecimal `json:"terp_4_value"`
+	Terp5                   nulls.String        `json:"terp_5"`
+	Terp5Value              decimal.NullDecimal `json:"terp_5_value"`
+	ThcAverage              decimal.NullDecimal `json:"thc_average"`
+	TotalCannabinoidAverage decimal.NullDecimal `json:"total_cannabinoid_average"`
+	LightDep2022            string              `json:"light_dep_2022"`
+	FallHarvest2022         string              `json:"fall_harvest_2022"`
+	QuantityAvailable       decimal.Decimal     `json:"quantity_available"`
 }
 
 // description: Create a strain
@@ -214,56 +214,55 @@ func (q *Queries) ListStrains(ctx context.Context) ([]Strain, error) {
 
 const updateStrain = `-- name: UpdateStrain :one
 UPDATE strains
-SET name                      = $2,
-    type                      = $3,
-    yield_average             = $4,
-    terp_average_total        = $5,
-    terp_1                    = $6,
-    terp_1_value              = $7,
-    terp_2                    = $8,
-    terp_2_value              = $9,
-    terp_3                    = $10,
-    terp_3_value              = $11,
-    terp_4                    = $12,
-    terp_4_value              = $13,
-    terp_5                    = $14,
-    terp_5_value              = $15,
-    thc_average               = $16,
-    total_cannabinoid_average = $17,
-    light_dep_2022            = $18,
-    fall_harvest_2022         = $19,
-    quantity_available        = $20
-WHERE id = $1
+SET name                      = COALESCE($1, name),
+    type                      = COALESCE($2, type),
+    yield_average             = COALESCE($3, yield_average),
+    terp_average_total        = COALESCE($4, terp_average_total),
+    terp_1                    = COALESCE($5, terp_1),
+    terp_1_value              = COALESCE($6, terp_1_value),
+    terp_2                    = COALESCE($7, terp_2),
+    terp_2_value              = COALESCE($8, terp_2_value),
+    terp_3                    = COALESCE($9, terp_3),
+    terp_3_value              = COALESCE($10, terp_3_value),
+    terp_4                    = COALESCE($11, terp_4),
+    terp_4_value              = COALESCE($12, terp_4_value),
+    terp_5                    = COALESCE($13, terp_5),
+    terp_5_value              = COALESCE($14, terp_5_value),
+    thc_average               = COALESCE($15, thc_average),
+    total_cannabinoid_average = COALESCE($16, total_cannabinoid_average),
+    light_dep_2022            = COALESCE($17, light_dep_2022),
+    fall_harvest_2022         = COALESCE($18, fall_harvest_2022),
+    quantity_available        = COALESCE($19, quantity_available)
+WHERE id = $20
 RETURNING id, created_at, updated_at, name, type, yield_average, terp_average_total, terp_1, terp_1_value, terp_2, terp_2_value, terp_3, terp_3_value, terp_4, terp_4_value, terp_5, terp_5_value, thc_average, total_cannabinoid_average, light_dep_2022, fall_harvest_2022, quantity_available
 `
 
 type UpdateStrainParams struct {
-	ID                      int64           `json:"id"`
-	Name                    string          `json:"name"`
-	Type                    string          `json:"type"`
-	YieldAverage            decimal.Decimal `json:"yield_average"`
-	TerpAverageTotal        decimal.Decimal `json:"terp_average_total"`
-	Terp1                   nulls.String    `json:"terp_1"`
-	Terp1Value              decimal.Decimal `json:"terp_1_value"`
-	Terp2                   nulls.String    `json:"terp_2"`
-	Terp2Value              decimal.Decimal `json:"terp_2_value"`
-	Terp3                   nulls.String    `json:"terp_3"`
-	Terp3Value              decimal.Decimal `json:"terp_3_value"`
-	Terp4                   nulls.String    `json:"terp_4"`
-	Terp4Value              decimal.Decimal `json:"terp_4_value"`
-	Terp5                   nulls.String    `json:"terp_5"`
-	Terp5Value              decimal.Decimal `json:"terp_5_value"`
-	ThcAverage              decimal.Decimal `json:"thc_average"`
-	TotalCannabinoidAverage decimal.Decimal `json:"total_cannabinoid_average"`
-	LightDep2022            string          `json:"light_dep_2022"`
-	FallHarvest2022         string          `json:"fall_harvest_2022"`
-	QuantityAvailable       decimal.Decimal `json:"quantity_available"`
+	Name                    nulls.String        `json:"name"`
+	Type                    nulls.String        `json:"type"`
+	YieldAverage            decimal.NullDecimal `json:"yield_average"`
+	TerpAverageTotal        decimal.NullDecimal `json:"terp_average_total"`
+	Terp1                   nulls.String        `json:"terp_1"`
+	Terp1Value              decimal.NullDecimal `json:"terp_1_value"`
+	Terp2                   nulls.String        `json:"terp_2"`
+	Terp2Value              decimal.NullDecimal `json:"terp_2_value"`
+	Terp3                   nulls.String        `json:"terp_3"`
+	Terp3Value              decimal.NullDecimal `json:"terp_3_value"`
+	Terp4                   nulls.String        `json:"terp_4"`
+	Terp4Value              decimal.NullDecimal `json:"terp_4_value"`
+	Terp5                   nulls.String        `json:"terp_5"`
+	Terp5Value              decimal.NullDecimal `json:"terp_5_value"`
+	ThcAverage              decimal.NullDecimal `json:"thc_average"`
+	TotalCannabinoidAverage decimal.NullDecimal `json:"total_cannabinoid_average"`
+	LightDep2022            nulls.String        `json:"light_dep_2022"`
+	FallHarvest2022         nulls.String        `json:"fall_harvest_2022"`
+	QuantityAvailable       decimal.NullDecimal `json:"quantity_available"`
+	ID                      int64               `json:"id"`
 }
 
 // description: Update a strain
 func (q *Queries) UpdateStrain(ctx context.Context, arg UpdateStrainParams) (Strain, error) {
 	row := q.db.QueryRowContext(ctx, updateStrain,
-		arg.ID,
 		arg.Name,
 		arg.Type,
 		arg.YieldAverage,
@@ -283,6 +282,7 @@ func (q *Queries) UpdateStrain(ctx context.Context, arg UpdateStrainParams) (Str
 		arg.LightDep2022,
 		arg.FallHarvest2022,
 		arg.QuantityAvailable,
+		arg.ID,
 	)
 	var i Strain
 	err := row.Scan(

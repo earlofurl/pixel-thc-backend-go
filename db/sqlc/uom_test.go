@@ -5,7 +5,6 @@ import (
 	"github.com/stretchr/testify/require"
 	"pixel-thc-backend-go/util"
 	"testing"
-	"time"
 )
 
 func createRandomUom(t *testing.T) Uom {
@@ -57,35 +56,4 @@ func TestQueries_TestListUoms(t *testing.T) {
 	for _, uom := range uoms {
 		require.NotEmpty(t, uom)
 	}
-}
-
-func TestQueries_TestUpdateUom(t *testing.T) {
-	uom1 := createRandomUom(t)
-
-	arg := UpdateUomParams{
-		ID:           uom1.ID,
-		Name:         util.RandomString(6),
-		Abbreviation: util.RandomString(3),
-	}
-
-	uom2, err := testQueries.UpdateUom(context.Background(), arg)
-	require.NoError(t, err)
-	require.NotEmpty(t, uom2)
-
-	require.Equal(t, uom1.ID, uom2.ID)
-	require.Equal(t, arg.Name, uom2.Name)
-	require.Equal(t, arg.Abbreviation, uom2.Abbreviation)
-	require.WithinDuration(t, uom1.CreatedAt, uom2.CreatedAt, time.Second)
-	require.WithinDuration(t, uom2.UpdatedAt, time.Now(), time.Second)
-}
-
-func TestQueries_TestDeleteUom(t *testing.T) {
-	uom1 := createRandomUom(t)
-
-	err := testQueries.DeleteUom(context.Background(), uom1.ID)
-	require.NoError(t, err)
-
-	uom2, err := testQueries.GetUom(context.Background(), uom1.ID)
-	require.Error(t, err)
-	require.Empty(t, uom2)
 }

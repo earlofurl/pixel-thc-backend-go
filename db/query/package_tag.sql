@@ -20,20 +20,18 @@ LIMIT 1;
 
 -- name: ListPackageTags :many
 -- description: List package tags by limit and offset
-SELECT * FROM package_tags WHERE is_assigned = $1 ORDER BY id LIMIT $2 OFFSET $3;
+SELECT *
+FROM package_tags
+WHERE is_assigned = $1
+ORDER BY id
+LIMIT $2 OFFSET $3;
 
 -- name: UpdatePackageTag :one
 -- description: Update a package tag
 UPDATE package_tags
-SET is_assigned         = $2,
-    is_provisional      = $3,
-    is_active           = $4,
-    assigned_package_id = $5
-WHERE id = $1
+SET is_assigned         = COALESCE(sqlc.narg(is_assigned), is_assigned),
+    is_provisional      = COALESCE(sqlc.narg(is_provisional), is_provisional),
+    is_active           = COALESCE(sqlc.narg(is_active), is_active),
+    assigned_package_id = COALESCE(sqlc.narg(assigned_package_id), assigned_package_id)
+WHERE id = sqlc.arg(id)
 RETURNING *;
-
--- name: DeletePackageTag :exec
--- description: Delete a package tag by ID
-DELETE
-FROM package_tags
-WHERE id = $1;

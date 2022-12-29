@@ -449,20 +449,6 @@ func (mr *MockStoreMockRecorder) DeletePackage(arg0, arg1 interface{}) *gomock.C
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeletePackage", reflect.TypeOf((*MockStore)(nil).DeletePackage), arg0, arg1)
 }
 
-// DeletePackageTag mocks base method.
-func (m *MockStore) DeletePackageTag(arg0 context.Context, arg1 int64) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeletePackageTag", arg0, arg1)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// DeletePackageTag indicates an expected call of DeletePackageTag.
-func (mr *MockStoreMockRecorder) DeletePackageTag(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeletePackageTag", reflect.TypeOf((*MockStore)(nil).DeletePackageTag), arg0, arg1)
-}
-
 // DeleteProductCategory mocks base method.
 func (m *MockStore) DeleteProductCategory(arg0 context.Context, arg1 int64) error {
 	m.ctrl.T.Helper()
@@ -489,20 +475,6 @@ func (m *MockStore) DeleteStrain(arg0 context.Context, arg1 int64) error {
 func (mr *MockStoreMockRecorder) DeleteStrain(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteStrain", reflect.TypeOf((*MockStore)(nil).DeleteStrain), arg0, arg1)
-}
-
-// DeleteUom mocks base method.
-func (m *MockStore) DeleteUom(arg0 context.Context, arg1 int64) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeleteUom", arg0, arg1)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// DeleteUom indicates an expected call of DeleteUom.
-func (mr *MockStoreMockRecorder) DeleteUom(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteUom", reflect.TypeOf((*MockStore)(nil).DeleteUom), arg0, arg1)
 }
 
 // GetFacility mocks base method.
@@ -956,18 +928,18 @@ func (mr *MockStoreMockRecorder) ListPackageAdjustments(arg0, arg1 interface{}) 
 }
 
 // ListPackageTags mocks base method.
-func (m *MockStore) ListPackageTags(arg0 context.Context) ([]db.PackageTag, error) {
+func (m *MockStore) ListPackageTags(arg0 context.Context, arg1 db.ListPackageTagsParams) ([]db.PackageTag, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ListPackageTags", arg0)
+	ret := m.ctrl.Call(m, "ListPackageTags", arg0, arg1)
 	ret0, _ := ret[0].([]db.PackageTag)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // ListPackageTags indicates an expected call of ListPackageTags.
-func (mr *MockStoreMockRecorder) ListPackageTags(arg0 interface{}) *gomock.Call {
+func (mr *MockStoreMockRecorder) ListPackageTags(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListPackageTags", reflect.TypeOf((*MockStore)(nil).ListPackageTags), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListPackageTags", reflect.TypeOf((*MockStore)(nil).ListPackageTags), arg0, arg1)
 }
 
 // ListPackages mocks base method.
@@ -1193,21 +1165,6 @@ func (m *MockStore) UpdateStrain(arg0 context.Context, arg1 db.UpdateStrainParam
 func (mr *MockStoreMockRecorder) UpdateStrain(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateStrain", reflect.TypeOf((*MockStore)(nil).UpdateStrain), arg0, arg1)
-}
-
-// UpdateUom mocks base method.
-func (m *MockStore) UpdateUom(arg0 context.Context, arg1 db.UpdateUomParams) (db.Uom, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UpdateUom", arg0, arg1)
-	ret0, _ := ret[0].(db.Uom)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// UpdateUom indicates an expected call of UpdateUom.
-func (mr *MockStoreMockRecorder) UpdateUom(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateUom", reflect.TypeOf((*MockStore)(nil).UpdateUom), arg0, arg1)
 }
 
 // UpdateUser mocks base method.

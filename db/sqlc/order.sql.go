@@ -154,32 +154,32 @@ func (q *Queries) ListOrders(ctx context.Context) ([]Order, error) {
 
 const updateOrder = `-- name: UpdateOrder :one
 UPDATE orders
-SET scheduled_pack_date_time     = $1,
-    scheduled_ship_date_time     = $2,
-    scheduled_delivery_date_time = $3,
-    actual_pack_date_time        = $4,
-    actual_ship_date_time        = $5,
-    actual_delivery_date_time    = $6,
-    order_total                  = $7,
-    notes                        = $8,
-    status                       = $9,
-    customer_name                = $10
+SET scheduled_pack_date_time     = COALESCE($1, scheduled_pack_date_time),
+    scheduled_ship_date_time     = COALESCE($2, scheduled_ship_date_time),
+    scheduled_delivery_date_time = COALESCE($3, scheduled_delivery_date_time),
+    actual_pack_date_time        = COALESCE($4, actual_pack_date_time),
+    actual_ship_date_time        = COALESCE($5, actual_ship_date_time),
+    actual_delivery_date_time    = COALESCE($6, actual_delivery_date_time),
+    order_total                  = COALESCE($7, order_total),
+    notes                        = COALESCE($8, notes),
+    status                       = COALESCE($9, status),
+    customer_name                = COALESCE($10, customer_name)
 WHERE id = $11
 RETURNING id, created_at, updated_at, scheduled_pack_date_time, scheduled_ship_date_time, scheduled_delivery_date_time, actual_pack_date_time, actual_ship_date_time, actual_delivery_date_time, order_total, notes, status, customer_name
 `
 
 type UpdateOrderParams struct {
-	ScheduledPackDateTime     time.Time       `json:"scheduled_pack_date_time"`
-	ScheduledShipDateTime     time.Time       `json:"scheduled_ship_date_time"`
-	ScheduledDeliveryDateTime time.Time       `json:"scheduled_delivery_date_time"`
-	ActualPackDateTime        nulls.Time      `json:"actual_pack_date_time"`
-	ActualShipDateTime        nulls.Time      `json:"actual_ship_date_time"`
-	ActualDeliveryDateTime    nulls.Time      `json:"actual_delivery_date_time"`
-	OrderTotal                decimal.Decimal `json:"order_total"`
-	Notes                     string          `json:"notes"`
-	Status                    string          `json:"status"`
-	CustomerName              string          `json:"customer_name"`
-	ID                        int64           `json:"id"`
+	ScheduledPackDateTime     nulls.Time          `json:"scheduled_pack_date_time"`
+	ScheduledShipDateTime     nulls.Time          `json:"scheduled_ship_date_time"`
+	ScheduledDeliveryDateTime nulls.Time          `json:"scheduled_delivery_date_time"`
+	ActualPackDateTime        nulls.Time          `json:"actual_pack_date_time"`
+	ActualShipDateTime        nulls.Time          `json:"actual_ship_date_time"`
+	ActualDeliveryDateTime    nulls.Time          `json:"actual_delivery_date_time"`
+	OrderTotal                decimal.NullDecimal `json:"order_total"`
+	Notes                     nulls.String        `json:"notes"`
+	Status                    nulls.String        `json:"status"`
+	CustomerName              nulls.String        `json:"customer_name"`
+	ID                        int64               `json:"id"`
 }
 
 // description: Update a single order by id

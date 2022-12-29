@@ -94,9 +94,9 @@ func TestQueries_TestUpdatePackageTag(t *testing.T) {
 
 	arg := UpdatePackageTagParams{
 		ID:            packagetag1.ID,
-		IsAssigned:    util.RandomBool(),
-		IsProvisional: util.RandomBool(),
-		IsActive:      util.RandomBool(),
+		IsAssigned:    util.RandomNullsBool(),
+		IsProvisional: util.RandomNullsBool(),
+		IsActive:      util.RandomNullsBool(),
 	}
 
 	packagetag2, err := testQueries.UpdatePackageTag(context.Background(), arg)
@@ -104,20 +104,9 @@ func TestQueries_TestUpdatePackageTag(t *testing.T) {
 	require.NotEmpty(t, packagetag2)
 
 	require.Equal(t, packagetag1.ID, packagetag2.ID)
-	require.Equal(t, arg.IsAssigned, packagetag2.IsAssigned)
-	require.Equal(t, arg.IsProvisional, packagetag2.IsProvisional)
-	require.Equal(t, arg.IsActive, packagetag2.IsActive)
+	require.Equal(t, arg.IsAssigned.Bool, packagetag2.IsAssigned)
+	require.Equal(t, arg.IsProvisional.Bool, packagetag2.IsProvisional)
+	require.Equal(t, arg.IsActive.Bool, packagetag2.IsActive)
 	require.Equal(t, packagetag1.AssignedPackageID, packagetag2.AssignedPackageID)
 	require.WithinDuration(t, packagetag1.CreatedAt, packagetag2.CreatedAt, time.Second)
-}
-
-func TestQueries_TestDeletePackageTag(t *testing.T) {
-	packagetag1 := createRandomPackageTag(t)
-
-	err := testQueries.DeletePackageTag(context.Background(), packagetag1.ID)
-	require.NoError(t, err)
-
-	packagetag2, err := testQueries.GetPackageTag(context.Background(), packagetag1.ID)
-	require.Error(t, err)
-	require.Empty(t, packagetag2)
 }

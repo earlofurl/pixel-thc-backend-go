@@ -48,18 +48,6 @@ func (q *Queries) CreatePackageTag(ctx context.Context, arg CreatePackageTagPara
 	return i, err
 }
 
-const deletePackageTag = `-- name: DeletePackageTag :exec
-DELETE
-FROM package_tags
-WHERE id = $1
-`
-
-// description: Delete a package tag by ID
-func (q *Queries) DeletePackageTag(ctx context.Context, id int64) error {
-	_, err := q.db.ExecContext(ctx, deletePackageTag, id)
-	return err
-}
-
 const getPackageTag = `-- name: GetPackageTag :one
 SELECT id, created_at, updated_at, tag_number, is_assigned, is_provisional, is_active, assigned_package_id
 FROM package_tags
@@ -109,7 +97,11 @@ func (q *Queries) GetPackageTagByTagNumber(ctx context.Context, tagNumber string
 }
 
 const listPackageTags = `-- name: ListPackageTags :many
-SELECT id, created_at, updated_at, tag_number, is_assigned, is_provisional, is_active, assigned_package_id FROM package_tags WHERE is_assigned = $1 ORDER BY id LIMIT $2 OFFSET $3
+SELECT id, created_at, updated_at, tag_number, is_assigned, is_provisional, is_active, assigned_package_id
+FROM package_tags
+WHERE is_assigned = $1
+ORDER BY id
+LIMIT $2 OFFSET $3
 `
 
 type ListPackageTagsParams struct {
@@ -153,30 +145,30 @@ func (q *Queries) ListPackageTags(ctx context.Context, arg ListPackageTagsParams
 
 const updatePackageTag = `-- name: UpdatePackageTag :one
 UPDATE package_tags
-SET is_assigned         = $2,
-    is_provisional      = $3,
-    is_active           = $4,
-    assigned_package_id = $5
-WHERE id = $1
+SET is_assigned         = COALESCE($1, is_assigned),
+    is_provisional      = COALESCE($2, is_provisional),
+    is_active           = COALESCE($3, is_active),
+    assigned_package_id = COALESCE($4, assigned_package_id)
+WHERE id = $5
 RETURNING id, created_at, updated_at, tag_number, is_assigned, is_provisional, is_active, assigned_package_id
 `
 
 type UpdatePackageTagParams struct {
-	ID                int64       `json:"id"`
-	IsAssigned        bool        `json:"is_assigned"`
-	IsProvisional     bool        `json:"is_provisional"`
-	IsActive          bool        `json:"is_active"`
+	IsAssigned        nulls.Bool  `json:"is_assigned"`
+	IsProvisional     nulls.Bool  `json:"is_provisional"`
+	IsActive          nulls.Bool  `json:"is_active"`
 	AssignedPackageID nulls.Int64 `json:"assigned_package_id"`
+	ID                int64       `json:"id"`
 }
 
 // description: Update a package tag
 func (q *Queries) UpdatePackageTag(ctx context.Context, arg UpdatePackageTagParams) (PackageTag, error) {
 	row := q.db.QueryRowContext(ctx, updatePackageTag,
-		arg.ID,
 		arg.IsAssigned,
 		arg.IsProvisional,
 		arg.IsActive,
 		arg.AssignedPackageID,
+		arg.ID,
 	)
 	var i PackageTag
 	err := row.Scan(

@@ -7,6 +7,8 @@ package db
 
 import (
 	"context"
+
+	"github.com/gobuffalo/nulls"
 )
 
 const createItemType = `-- name: CreateItemType :one
@@ -121,21 +123,21 @@ func (q *Queries) ListItemTypes(ctx context.Context) ([]ItemType, error) {
 
 const updateItemType = `-- name: UpdateItemType :one
 UPDATE item_types
-SET product_form        = $1,
-    product_modifier    = $2,
-    uom_default         = $3,
-    product_category_id = $4,
+SET product_form        = COALESCE($1, product_form),
+    product_modifier    = COALESCE($2, product_modifier),
+    uom_default         = COALESCE($3, uom_default),
+    product_category_id = COALESCE($4, product_category_id),
     updated_at          = NOW()
 WHERE id = $5
-RETURNING id, created_at, updated_at, product_form, product_modifier, uom_default, product_category_id
+    RETURNING id, created_at, updated_at, product_form, product_modifier, uom_default, product_category_id
 `
 
 type UpdateItemTypeParams struct {
-	ProductForm       string `json:"product_form"`
-	ProductModifier   string `json:"product_modifier"`
-	UomDefault        int64  `json:"uom_default"`
-	ProductCategoryID int64  `json:"product_category_id"`
-	ID                int64  `json:"id"`
+	ProductForm       nulls.String `json:"product_form"`
+	ProductModifier   nulls.String `json:"product_modifier"`
+	UomDefault        nulls.Int64  `json:"uom_default"`
+	ProductCategoryID nulls.Int64  `json:"product_category_id"`
+	ID                int64        `json:"id"`
 }
 
 // description: Update an item type by ID

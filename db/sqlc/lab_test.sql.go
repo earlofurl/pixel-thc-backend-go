@@ -14,7 +14,8 @@ import (
 )
 
 const assignLabTestToPackage = `-- name: AssignLabTestToPackage :exec
-INSERT INTO lab_tests_packages (lab_test_id, package_id) VALUES ($1, $2)
+INSERT INTO lab_tests_packages (lab_test_id, package_id)
+VALUES ($1, $2)
 `
 
 type AssignLabTestToPackageParams struct {
@@ -330,82 +331,82 @@ func (q *Queries) ListLabTests(ctx context.Context) ([]LabTest, error) {
 
 const updateLabTest = `-- name: UpdateLabTest :one
 UPDATE lab_tests
-SET test_name                 = $1,
-    batch_code                = $2,
-    test_id_code              = $3,
-    lab_facility_name         = $4,
-    test_performed_date_time  = $5,
-    overall_passed            = $6,
-    test_type_name            = $7,
-    test_passed               = $8,
-    test_comment              = $9,
-    thc_total_percent         = $10,
-    thc_total_value           = $11,
-    cbd_percent               = $12,
-    cbd_value                 = $13,
-    terpene_total_percent     = $14,
-    terpene_total_value       = $15,
-    thc_a_percent             = $16,
-    thc_a_value               = $17,
-    delta9_thc_percent        = $18,
-    delta9_thc_value          = $19,
-    delta8_thc_percent        = $20,
-    delta8_thc_value          = $21,
-    thc_v_percent             = $22,
-    thc_v_value               = $23,
-    cbd_a_percent             = $24,
-    cbd_a_value               = $25,
-    cbn_percent               = $26,
-    cbn_value                 = $27,
-    cbg_a_percent             = $28,
-    cbg_a_value               = $29,
-    cbg_percent               = $30,
-    cbg_value                 = $31,
-    cbc_percent               = $32,
-    cbc_value                 = $33,
-    total_cannabinoid_percent = $34,
-    total_cannabinoid_value   = $35
+SET test_name                 = COALESCE($1, test_name),
+    batch_code                = COALESCE($2, batch_code),
+    test_id_code              = COALESCE($3, test_id_code),
+    lab_facility_name         = COALESCE($4, lab_facility_name),
+    test_performed_date_time  = COALESCE($5, test_performed_date_time),
+    overall_passed            = COALESCE($6, overall_passed),
+    test_type_name            = COALESCE($7, test_type_name),
+    test_passed               = COALESCE($8, test_passed),
+    test_comment              = COALESCE($9, test_comment),
+    thc_total_percent         = COALESCE($10, thc_total_percent),
+    thc_total_value           = COALESCE($11, thc_total_value),
+    cbd_percent               = COALESCE($12, cbd_percent),
+    cbd_value                 = COALESCE($13, cbd_value),
+    terpene_total_percent     = COALESCE($14, terpene_total_percent),
+    terpene_total_value       = COALESCE($15, terpene_total_value),
+    thc_a_percent             = COALESCE($16, thc_a_percent),
+    thc_a_value               = COALESCE($17, thc_a_value),
+    delta9_thc_percent        = COALESCE($18, delta9_thc_percent),
+    delta9_thc_value          = COALESCE($19, delta9_thc_value),
+    delta8_thc_percent        = COALESCE($20, delta8_thc_percent),
+    delta8_thc_value          = COALESCE($21, delta8_thc_value),
+    thc_v_percent             = COALESCE($22, thc_v_percent),
+    thc_v_value               = COALESCE($23, thc_v_value),
+    cbd_a_percent             = COALESCE($24, cbd_a_percent),
+    cbd_a_value               = COALESCE($25, cbd_a_value),
+    cbn_percent               = COALESCE($26, cbn_percent),
+    cbn_value                 = COALESCE($27, cbn_value),
+    cbg_a_percent             = COALESCE($28, cbg_a_percent),
+    cbg_a_value               = COALESCE($29, cbg_a_value),
+    cbg_percent               = COALESCE($30, cbg_percent),
+    cbg_value                 = COALESCE($31, cbg_value),
+    cbc_percent               = COALESCE($32, cbc_percent),
+    cbc_value                 = COALESCE($33, cbc_value),
+    total_cannabinoid_percent = COALESCE($34, total_cannabinoid_percent),
+    total_cannabinoid_value   = COALESCE($35, total_cannabinoid_value)
 WHERE id = $36
 RETURNING id, created_at, updated_at, test_name, batch_code, test_id_code, lab_facility_name, test_performed_date_time, test_completed, overall_passed, test_type_name, test_passed, test_comment, thc_total_percent, thc_total_value, cbd_percent, cbd_value, terpene_total_percent, terpene_total_value, thc_a_percent, thc_a_value, delta9_thc_percent, delta9_thc_value, delta8_thc_percent, delta8_thc_value, thc_v_percent, thc_v_value, cbd_a_percent, cbd_a_value, cbn_percent, cbn_value, cbg_a_percent, cbg_a_value, cbg_percent, cbg_value, cbc_percent, cbc_value, total_cannabinoid_percent, total_cannabinoid_value
 `
 
 type UpdateLabTestParams struct {
-	TestName                string          `json:"test_name"`
-	BatchCode               string          `json:"batch_code"`
-	TestIDCode              string          `json:"test_id_code"`
-	LabFacilityName         string          `json:"lab_facility_name"`
-	TestPerformedDateTime   time.Time       `json:"test_performed_date_time"`
-	OverallPassed           bool            `json:"overall_passed"`
-	TestTypeName            string          `json:"test_type_name"`
-	TestPassed              bool            `json:"test_passed"`
-	TestComment             string          `json:"test_comment"`
-	ThcTotalPercent         decimal.Decimal `json:"thc_total_percent"`
-	ThcTotalValue           decimal.Decimal `json:"thc_total_value"`
-	CbdPercent              decimal.Decimal `json:"cbd_percent"`
-	CbdValue                decimal.Decimal `json:"cbd_value"`
-	TerpeneTotalPercent     decimal.Decimal `json:"terpene_total_percent"`
-	TerpeneTotalValue       decimal.Decimal `json:"terpene_total_value"`
-	ThcAPercent             decimal.Decimal `json:"thc_a_percent"`
-	ThcAValue               decimal.Decimal `json:"thc_a_value"`
-	Delta9ThcPercent        decimal.Decimal `json:"delta9_thc_percent"`
-	Delta9ThcValue          decimal.Decimal `json:"delta9_thc_value"`
-	Delta8ThcPercent        decimal.Decimal `json:"delta8_thc_percent"`
-	Delta8ThcValue          decimal.Decimal `json:"delta8_thc_value"`
-	ThcVPercent             decimal.Decimal `json:"thc_v_percent"`
-	ThcVValue               decimal.Decimal `json:"thc_v_value"`
-	CbdAPercent             decimal.Decimal `json:"cbd_a_percent"`
-	CbdAValue               decimal.Decimal `json:"cbd_a_value"`
-	CbnPercent              decimal.Decimal `json:"cbn_percent"`
-	CbnValue                decimal.Decimal `json:"cbn_value"`
-	CbgAPercent             decimal.Decimal `json:"cbg_a_percent"`
-	CbgAValue               decimal.Decimal `json:"cbg_a_value"`
-	CbgPercent              decimal.Decimal `json:"cbg_percent"`
-	CbgValue                decimal.Decimal `json:"cbg_value"`
-	CbcPercent              decimal.Decimal `json:"cbc_percent"`
-	CbcValue                decimal.Decimal `json:"cbc_value"`
-	TotalCannabinoidPercent decimal.Decimal `json:"total_cannabinoid_percent"`
-	TotalCannabinoidValue   decimal.Decimal `json:"total_cannabinoid_value"`
-	ID                      nulls.Int64     `json:"id"`
+	TestName                nulls.String        `json:"test_name"`
+	BatchCode               nulls.String        `json:"batch_code"`
+	TestIDCode              nulls.String        `json:"test_id_code"`
+	LabFacilityName         nulls.String        `json:"lab_facility_name"`
+	TestPerformedDateTime   nulls.Time          `json:"test_performed_date_time"`
+	OverallPassed           nulls.Bool          `json:"overall_passed"`
+	TestTypeName            nulls.String        `json:"test_type_name"`
+	TestPassed              nulls.Bool          `json:"test_passed"`
+	TestComment             nulls.String        `json:"test_comment"`
+	ThcTotalPercent         decimal.NullDecimal `json:"thc_total_percent"`
+	ThcTotalValue           decimal.NullDecimal `json:"thc_total_value"`
+	CbdPercent              decimal.NullDecimal `json:"cbd_percent"`
+	CbdValue                decimal.NullDecimal `json:"cbd_value"`
+	TerpeneTotalPercent     decimal.NullDecimal `json:"terpene_total_percent"`
+	TerpeneTotalValue       decimal.NullDecimal `json:"terpene_total_value"`
+	ThcAPercent             decimal.NullDecimal `json:"thc_a_percent"`
+	ThcAValue               decimal.NullDecimal `json:"thc_a_value"`
+	Delta9ThcPercent        decimal.NullDecimal `json:"delta9_thc_percent"`
+	Delta9ThcValue          decimal.NullDecimal `json:"delta9_thc_value"`
+	Delta8ThcPercent        decimal.NullDecimal `json:"delta8_thc_percent"`
+	Delta8ThcValue          decimal.NullDecimal `json:"delta8_thc_value"`
+	ThcVPercent             decimal.NullDecimal `json:"thc_v_percent"`
+	ThcVValue               decimal.NullDecimal `json:"thc_v_value"`
+	CbdAPercent             decimal.NullDecimal `json:"cbd_a_percent"`
+	CbdAValue               decimal.NullDecimal `json:"cbd_a_value"`
+	CbnPercent              decimal.NullDecimal `json:"cbn_percent"`
+	CbnValue                decimal.NullDecimal `json:"cbn_value"`
+	CbgAPercent             decimal.NullDecimal `json:"cbg_a_percent"`
+	CbgAValue               decimal.NullDecimal `json:"cbg_a_value"`
+	CbgPercent              decimal.NullDecimal `json:"cbg_percent"`
+	CbgValue                decimal.NullDecimal `json:"cbg_value"`
+	CbcPercent              decimal.NullDecimal `json:"cbc_percent"`
+	CbcValue                decimal.NullDecimal `json:"cbc_value"`
+	TotalCannabinoidPercent decimal.NullDecimal `json:"total_cannabinoid_percent"`
+	TotalCannabinoidValue   decimal.NullDecimal `json:"total_cannabinoid_value"`
+	ID                      nulls.Int64         `json:"id"`
 }
 
 // description: Update a lab test

@@ -61,14 +61,10 @@ type Querier interface {
 	DeleteOrder(ctx context.Context, id int64) error
 	// description: Delete a package
 	DeletePackage(ctx context.Context, id int64) error
-	// description: Delete a package tag by ID
-	DeletePackageTag(ctx context.Context, id int64) error
 	// description: Delete a product category
 	DeleteProductCategory(ctx context.Context, id int64) error
 	// description: Delete a strain by ID
 	DeleteStrain(ctx context.Context, id int64) error
-	// description: Delete a UOM by ID
-	DeleteUom(ctx context.Context, id int64) error
 	// description: Get a facility by ID
 	GetFacility(ctx context.Context, id int64) (Facility, error)
 	// description: Get a location within a facility by ID
@@ -160,8 +156,6 @@ type Querier interface {
 	UpdateProductCategory(ctx context.Context, arg UpdateProductCategoryParams) (ProductCategory, error)
 	// description: Update a strain
 	UpdateStrain(ctx context.Context, arg UpdateStrainParams) (Strain, error)
-	// description: Update a UOM by ID
-	UpdateUom(ctx context.Context, arg UpdateUomParams) (Uom, error)
 	UpdateUser(ctx context.Context, arg UpdateUserParams) (User, error)
 }
 

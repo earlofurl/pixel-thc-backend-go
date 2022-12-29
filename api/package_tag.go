@@ -80,15 +80,6 @@ func (server *Server) listPackageTags(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, packageTags)
 }
 
-//func (server *Server) listPackageTags(ctx *gin.Context) {
-//	packageTags, err := server.store.ListPackageTags(ctx)
-//	if err != nil {
-//		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
-//		return
-//	}
-//	ctx.JSON(http.StatusOK, packageTags)
-//}
-
 type getPackageTagByTagNumberRequest struct {
 	TagNumber string `uri:"tag_number" binding:"required"`
 }
@@ -106,19 +97,3 @@ func (server *Server) getPackageTagByTagNumber(ctx *gin.Context) {
 	}
 	ctx.JSON(http.StatusOK, packageTag)
 }
-
-func (server *Server) deletePackageTag(ctx *gin.Context) {
-	var req getPackageTagRequest
-	if err := ctx.ShouldBindUri(&req); err != nil {
-		ctx.JSON(http.StatusBadRequest, errorResponse(err))
-		return
-	}
-	err := server.store.DeletePackageTag(ctx, req.ID)
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
-		return
-	}
-	ctx.JSON(http.StatusOK, gin.H{"message": "package tag deleted"})
-}
-
-// TODO: update package tag

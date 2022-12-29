@@ -2,6 +2,7 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/gobuffalo/nulls"
 	"net/http"
 	db "pixel-thc-backend-go/db/sqlc"
 )
@@ -79,8 +80,8 @@ func (server *Server) updateFacility(ctx *gin.Context) {
 
 	arg := db.UpdateFacilityParams{
 		ID:            req.ID,
-		Name:          updateReq.Name,
-		LicenseNumber: updateReq.LicenseNumber,
+		Name:          nulls.NewString(updateReq.Name),
+		LicenseNumber: nulls.NewString(updateReq.LicenseNumber),
 	}
 
 	facility, err := server.store.UpdateFacility(ctx, arg)

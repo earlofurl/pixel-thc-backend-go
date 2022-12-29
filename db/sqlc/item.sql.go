@@ -8,6 +8,8 @@ package db
 import (
 	"context"
 	"time"
+
+	"github.com/gobuffalo/nulls"
 )
 
 const createItem = `-- name: CreateItem :one
@@ -137,30 +139,30 @@ func (q *Queries) ListItems(ctx context.Context) ([]ListItemsRow, error) {
 
 const updateItem = `-- name: UpdateItem :one
 UPDATE items
-SET description  = $2,
-    is_used      = $3,
-    item_type_id = $4,
-    strain_id    = $5
-WHERE id = $1
+SET description  = COALESCE($1, description),
+    is_used      = COALESCE($2, is_used),
+    item_type_id = COALESCE($3, item_type_id),
+    strain_id    = COALESCE($4, strain_id)
+WHERE id = $5
 RETURNING id, created_at, updated_at, description, is_used, item_type_id, strain_id
 `
 
 type UpdateItemParams struct {
-	ID          int64  `json:"id"`
-	Description string `json:"description"`
-	IsUsed      bool   `json:"is_used"`
-	ItemTypeID  int64  `json:"item_type_id"`
-	StrainID    int64  `json:"strain_id"`
+	Description nulls.String `json:"description"`
+	IsUsed      nulls.Bool   `json:"is_used"`
+	ItemTypeID  nulls.Int64  `json:"item_type_id"`
+	StrainID    nulls.Int64  `json:"strain_id"`
+	ID          int64        `json:"id"`
 }
 
 // description: Update an item by ID
 func (q *Queries) UpdateItem(ctx context.Context, arg UpdateItemParams) (Item, error) {
 	row := q.db.QueryRowContext(ctx, updateItem,
-		arg.ID,
 		arg.Description,
 		arg.IsUsed,
 		arg.ItemTypeID,
 		arg.StrainID,
+		arg.ID,
 	)
 	var i Item
 	err := row.Scan(

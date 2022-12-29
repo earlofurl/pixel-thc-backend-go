@@ -51,22 +51,20 @@ func (server *Server) listProductCategories(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, productCategories)
 }
 
-type deleteProductCategoryRequest struct {
-	ID int64 `uri:"id" binding:"required,min=1"`
-}
-
-func (server *Server) deleteProductCategory(ctx *gin.Context) {
-	var req deleteProductCategoryRequest
-	if err := ctx.ShouldBindUri(&req); err != nil {
-		ctx.JSON(http.StatusBadRequest, errorResponse(err))
-		return
-	}
-	err := server.store.DeleteProductCategory(ctx, req.ID)
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
-		return
-	}
-	ctx.JSON(http.StatusOK, nil)
-}
-
-// TODO: updateProductCategory
+//type deleteProductCategoryRequest struct {
+//	ID int64 `uri:"id" binding:"required,min=1"`
+//}
+//
+//func (server *Server) deleteProductCategory(ctx *gin.Context) {
+//	var req deleteProductCategoryRequest
+//	if err := ctx.ShouldBindUri(&req); err != nil {
+//		ctx.JSON(http.StatusBadRequest, errorResponse(err))
+//		return
+//	}
+//	err := server.store.DeleteProductCategory(ctx, req.ID)
+//	if err != nil {
+//		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
+//		return
+//	}
+//	ctx.JSON(http.StatusOK, nil)
+//}

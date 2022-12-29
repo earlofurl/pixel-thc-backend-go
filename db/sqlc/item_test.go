@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"github.com/gobuffalo/nulls"
 	"github.com/stretchr/testify/require"
 	"pixel-thc-backend-go/util"
 	"testing"
@@ -86,10 +87,10 @@ func TestQueries_UpdateItem(t *testing.T) {
 
 	arg := UpdateItemParams{
 		ID:          item1.ID,
-		Description: util.RandomString(10),
-		IsUsed:      util.RandomBool(),
-		ItemTypeID:  itemType1.ID,
-		StrainID:    strain1.ID,
+		Description: util.RandomNullsString(10),
+		IsUsed:      util.RandomNullsBool(),
+		ItemTypeID:  nulls.NewInt64(itemType1.ID),
+		StrainID:    nulls.NewInt64(strain1.ID),
 	}
 
 	item2, err := testQueries.UpdateItem(context.Background(), arg)
@@ -97,10 +98,10 @@ func TestQueries_UpdateItem(t *testing.T) {
 	require.NotEmpty(t, item2)
 
 	require.Equal(t, item1.ID, item2.ID)
-	require.Equal(t, arg.Description, item2.Description)
+	require.Equal(t, arg.Description.String, item2.Description)
 	// require.NotEqual(t, arg.IsUsed, item2.IsUsed)
-	require.Equal(t, arg.ItemTypeID, item2.ItemTypeID)
-	require.Equal(t, arg.StrainID, item2.StrainID)
+	require.Equal(t, arg.ItemTypeID.Int64, item2.ItemTypeID)
+	require.Equal(t, arg.StrainID.Int64, item2.StrainID)
 	require.NotEqual(t, item1.Description, item2.Description)
 	require.NotEqual(t, item1.ItemTypeID, item2.ItemTypeID)
 	require.NotEqual(t, item1.StrainID, item2.StrainID)

@@ -229,28 +229,28 @@ type SourcePackagesChildPackage struct {
 }
 
 type Strain struct {
-	ID                      int64           `json:"id"`
-	CreatedAt               time.Time       `json:"created_at"`
-	UpdatedAt               time.Time       `json:"updated_at"`
-	Name                    string          `json:"name"`
-	Type                    string          `json:"type"`
-	YieldAverage            decimal.Decimal `json:"yield_average"`
-	TerpAverageTotal        decimal.Decimal `json:"terp_average_total"`
-	Terp1                   nulls.String    `json:"terp_1"`
-	Terp1Value              decimal.Decimal `json:"terp_1_value"`
-	Terp2                   nulls.String    `json:"terp_2"`
-	Terp2Value              decimal.Decimal `json:"terp_2_value"`
-	Terp3                   nulls.String    `json:"terp_3"`
-	Terp3Value              decimal.Decimal `json:"terp_3_value"`
-	Terp4                   nulls.String    `json:"terp_4"`
-	Terp4Value              decimal.Decimal `json:"terp_4_value"`
-	Terp5                   nulls.String    `json:"terp_5"`
-	Terp5Value              decimal.Decimal `json:"terp_5_value"`
-	ThcAverage              decimal.Decimal `json:"thc_average"`
-	TotalCannabinoidAverage decimal.Decimal `json:"total_cannabinoid_average"`
-	LightDep2022            string          `json:"light_dep_2022"`
-	FallHarvest2022         string          `json:"fall_harvest_2022"`
-	QuantityAvailable       decimal.Decimal `json:"quantity_available"`
+	ID                      int64               `json:"id"`
+	CreatedAt               time.Time           `json:"created_at"`
+	UpdatedAt               time.Time           `json:"updated_at"`
+	Name                    string              `json:"name"`
+	Type                    string              `json:"type"`
+	YieldAverage            decimal.NullDecimal `json:"yield_average"`
+	TerpAverageTotal        decimal.NullDecimal `json:"terp_average_total"`
+	Terp1                   nulls.String        `json:"terp_1"`
+	Terp1Value              decimal.NullDecimal `json:"terp_1_value"`
+	Terp2                   nulls.String        `json:"terp_2"`
+	Terp2Value              decimal.NullDecimal `json:"terp_2_value"`
+	Terp3                   nulls.String        `json:"terp_3"`
+	Terp3Value              decimal.NullDecimal `json:"terp_3_value"`
+	Terp4                   nulls.String        `json:"terp_4"`
+	Terp4Value              decimal.NullDecimal `json:"terp_4_value"`
+	Terp5                   nulls.String        `json:"terp_5"`
+	Terp5Value              decimal.NullDecimal `json:"terp_5_value"`
+	ThcAverage              decimal.NullDecimal `json:"thc_average"`
+	TotalCannabinoidAverage decimal.NullDecimal `json:"total_cannabinoid_average"`
+	LightDep2022            string              `json:"light_dep_2022"`
+	FallHarvest2022         string              `json:"fall_harvest_2022"`
+	QuantityAvailable       decimal.Decimal     `json:"quantity_available"`
 }
 
 type Uom struct {

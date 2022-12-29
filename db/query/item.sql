@@ -22,11 +22,11 @@ ORDER BY strain_id;
 -- name: UpdateItem :one
 -- description: Update an item by ID
 UPDATE items
-SET description  = $2,
-    is_used      = $3,
-    item_type_id = $4,
-    strain_id    = $5
-WHERE id = $1
+SET description  = COALESCE(sqlc.narg(description), description),
+    is_used      = COALESCE(sqlc.narg(is_used), is_used),
+    item_type_id = COALESCE(sqlc.narg(item_type_id), item_type_id),
+    strain_id    = COALESCE(sqlc.narg(strain_id), strain_id)
+WHERE id = sqlc.arg(id)
 RETURNING *;
 
 -- name: DeleteItem :exec

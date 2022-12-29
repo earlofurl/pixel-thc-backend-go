@@ -82,17 +82,17 @@ func (server *Server) listOrders(ctx *gin.Context) {
 }
 
 type updateOrderRequest struct {
-	ID                        int64           `uri:"id" binding:"required,min=1"`
-	ScheduledPackDateTime     time.Time       `json:"scheduled_pack_date_time"`
-	ScheduledShipDateTime     time.Time       `json:"scheduled_ship_date_time"`
-	ScheduledDeliveryDateTime time.Time       `json:"scheduled_delivery_date_time"`
-	ActualPackDateTime        nulls.Time      `json:"actual_pack_date_time"`
-	ActualShipDateTime        nulls.Time      `json:"actual_ship_date_time"`
-	ActualDeliveryDateTime    nulls.Time      `json:"actual_delivery_date_time"`
-	OrderTotal                decimal.Decimal `json:"order_total"`
-	Notes                     string          `json:"notes"`
-	Status                    string          `json:"status"`
-	CustomerName              string          `json:"customer_name"`
+	ID                        int64               `uri:"id" binding:"required,min=1"`
+	ScheduledPackDateTime     nulls.Time          `json:"scheduled_pack_date_time"`
+	ScheduledShipDateTime     nulls.Time          `json:"scheduled_ship_date_time"`
+	ScheduledDeliveryDateTime nulls.Time          `json:"scheduled_delivery_date_time"`
+	ActualPackDateTime        nulls.Time          `json:"actual_pack_date_time"`
+	ActualShipDateTime        nulls.Time          `json:"actual_ship_date_time"`
+	ActualDeliveryDateTime    nulls.Time          `json:"actual_delivery_date_time"`
+	OrderTotal                decimal.NullDecimal `json:"order_total"`
+	Notes                     nulls.String        `json:"notes"`
+	Status                    nulls.String        `json:"status"`
+	CustomerName              nulls.String        `json:"customer_name"`
 }
 
 func (server *Server) updateOrder(ctx *gin.Context) {

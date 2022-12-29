@@ -57,23 +57,3 @@ func (server *Server) listUoms(ctx *gin.Context) {
 	}
 	ctx.JSON(http.StatusOK, uoms)
 }
-
-type deleteUomRequest struct {
-	ID int64 `uri:"id" binding:"required,min=1"`
-}
-
-func (server *Server) deleteUom(ctx *gin.Context) {
-	var req deleteUomRequest
-	if err := ctx.ShouldBindUri(&req); err != nil {
-		ctx.JSON(http.StatusBadRequest, errorResponse(err))
-		return
-	}
-	err := server.store.DeleteUom(ctx, req.ID)
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
-		return
-	}
-	ctx.JSON(http.StatusOK, nil)
-}
-
-// TODO: updateUom

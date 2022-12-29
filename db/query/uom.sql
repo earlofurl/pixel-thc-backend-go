@@ -23,17 +23,3 @@ SELECT *
 FROM uoms
 WHERE name = $1
 LIMIT 1;
-
--- name: UpdateUom :one
--- description: Update a UOM by ID
-UPDATE uoms
-SET name         = $2,
-    abbreviation = $3
-WHERE id = $1
-RETURNING *;
-
--- name: DeleteUom :exec
--- description: Delete a UOM by ID
-DELETE
-FROM uoms
-WHERE id = $1;

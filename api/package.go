@@ -177,3 +177,92 @@ func (server *Server) listActivePackages(ctx *gin.Context) {
 	}
 	ctx.JSON(http.StatusOK, productPackages)
 }
+
+type updatePackageRequest struct {
+	ID                                int64               `json:"id" binding:"required,min=1"`
+	TagID                             nulls.Int64         `json:"tag_id"`
+	PackageType                       nulls.String        `json:"package_type"`
+	Quantity                          decimal.NullDecimal `json:"quantity"`
+	Notes                             nulls.String        `json:"notes"`
+	PackagedDateTime                  nulls.Time          `json:"packaged_date_time"`
+	HarvestDateTime                   nulls.Time          `json:"harvest_date_time"`
+	LabTestingState                   nulls.String        `json:"lab_testing_state"`
+	LabTestingStateDateTime           nulls.Time          `json:"lab_testing_state_date_time"`
+	IsTradeSample                     nulls.Bool          `json:"is_trade_sample"`
+	IsTestingSample                   nulls.Bool          `json:"is_testing_sample"`
+	ProductRequiresRemediation        nulls.Bool          `json:"product_requires_remediation"`
+	ContainsRemediatedProduct         nulls.Bool          `json:"contains_remediated_product"`
+	RemediationDateTime               nulls.Time          `json:"remediation_date_time"`
+	ReceivedDateTime                  nulls.Time          `json:"received_date_time"`
+	ReceivedFromManifestNumber        nulls.String        `json:"received_from_manifest_number"`
+	ReceivedFromFacilityLicenseNumber nulls.String        `json:"received_from_facility_license_number"`
+	ReceivedFromFacilityName          nulls.String        `json:"received_from_facility_name"`
+	IsOnHold                          nulls.Bool          `json:"is_on_hold"`
+	ArchivedDate                      nulls.Time          `json:"archived_date"`
+	FinishedDate                      nulls.Time          `json:"finished_date"`
+	ItemID                            nulls.Int64         `json:"item_id"`
+	ProvisionalLabel                  nulls.String        `json:"provisional_label"`
+	IsProvisional                     nulls.Bool          `json:"is_provisional"`
+	IsSold                            nulls.Bool          `json:"is_sold"`
+	PpuDefault                        decimal.NullDecimal `json:"ppu_default"`
+	PpuOnOrder                        decimal.NullDecimal `json:"ppu_on_order"`
+	TotalPackagePriceOnOrder          decimal.NullDecimal `json:"total_package_price_on_order"`
+	PpuSoldPrice                      decimal.NullDecimal `json:"ppu_sold_price"`
+	TotalSoldPrice                    decimal.NullDecimal `json:"total_sold_price"`
+	PackagingSuppliesConsumed         nulls.Bool          `json:"packaging_supplies_consumed"`
+	IsLineItem                        nulls.Bool          `json:"is_line_item"`
+	OrderID                           nulls.Int64         `json:"order_id"`
+	UomID                             nulls.Int64         `json:"uom_id"`
+	IsActive                          nulls.Bool          `json:"is_active"`
+}
+
+func (server *Server) updatePackage(ctx *gin.Context) {
+	var req updatePackageRequest
+	if err := ctx.ShouldBindJSON(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, errorResponse(err))
+		return
+	}
+
+	productPackage, err := server.store.UpdatePackage(ctx, db.UpdatePackageParams{
+		ID:                                req.ID,
+		TagID:                             req.TagID,
+		PackageType:                       req.PackageType,
+		Quantity:                          req.Quantity,
+		Notes:                             req.Notes,
+		PackagedDateTime:                  req.PackagedDateTime,
+		HarvestDateTime:                   req.HarvestDateTime,
+		LabTestingState:                   req.LabTestingState,
+		LabTestingStateDateTime:           req.LabTestingStateDateTime,
+		IsTradeSample:                     req.IsTradeSample,
+		IsTestingSample:                   req.IsTestingSample,
+		ProductRequiresRemediation:        req.ProductRequiresRemediation,
+		ContainsRemediatedProduct:         req.ContainsRemediatedProduct,
+		RemediationDateTime:               req.RemediationDateTime,
+		ReceivedDateTime:                  req.ReceivedDateTime,
+		ReceivedFromManifestNumber:        req.ReceivedFromManifestNumber,
+		ReceivedFromFacilityLicenseNumber: req.ReceivedFromFacilityLicenseNumber,
+		ReceivedFromFacilityName:          req.ReceivedFromFacilityName,
+		IsOnHold:                          req.IsOnHold,
+		ArchivedDate:                      req.ArchivedDate,
+		FinishedDate:                      req.FinishedDate,
+		ItemID:                            req.ItemID,
+		ProvisionalLabel:                  req.ProvisionalLabel,
+		IsProvisional:                     req.IsProvisional,
+		IsSold:                            req.IsSold,
+		PpuDefault:                        req.PpuDefault,
+		PpuOnOrder:                        req.PpuOnOrder,
+		TotalPackagePriceOnOrder:          req.TotalPackagePriceOnOrder,
+		PpuSoldPrice:                      req.PpuSoldPrice,
+		TotalSoldPrice:                    req.TotalSoldPrice,
+		PackagingSuppliesConsumed:         req.PackagingSuppliesConsumed,
+		IsLineItem:                        req.IsLineItem,
+		OrderID:                           req.OrderID,
+		UomID:                             req.UomID,
+		IsActive:                          req.IsActive,
+	})
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
+		return
+	}
+	ctx.JSON(http.StatusOK, productPackage)
+}

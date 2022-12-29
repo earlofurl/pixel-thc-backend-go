@@ -24,9 +24,9 @@ WHERE facility_id = $1;
 -- name: UpdateFacilityLocation :one
 -- description: Update a location within a facility
 UPDATE facility_locations
-SET name        = $1,
-    facility_id = $2
-WHERE id = $3
+SET name        = COALESCE(sqlc.narg(name), name),
+    facility_id = COALESCE(sqlc.narg(facility_id), facility_id)
+WHERE id = sqlc.arg(id)
 RETURNING *;
 
 -- name: DeleteFacilityLocation :exec

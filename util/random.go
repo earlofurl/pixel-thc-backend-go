@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+// TODO: Make the random nulls.X values have a chance to return null
+
 const alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 func init() {
@@ -91,6 +93,11 @@ func RandomBool() bool {
 	return rand.Intn(2) == 0
 }
 
+// RandomNullsBool generates a random nulls.Bool
+func RandomNullsBool() nulls.Bool {
+	return nulls.NewBool(RandomBool())
+}
+
 // RandomPercent generates a random decimal percent
 func RandomPercent() float64 {
 	return RandomFloat(1, 100)
@@ -105,7 +112,7 @@ func RandomTagNumber() string {
 	return RandomString(24)
 }
 
-// RandomEmail generates a random valid email address
+// RandomValidEmail generates a random valid email address
 func RandomValidEmail() string {
 	return fmt.Sprintf("%s@%s.com", RandomString(6), RandomString(6))
 }

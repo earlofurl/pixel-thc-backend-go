@@ -34,18 +34,6 @@ func (q *Queries) CreateUom(ctx context.Context, arg CreateUomParams) (Uom, erro
 	return i, err
 }
 
-const deleteUom = `-- name: DeleteUom :exec
-DELETE
-FROM uoms
-WHERE id = $1
-`
-
-// description: Delete a UOM by ID
-func (q *Queries) DeleteUom(ctx context.Context, id int64) error {
-	_, err := q.db.ExecContext(ctx, deleteUom, id)
-	return err
-}
-
 const getUom = `-- name: GetUom :one
 SELECT id, created_at, updated_at, name, abbreviation
 FROM uoms
@@ -122,32 +110,4 @@ func (q *Queries) ListUoms(ctx context.Context) ([]Uom, error) {
 		return nil, err
 	}
 	return items, nil
-}
-
-const updateUom = `-- name: UpdateUom :one
-UPDATE uoms
-SET name         = $2,
-    abbreviation = $3
-WHERE id = $1
-RETURNING id, created_at, updated_at, name, abbreviation
-`
-
-type UpdateUomParams struct {
-	ID           int64  `json:"id"`
-	Name         string `json:"name"`
-	Abbreviation string `json:"abbreviation"`
-}
-
-// description: Update a UOM by ID
-func (q *Queries) UpdateUom(ctx context.Context, arg UpdateUomParams) (Uom, error) {
-	row := q.db.QueryRowContext(ctx, updateUom, arg.ID, arg.Name, arg.Abbreviation)
-	var i Uom
-	err := row.Scan(
-		&i.ID,
-		&i.CreatedAt,
-		&i.UpdatedAt,
-		&i.Name,
-		&i.Abbreviation,
-	)
-	return i, err
 }

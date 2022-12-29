@@ -22,17 +22,17 @@ ORDER BY created_at DESC;
 -- name: UpdateOrder :one
 -- description: Update a single order by id
 UPDATE orders
-SET scheduled_pack_date_time     = $1,
-    scheduled_ship_date_time     = $2,
-    scheduled_delivery_date_time = $3,
-    actual_pack_date_time        = $4,
-    actual_ship_date_time        = $5,
-    actual_delivery_date_time    = $6,
-    order_total                  = $7,
-    notes                        = $8,
-    status                       = $9,
-    customer_name                = $10
-WHERE id = $11
+SET scheduled_pack_date_time     = COALESCE(sqlc.narg(scheduled_pack_date_time), scheduled_pack_date_time),
+    scheduled_ship_date_time     = COALESCE(sqlc.narg(scheduled_ship_date_time), scheduled_ship_date_time),
+    scheduled_delivery_date_time = COALESCE(sqlc.narg(scheduled_delivery_date_time), scheduled_delivery_date_time),
+    actual_pack_date_time        = COALESCE(sqlc.narg(actual_pack_date_time), actual_pack_date_time),
+    actual_ship_date_time        = COALESCE(sqlc.narg(actual_ship_date_time), actual_ship_date_time),
+    actual_delivery_date_time    = COALESCE(sqlc.narg(actual_delivery_date_time), actual_delivery_date_time),
+    order_total                  = COALESCE(sqlc.narg(order_total), order_total),
+    notes                        = COALESCE(sqlc.narg(notes), notes),
+    status                       = COALESCE(sqlc.narg(status), status),
+    customer_name                = COALESCE(sqlc.narg(customer_name), customer_name)
+WHERE id = sqlc.arg(id)
 RETURNING *;
 
 -- name: DeleteOrder :exec

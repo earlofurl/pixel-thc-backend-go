@@ -63,16 +63,16 @@ func TestQueries_UpdateStrain(t *testing.T) {
 	strain1 := createRandomStrain(t)
 	arg := UpdateStrainParams{
 		ID:   strain1.ID,
-		Name: util.RandomString(6),
-		Type: util.RandomString(3),
+		Name: util.RandomNullsString(6),
+		Type: util.RandomNullsString(3),
 	}
 	strain2, err := testQueries.UpdateStrain(context.Background(), arg)
 	require.NoError(t, err)
 	require.NotEmpty(t, strain2)
 
 	require.Equal(t, strain1.ID, strain2.ID)
-	require.Equal(t, arg.Name, strain2.Name)
-	require.Equal(t, arg.Type, strain2.Type)
+	require.Equal(t, arg.Name.String, strain2.Name)
+	require.Equal(t, arg.Type.String, strain2.Type)
 	require.WithinDuration(t, strain1.CreatedAt, strain2.CreatedAt, time.Second)
 }
 

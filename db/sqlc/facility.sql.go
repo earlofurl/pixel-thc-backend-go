@@ -7,6 +7,8 @@ package db
 
 import (
 	"context"
+
+	"github.com/gobuffalo/nulls"
 )
 
 const createFacility = `-- name: CreateFacility :one
@@ -35,7 +37,8 @@ func (q *Queries) CreateFacility(ctx context.Context, arg CreateFacilityParams) 
 }
 
 const deleteFacility = `-- name: DeleteFacility :exec
-DELETE FROM facilities
+DELETE
+FROM facilities
 WHERE id = $1
 `
 
@@ -102,20 +105,21 @@ func (q *Queries) ListFacilities(ctx context.Context) ([]Facility, error) {
 
 const updateFacility = `-- name: UpdateFacility :one
 UPDATE facilities
-SET name = $2, license_number = $3
-WHERE id = $1
+SET name           = COALESCE($1, name),
+    license_number = COALESCE($2, license_number)
+WHERE id = $3
 RETURNING id, created_at, updated_at, name, license_number
 `
 
 type UpdateFacilityParams struct {
-	ID            int64  `json:"id"`
-	Name          string `json:"name"`
-	LicenseNumber string `json:"license_number"`
+	Name          nulls.String `json:"name"`
+	LicenseNumber nulls.String `json:"license_number"`
+	ID            int64        `json:"id"`
 }
 
 // description: Update a facility by ID
 func (q *Queries) UpdateFacility(ctx context.Context, arg UpdateFacilityParams) (Facility, error) {
-	row := q.db.QueryRowContext(ctx, updateFacility, arg.ID, arg.Name, arg.LicenseNumber)
+	row := q.db.QueryRowContext(ctx, updateFacility, arg.Name, arg.LicenseNumber, arg.ID)
 	var i Facility
 	err := row.Scan(
 		&i.ID,

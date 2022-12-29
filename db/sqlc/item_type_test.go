@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"github.com/gobuffalo/nulls"
 	"github.com/stretchr/testify/require"
 	"pixel-thc-backend-go/util"
 	"testing"
@@ -80,10 +81,10 @@ func TestQueries_UpdateItemType(t *testing.T) {
 
 	arg := UpdateItemTypeParams{
 		ID:                itemType1.ID,
-		ProductForm:       productForm,
-		ProductModifier:   productModifier,
-		UomDefault:        uom2.ID,
-		ProductCategoryID: productCategory2.ID,
+		ProductForm:       nulls.NewString(productForm),
+		ProductModifier:   nulls.NewString(productModifier),
+		UomDefault:        nulls.NewInt64(uom2.ID),
+		ProductCategoryID: nulls.NewInt64(productCategory2.ID),
 	}
 
 	itemType2, err := testQueries.UpdateItemType(context.Background(), arg)

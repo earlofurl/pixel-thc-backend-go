@@ -7,6 +7,8 @@ package db
 
 import (
 	"context"
+
+	"github.com/gobuffalo/nulls"
 )
 
 const createFacilityLocation = `-- name: CreateFacilityLocation :one
@@ -139,16 +141,16 @@ func (q *Queries) ListFacilityLocationsByFacility(ctx context.Context, facilityI
 
 const updateFacilityLocation = `-- name: UpdateFacilityLocation :one
 UPDATE facility_locations
-SET name        = $1,
-    facility_id = $2
+SET name        = COALESCE($1, name),
+    facility_id = COALESCE($2, facility_id)
 WHERE id = $3
 RETURNING id, created_at, updated_at, name, facility_id
 `
 
 type UpdateFacilityLocationParams struct {
-	Name       string `json:"name"`
-	FacilityID int64  `json:"facility_id"`
-	ID         int64  `json:"id"`
+	Name       nulls.String `json:"name"`
+	FacilityID nulls.Int64  `json:"facility_id"`
+	ID         int64        `json:"id"`
 }
 
 // description: Update a location within a facility
