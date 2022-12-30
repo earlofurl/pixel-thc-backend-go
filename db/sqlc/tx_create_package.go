@@ -106,7 +106,7 @@ func (store *SQLStore) CreatePackageTx(ctx context.Context, arg CreatePackageTxP
 
 		// Update the package_tag row of the id assigned to new package
 		result.PackageTag, err = q.UpdatePackageTag(ctx, UpdatePackageTagParams{
-			ID:                pkg.ID,
+			ID:                pkg.TagID.Int64,
 			IsAssigned:        nulls.NewBool(true),
 			IsActive:          nulls.NewBool(true),
 			IsProvisional:     nulls.NewBool(true),
