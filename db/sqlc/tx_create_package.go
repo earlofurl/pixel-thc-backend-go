@@ -18,6 +18,7 @@ type CreatePackageTxResult struct {
 	PackageAdjustment              PackageAdjustment          `json:"package_adjustment"`
 	FromPackage                    Package                    `json:"from_package"`
 	ToPackage                      Package                    `json:"to_package"`
+	PackageTag                     PackageTag                 `json:"package_tag"`
 	FromPackageAdjEntry            PackageAdjEntry            `json:"from_entry"`
 	ToPackageAdjEntry              PackageAdjEntry            `json:"to_entry"`
 	SourcePackageChildPackageEntry SourcePackagesChildPackage `json:"source_packages_child_package"`
@@ -98,6 +99,18 @@ func (store *SQLStore) CreatePackageTx(ctx context.Context, arg CreatePackageTxP
 		err = q.AssignLabTestToPackage(ctx, AssignLabTestToPackageParams{
 			LabTestID: labTest.LabTestID,
 			PackageID: pkg.ID,
+		})
+		if err != nil {
+			return err
+		}
+
+		// Update the package_tag row of the id assigned to new package
+		result.PackageTag, err = q.UpdatePackageTag(ctx, UpdatePackageTagParams{
+			ID:                pkg.ID,
+			IsAssigned:        nulls.NewBool(true),
+			IsActive:          nulls.NewBool(true),
+			IsProvisional:     nulls.NewBool(true),
+			AssignedPackageID: nulls.NewInt64(pkg.ID),
 		})
 		if err != nil {
 			return err
