@@ -34,7 +34,7 @@ test:
 	go test -v -cover ./...
 
 server:
-	go run cmd/pixelthc/main.go
+	go run cmd/pixelthc-entrypoint/main.go
 
 mock:
 	mockgen -package mockdb -destination internal/db/mock/store.go pixel-thc-backend-go/internal/db/sqlc Store

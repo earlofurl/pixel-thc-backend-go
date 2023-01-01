@@ -22,24 +22,47 @@
 #CMD [ "/app/main" ]
 #ENTRYPOINT [ "start.sh" ]
 
-# Build stage
+##
+## Build Stage
+##
 FROM golang:1.19-alpine3.16 AS builder
 
-WORKDIR /
+# Set destination for COPY
+WORKDIR /app
 
-COPY . .
+# Download Go modules
+COPY go.mod .
+COPY go.sum .
+RUN go mod download
+
+# Copy the source code. Note the slash at the end, as explained in
+# https://docs.docker.com/engine/reference/builder/#copy
+COPY cmd/pixelthc-entrypoint/main.go ./
+COPY internal ./internal
+COPY app.env ./
+COPY internal/db/migration ./internal/db/migration
 
 RUN go build -o /pixelthc
 
-# Run stage
+##
+## Deploy Stage
+##
+
 FROM alpine:3.16
 
 WORKDIR /
 
+# Copy the binary from the build stage
 COPY --from=builder /pixelthc /pixelthc
-COPY app.env .
-COPY internal/db/migration ./internal/db/migration
+
+# Copy the app.env file
+COPY --from=builder /app/app.env .
+
+# Copy the migration files
+COPY --from=builder /app/internal/db/migration ./internal/db/migration
 
 EXPOSE 8080
 
-ENTRYPOINT [ "/pixelthc/cmd/pixelthc-entrypoint" ]
+USER nonroot:nonroot
+
+ENTRYPOINT [ "/pixelthc" ]
