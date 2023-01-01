@@ -17,10 +17,23 @@ func main() {
 		log.Fatal().Err(err).Msg("Error connecting to database")
 	}
 
+	tx, err := db.Begin()
+	if err != nil {
+		log.Fatal().Err(err).Msg("Error starting transaction")
+	}
+
 	// Create a new seeder
-	s := seeds.NewSeed(db)
+	s := seeds.NewSeed(tx)
 
 	if err := seeder.Execute(s); err != nil {
-		log.Fatal().Err(err).Msg("Error seeding database")
+		log.Fatal().Err(err).Msg("Error seeding database. Rolling back...")
+		err := tx.Rollback()
+		if err != nil {
+			return
+		}
+	}
+	err = tx.Commit()
+	if err != nil {
+		return
 	}
 }
