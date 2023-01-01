@@ -63,6 +63,8 @@ COPY --from=builder /app/internal/db/migration ./internal/db/migration
 
 EXPOSE 8080
 
-USER nonroot:nonroot
+# Set non root user
+#RUN adduser -D -g '' pixelthc
+#USER pixelthc:pixelthc
 
 ENTRYPOINT [ "/pixelthc" ]

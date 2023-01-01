@@ -16,11 +16,11 @@ services:
       - DB_SOURCE=postgresql://root:secret@postgres:5432/pixel_thc_dev?sslmode=disable
     depends_on:
       - postgres
-    entrypoint:
-      [
-        "/app/wait-for.sh",
-        "postgres:5432",
-        "--",
-        "/app/start.sh"
-      ]
-    command: [ "/app/main" ]
+#    entrypoint:
+#      [
+#        "/app/wait-for.sh",
+#        "postgres:5432",
+#        "--",
+#        "/app/start.sh"
+#      ]
+#    command: [ "/app/main" ]
