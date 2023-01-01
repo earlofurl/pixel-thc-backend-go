@@ -56,7 +56,7 @@ WORKDIR /
 COPY --from=builder /pixelthc /pixelthc
 
 # Copy the app.env file
-COPY --from=builder /app/app.env .
+COPY --from=builder /app/app.env ./
 
 # Copy the migration files
 COPY --from=builder /app/internal/db/migration ./internal/db/migration
