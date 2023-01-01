@@ -6,7 +6,7 @@ type Seed struct {
 	tx *sql.Tx
 }
 
-// PopulateDatabase calls the seed functions in specific order
+// PopulateDatabase calls the seed functions in a specific order
 func (s Seed) PopulateDatabase() {
 	s.uomsSeed()
 	s.facilitiesSeed()
