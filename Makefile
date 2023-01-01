@@ -13,16 +13,16 @@ dropdb:
 	docker exec -it postgres dropdb pixel_thc_dev
 
 migrateup:
-	migrate -path db/migration -database "$(DB_URL)" -verbose up
+	migrate -path internal/db/migration -database "$(DB_URL)" -verbose up
 
 migrateup1:
-	migrate -path db/migration -database "$(DB_URL)" -verbose up 1
+	migrate -path internal/db/migration -database "$(DB_URL)" -verbose up 1
 
 migratedown:
-	migrate -path db/migration -database "$(DB_URL)" -verbose down
+	migrate -path internal/db/migration -database "$(DB_URL)" -verbose down
 
 migratedown1:
-	migrate -path db/migration -database "$(DB_URL)" -verbose down 1
+	migrate -path internal/db/migration -database "$(DB_URL)" -verbose down 1
 
 db_schema:
 	dbml2sql --postgres -o doc/schema.sql doc/db.dbml
@@ -34,10 +34,10 @@ test:
 	go test -v -cover ./...
 
 server:
-	go run main.go
+	go run cmd/pixelthc/main.go
 
 mock:
-	mockgen -package mockdb -destination db/mock/store.go pixel-thc-backend-go/db/sqlc Store
+	mockgen -package mockdb -destination internal/db/mock/store.go pixel-thc-backend-go/internal/db/sqlc Store
 
 redis:
 	docker run --name redis -p 6379:6379 -d redis:7-alpine

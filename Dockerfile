@@ -29,17 +29,17 @@ WORKDIR /app
 
 COPY . .
 
-RUN go build -o /pxthc
+RUN go build -o /pixelthc
 
 # Run stage
 FROM alpine:3.16
 
 WORKDIR /
 
-COPY --from=builder /pxthc /pxthc
+COPY --from=builder /pixelthc /pixelthc
 COPY app.env .
-COPY db/migration ./db/migration
+COPY internal/db/migration ./internal/db/migration
 
 EXPOSE 8080
 
-ENTRYPOINT [ "/pxthc" ]
+ENTRYPOINT [ "/pixelthc/cmd/pixelthc-entrypoint" ]
