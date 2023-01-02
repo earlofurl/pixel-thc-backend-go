@@ -1,7 +1,7 @@
 package main
 
 import (
-	"database/sql"
+	"github.com/jmoiron/sqlx"
 	"pixel-thc-backend-go/internal/db/seeder/seeds"
 
 	"github.com/danvergara/seeder"
@@ -12,12 +12,12 @@ import (
 )
 
 func main() {
-	db, err := sql.Open("postgres", "postgres://root:secret@localhost:5432/pixel_thc_dev?sslmode=disable")
+	db, err := sqlx.Open("postgres", "postgres://root:secret@localhost:5432/pixel_thc_dev?sslmode=disable")
 	if err != nil {
 		log.Fatal().Err(err).Msg("Error connecting to database")
 	}
 
-	tx, err := db.Begin()
+	tx, err := db.Beginx()
 	if err != nil {
 		log.Fatal().Err(err).Msg("Error starting transaction")
 	}

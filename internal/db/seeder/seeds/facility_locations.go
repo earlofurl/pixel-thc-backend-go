@@ -1,23 +1,24 @@
 package seeds
 
-import "github.com/rs/zerolog/log"
+import (
+	"fmt"
+	"github.com/rs/zerolog/log"
+	"pixel-thc-backend-go/internal/util"
+)
 
 // facilityLocationsSeed seeds the facility_locations table with standard set of facility locations
 func (s Seed) facilityLocationsSeed() {
 	var err error
 
-	_, err = s.tx.Exec(`INSERT INTO facility_locations (name, facility_id) VALUES ($1, $2)`, "Location 1", 1)
-	if err != nil {
-		log.Fatal().Err(err).Msg("Error seeding facility locations table at Location 1")
+	for i := 0; i < 100; i++ {
+		i := i
+		_, err = s.tx.Exec(`INSERT INTO facility_locations (name, facility_id) 
+			VALUES ($1, $2)`,
+			fmt.Sprintf("Facility Location %d", i+1),
+			util.RandomInt(1, 100))
+		if err != nil {
+			log.Fatal().Err(err).Msg("Error seeding facility locations table")
+		}
 	}
 
-	_, err = s.tx.Exec(`INSERT INTO facility_locations (name, facility_id) VALUES ($1, $2)`, "Location 2", 1)
-	if err != nil {
-		log.Fatal().Err(err).Msg("Error seeding facility locations table at Location 2")
-	}
-
-	_, err = s.tx.Exec(`INSERT INTO facility_locations (name, facility_id) VALUES ($1, $2)`, "Location 3", 1)
-	if err != nil {
-		log.Fatal().Err(err).Msg("Error seeding facility locations table at Location 3")
-	}
 }

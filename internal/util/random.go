@@ -116,3 +116,24 @@ func RandomTagNumber() string {
 func RandomValidEmail() string {
 	return fmt.Sprintf("%s@%s.com", RandomString(6), RandomString(6))
 }
+
+// RandomTerpeneName returns a terpene name from a list of possible terpenes
+func RandomTerpeneName() string {
+	// slice of terpene names
+	terpenes := []string{"alpha-pinene", "beta-pinene", "limonene", "myrcene", "linalool", "caryophyllene", "terpinolene", "ocimene", "terpineol", "alpha-humulene", "beta-caryophyllene", "geraniol", "nerolidol", "alpha-terpinene", "alpha-phellandrene", "sabinene", "terpinene-4-ol", "alpha-bisabolol", "alpha-terpineol", "beta-phellandrene", "delta-3-carene", "delta-cadinene", "delta-cadinol", "delta-ocimene", "delta-terpinene", "gamma-terpinene", "geranyl-acetate", "geranyl-acetone", "geranyl-butyrate", "geranyl-geraniol", "geranyl-isobutyrate", "geranyl-isovalerate", "geranyl-terpinol"}
+	n := len(terpenes)
+	return terpenes[rand.Intn(n)]
+}
+
+// RandomStrainType returns a strain type from a list of possible strain types
+func RandomStrainType() string {
+	// slice of strain types
+	strainTypes := []string{"Indica", "Sativa", "Hybrid", "Indica Dominant", "Sativa Dominant"}
+	n := len(strainTypes)
+	return strainTypes[rand.Intn(n)]
+}
+
+// RandomDateTime returns a random date time within the last 30 days
+func RandomDateTime() time.Time {
+	return time.Now().AddDate(0, 0, -rand.Intn(30)).Round(time.Microsecond)
+}
